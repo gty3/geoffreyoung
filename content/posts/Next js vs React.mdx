@@ -1,0 +1,44 @@
+# Next js vs React
+
+Last edit: October 11, 2022 12:27 PM
+
+## **What is Next.js and why should you use it?**
+
+Next.js is a framework that wraps React - essentially a way of organizing your react app with some cool features that work wonders for SEO and performance.
+
+When I was learning React I was confused enough, I didn't need more by incorporating Next.js. But by using Next.js I was able to offload a lot of work onto the framework.
+
+![badPerforamnce.png](Next%20js%20vs%20React%206ebfc12162a14d558c3fcb9955f66ffe/badPerforamnce.png)
+
+Here is my Lighthouse score using just React (Lighthouse tool is found in chrome dev tools).
+
+A big difference between Next.js and React is pages. Every file in the 'pages' folder is rendered as a separate page; folders create sub-directories. Navigating pages is essentially the same as using React Router, you just use next/router instead.
+
+![pagesnextreact.png](Next%20js%20vs%20React%206ebfc12162a14d558c3fcb9955f66ffe/pagesnextreact.png)
+
+You can now start using Next.js. **`npx create-next-app`**, with Typescript **`--ts`**, and with Tailwind **`-e with-tailwindcss`**.
+
+In my React app, I had all my routes on one page; I had to import the components then give them a path, while not necessarily difficult, it was cumbersome. It also negatively affected the performance of my app as shown above - I would need to split it up.
+
+![AppjsMini.png](Next%20js%20vs%20React%206ebfc12162a14d558c3fcb9955f66ffe/AppjsMini.png)
+
+But instead of splitting the above file up, I'm able to get rid of it altogether. The pages are automatically created with their filenames as their URL. They are also prerendered by Next, so when fetching the page, you get the html, this helps google crawl your pages, as Google crawling bots will fail to crawl if the JavaScript takes a long time. But your still able to interact with the page like any other React app.
+
+How would a page that requires backend data or anything asynchronous get prerendered? Next.js has 3 technologies that you can use:
+
+Static site generation - SSG, server side rendering - SSR, and incremental static regeneration - ISR.
+
+- SSG - When you deploy your React app you build it. Same thing with Next.js but you get a special function **`getStaticProps`** where everything in this function runs at build time. Let's say your website relies on some backend data, instead of the user loading your React app, then retrieving the backend data, the data was already retrieved and rendered at build time so the user receives the pre-rendered html. Since the html is pre-rendered, you gain the advantage by being able to cache it in a CDN for faster load times.
+- SSR - Next.js advises against SSR. Its like SSG but instead of generating the HTML at build time, its generated every request. There are scenarios where this is advantageous but not in my case.
+- ISR - What if your backend data changes often? SSR isn't much more performant than client side rendering and with SSG you would have to rebuild your whole app all the time. With ISR you don't have to. Each page thats visited will rebuild if the backend data has changed. But before that happens, the most recent visits a page it retrieves the last served page. It then checks to see if the page has the most recent data, and if not it updates the content distribution cache. Then when the next person visits the page, it will retrieve that page, then again check to see if its the most recent. Eg the most recent data is retrieved after a refresh.
+
+> Note: to take advantage of ISR you have to deploy with Vercel, SSR you need to deploy with someone like Vercel or Netlify. And SSG, you can deploy with almost anyone.
+> 
+
+After rebuilding my app with Next.js:
+
+![Screenshot from 2021-04-24 16-31-03.png](Next%20js%20vs%20React%206ebfc12162a14d558c3fcb9955f66ffe/Screenshot_from_2021-04-24_16-31-03.png)
+
+Each has its own best use cases, my web app is a blog, so I have the blog posts set up with ISR, while other pages like account settings use SSG.
+
+There are a ton of tools and resources for making web apps, it's hard to know what to use. Next.js might seem complicated but you can start using it as long as you have a little React JS experience, but it'll make your development experience a whole lot better in the long run.

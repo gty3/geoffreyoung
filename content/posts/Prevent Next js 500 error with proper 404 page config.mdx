@@ -1,0 +1,79 @@
+# Prevent Next.js 500 error with proper 404 page configuration
+
+Last edit: October 11, 2022 12:27 PM
+
+## **Are you using incremental static regeneration? Is your Google search console indexing 500 error pages?**
+
+If you have a web app with pages that change location or get removed, you might be generating 500 error pages with Next.js. Google will keep these pages indexed unless you return a 404 page.
+
+Typically with a statically generated site, you only generate pages on build. In this case, with Next.js you can use **`fallback: false`** in getStaticPaths. Any page/address not built returns 404.
+
+```
+import API from '@aws-amplify/api'
+export default function UserPage({ user }) {
+  return <div>This is {user.username}'s Page</div>
+}
+export async function getStaticPaths() {
+  const getAllUsers = await API.get(process.env.NEXT_PUBLIC_APIGATEWAY_NAME, "/getAllUsers")
+  const paths = getAllUsers.body.Items.map(user => {
+    return { params: { id: user.Username } }
+  })
+  return { paths, fallback: false }
+}
+export async function getStaticProps({ params }) {
+  const getUserInit = { body: { username: params.id } }
+  const getUser = await API.post(process.env.NEXT_PUBLIC_APIGATEWAY_NAME, "/getUser", getUserInit)
+  return { props: { user: getUser }, revalidate: 1 }
+}
+
+```
+
+The code above returns a very basic user page. But if a user creates a page after the build, going to that new address will return a 404 page.
+
+To prevent this we need to change **`fallback:`** to either **`true`** or **`"blocking"`**. So when that new page gets visited, if **`fallback: true`**, a prerendered page (that you make) will be returned while the new page is built in the background. I'm not a fan of returning a page only for it to be quickly replaced so I use **`fallback: "blocking"`**; it acts like SSR and builds the page while you wait.
+
+```
+export async function getStaticPaths() {
+  const getAllUsers = await API.get(process.env.NEXT_PUBLIC_APIGATEWAY_NAME, "/getAllUsers")
+  const paths = getAllUsers.body.Items.map(user => {
+    return { params: { id: user.Username } }
+  })
+  return { paths, fallback: "blocking" }
+}
+
+```
+
+So now when we visit that new page we actually get the new page, albeit a little slower to load. But now if you go to a nonexistent page, it 500 errors, not 404. This causes problems with Google Search. Say a user creates a page, then deletes it - Google will keep the page indexed despite returning a 500 error.
+
+![urlIsOnGoogle.png](Prevent%20Next%20js%20500%20error%20with%20proper%20404%20page%20con%20c63cb723b9dd4bbea73c5d3f996f2a14/urlIsOnGoogle.png)
+
+Once a user deletes their page, we don't want it showing up in our Google search results. We need the page to return 404.
+
+We can do this in Next.js by returning **`notFound: true`** in **`getStaticProps()`** when the user doesn't exist.
+
+```
+export async function getStaticProps({ params }) {
+  const getUserInit = { body: { username: params.id } }
+  const getUser = await API.post(process.env.NEXT_PUBLIC_APIGATEWAY_NAME, "/getUser", getUserInit)
+  return getUser ? { props: { user: getUser }, revalidate: 1 } : { notFound: true }
+}
+
+```
+
+The behaviour of the app is as follows:
+
+1. You browse to talktree.me/deletedUser
+2. If the page exists on Vercel's CDN, it is served from there
+3. This page is not on the CDN, so its built while we wait (**`fallback: "blocking"`**)
+4. The page is built but the user doesn't exist so a 404 page is returned (**`notFound: true`**)
+
+Below is what we want to see when indexing a non existent page.
+
+![index404.png](Prevent%20Next%20js%20500%20error%20with%20proper%20404%20page%20con%20c63cb723b9dd4bbea73c5d3f996f2a14/index404.png)
+
+Now that the 404 page is being properly served, you can customize it by creating a 404.js file in your pages folder.
+
+When a page is moved or removed, you don't have to do anything with Google:
+
+> If you recently changed your site and now have some outdated URLs in the index, Google's crawlers will see this as we recrawl your URLs, and those pages will naturally drop out of our search results.
+>

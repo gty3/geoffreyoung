@@ -1,0 +1,52 @@
+# Retrieve images from S3 using AWS's serverless image handler
+
+Last edit: October 11, 2022 12:27 PM
+
+## **Using AWS's serverless image handler Cloudformation to easily resize images**
+
+I had previously shown how to upload images to an S3 bucket **[in this post](https://talktree.me/geoff-young/How-to-upload-images-to-S3-using-Quill-React-and-Amplify)**.
+
+## **Now we need to display those images using a serverless image handler**
+
+The normal practice is to serve those files through CloudFront for caching. We also want to be resizing these images to optimize load times.
+
+Conveniently Amazon has a CloudFormation template that takes care of this!
+
+**[Go here](https://aws.amazon.com/solutions/implementations/serverless-image-handler/)**
+
+and press Launch in Console.
+
+![Untitled](Retrieve%20images%20from%20S3%20using%20AWS's%20serverless%20ima%204d75d66d276f434d8d5b90d1b49b53c3/Untitled.png)
+
+Then press next at Create Stack Specify Template.
+
+Enable CORS, add your bucket name to the SourceBuckets, you can deploy a demo UI, I turn this off since I'll be testing it in my app, and leave the rest as is.
+
+Press next until the cloudformation is deployed.
+
+After the cloudformation has formed, and you have it opened, go to outputs and copy the API endpoint, we'll need that in our front end.
+
+```
+const s3res = await Storage.put(file.name, file)
+const jsonToUrl = {
+  "bucket": process.env.storage.BUCKET,
+  "key": `public/${s3res.key}`,
+    "edits": {
+      "resize": {
+        "width": 900,
+        "height": 675,
+        "fit": "cover"
+     }
+   }
+}
+const converting = Buffer.from(JSON.stringify(jsonToUrl)).toString('base64')
+const convertedUrl = process.env.img_cloudfront + "/" + converting
+```
+
+In the above code, we define some JSON and encode it to form the URL. (Some sites like **[Imgix](https://imgix.com/)** allow you to put the image dimensions directly in the URL)
+
+Notice 'const converting' - In this particular instance, I'm working with Next.js, server-rendered React, on the client-side you can use 'window.btoa(STRING)'. Let's say you want the image without resizing it, just leave out the 'edits' key. Here I resize it to 900x675. Then we add that to our base URL our cloudformation outputted. Then we can use that URL in any '<img src="">'.
+
+Check out the **[docs](https://docs.aws.amazon.com/solutions/latest/serverless-image-handler/serverless-image-handler.pdf#welcome)**, you can do some cool stuff like smart cropping and content moderation.
+
+## **Now instead of paying for an image processor, we do it ourselves for ~~free~~, much cheaper.**

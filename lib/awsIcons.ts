@@ -19,8 +19,8 @@ export const lambda = `<svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.
 <desc>Created with Sketch.</desc>
 <defs>
 		<linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="linearGradient-1">
-				<stop stop-color="#C8511B" offset="0%"></stop>
-				<stop stop-color="#FF9900" offset="100%"></stop>
+				<stop stopColor="#C8511B" offset="0%"></stop>
+				<stop stopColor="#FF9900" offset="100%"></stop>
 		</linearGradient>
 </defs>
 <g id="Icon-Architecture/16/Arch_AWS-Lambda_16" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -34,8 +34,8 @@ export const apiGateway = `<svg viewBox="0 0 24 24" version="1.1" xmlns="http://
 <title>Icon-Architecture/16/Arch_ Amazon-API-Gateway_16</title>
 <defs>
 		<linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="linearGradient-1">
-				<stop stop-color="#B0084D" offset="0%"></stop>
-				<stop stop-color="#FF4F8B" offset="100%"></stop>
+				<stop stopColor="#B0084D" offset="0%"></stop>
+				<stop stopColor="#FF4F8B" offset="100%"></stop>
 		</linearGradient>
 </defs>
 <g id="Icon-Architecture/16/Arch_-Amazon-API-Gateway_16" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -53,8 +53,8 @@ export const dynamoDb = `<svg viewBox="0 0 24 24" version="1.1" xmlns="http://ww
 <desc>Created with Sketch.</desc>
 <defs>
 		<linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="linearGradient-1">
-				<stop stop-color="#2E27AD" offset="0%"></stop>
-				<stop stop-color="#527FFF" offset="100%"></stop>
+				<stop stopColor="#2E27AD" offset="0%"></stop>
+				<stop stopColor="#527FFF" offset="100%"></stop>
 		</linearGradient>
 </defs>
 <g id="Icon-Architecture/16/Arch_Amazon-DynamoDB_16" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -70,8 +70,8 @@ export const cloudFormation = `<svg viewBox="0 0 24 24" version="1.1" xmlns="htt
 <desc>Created with Sketch.</desc>
 <defs>
 		<linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="linearGradient-1">
-				<stop stop-color="#B0084D" offset="0%"></stop>
-				<stop stop-color="#FF4F8B" offset="100%"></stop>
+				<stop stopColor="#B0084D" offset="0%"></stop>
+				<stop stopColor="#FF4F8B" offset="100%"></stop>
 		</linearGradient>
 </defs>
 <g id="Icon-Architecture/16/Arch_AWS-CloudFormation_16" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -87,8 +87,8 @@ export const cognito = `<svg width="24px" height="24px" viewBox="0 0 24 24" vers
 <desc>Created with Sketch.</desc>
 <defs>
 		<linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="linearGradient-1">
-				<stop stop-color="#BD0816" offset="0%"></stop>
-				<stop stop-color="#FF5252" offset="100%"></stop>
+				<stop stopColor="#BD0816" offset="0%"></stop>
+				<stop stopColor="#FF5252" offset="100%"></stop>
 		</linearGradient>
 </defs>
 <g id="Icon-Architecture/16/Arch_Amazon-Cognito_16" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -104,8 +104,8 @@ export const cloudFront = `<svg width="24px" height="24px" viewBox="0 0 24 24" v
 <desc>Created with Sketch.</desc>
 <defs>
 		<linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="linearGradient-1">
-				<stop stop-color="#4D27A8" offset="0%"></stop>
-				<stop stop-color="#A166FF" offset="100%"></stop>
+				<stop stopColor="#4D27A8" offset="0%"></stop>
+				<stop stopColor="#A166FF" offset="100%"></stop>
 		</linearGradient>
 </defs>
 <g id="Icon-Architecture/16/Arch_Amazon-CloudFront_16" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -121,8 +121,8 @@ export const iam = `<svg width="24px" height="24px" viewBox="0 0 24 24" version=
 <desc>Created with Sketch.</desc>
 <defs>
 		<linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="linearGradient-1">
-				<stop stop-color="#BD0816" offset="0%"></stop>
-				<stop stop-color="#FF5252" offset="100%"></stop>
+				<stop stopColor="#BD0816" offset="0%"></stop>
+				<stop stopColor="#FF5252" offset="100%"></stop>
 		</linearGradient>
 </defs>
 <g id="Icon-Architecture/16/Arch_AWS-Identity-and-Access-Management_16" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -133,4 +133,4 @@ export const iam = `<svg width="24px" height="24px" viewBox="0 0 24 24" version=
 </g>
 </svg>`
 
-// export const s3 = `<svg class="w-6 h-6" height="40" width="40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="Arch_Amazon-S3-Standard_32_svg__a"><stop stop-color="#1B660F" offset="0%"></stop><stop stop-color="#6CAE3E" offset="100%"></stop></linearGradient></defs><g fill="none" fill-rule="evenodd"><path d="M0 0h40v40H0z" fill="url(#Arch_Amazon-S3-Standard_32_svg__a)"></path><path d="M30.074 22.671l.2-1.301c1.703 1.016 1.735 1.444 1.732 1.46-.004.003-.308.24-1.932-.159zm-10.185-3.733a.995.995 0 01-.992.994.994.994 0 010-1.99c.547 0 .992.448.992.996zm7.869 12.33c0 .123-.495.31-.93.478l-.445.17c-.475.189-1.037.359-1.669.504-1.576.366-3.75.585-5.817.585-5.503 0-8.435-1.009-8.439-1.798L8.256 13.57c1.899 1.452 5.8 2.382 10.641 2.382 4.63 0 9.364-.897 11.584-2.472l-1.366 8.92c-2.871-.874-6.392-2.56-8.132-3.398l-.105-.05.002-.015c0-1.098-.89-1.99-1.983-1.99a1.988 1.988 0 00-1.983 1.99c0 1.097.89 1.99 1.983 1.99.733 0 1.367-.407 1.71-1.002 1.806.868 5.41 2.591 8.356 3.468l-1.205 7.874zm-8.86-23.273c6.676 0 11.857 1.86 11.894 3.465l-.024.148c-.27 1.579-5.352 3.35-11.87 3.35-6.388 0-10.71-1.725-10.89-3.375l-.015-.12c.023-1.678 4.397-3.468 10.904-3.468zm11.538 12.318l1.344-8.76c.001-.026.006-.05.006-.076C31.786 8.674 25.233 7 18.897 7 12.003 7 7 8.883 7 11.477l.003.061 2.468 19.73c0 2.6 7.852 2.732 9.426 2.732 2.137 0 4.394-.228 6.04-.61a12.74 12.74 0 001.81-.548l.432-.167c.844-.321 1.57-.598 1.564-1.331l1.18-7.684c.655.158 1.197.24 1.63.24.58-.001.973-.143 1.21-.428a.982.982 0 00.219-.832c-.127-.681-.923-1.405-2.546-2.327z" fill="#FFF"></path></g></svg>`
+// export const s3 = `<svg class="w-6 h-6" height="40" width="40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="Arch_Amazon-S3-Standard_32_svg__a"><stop stopColor="#1B660F" offset="0%"></stop><stop stopColor="#6CAE3E" offset="100%"></stop></linearGradient></defs><g fill="none" fill-rule="evenodd"><path d="M0 0h40v40H0z" fill="url(#Arch_Amazon-S3-Standard_32_svg__a)"></path><path d="M30.074 22.671l.2-1.301c1.703 1.016 1.735 1.444 1.732 1.46-.004.003-.308.24-1.932-.159zm-10.185-3.733a.995.995 0 01-.992.994.994.994 0 010-1.99c.547 0 .992.448.992.996zm7.869 12.33c0 .123-.495.31-.93.478l-.445.17c-.475.189-1.037.359-1.669.504-1.576.366-3.75.585-5.817.585-5.503 0-8.435-1.009-8.439-1.798L8.256 13.57c1.899 1.452 5.8 2.382 10.641 2.382 4.63 0 9.364-.897 11.584-2.472l-1.366 8.92c-2.871-.874-6.392-2.56-8.132-3.398l-.105-.05.002-.015c0-1.098-.89-1.99-1.983-1.99a1.988 1.988 0 00-1.983 1.99c0 1.097.89 1.99 1.983 1.99.733 0 1.367-.407 1.71-1.002 1.806.868 5.41 2.591 8.356 3.468l-1.205 7.874zm-8.86-23.273c6.676 0 11.857 1.86 11.894 3.465l-.024.148c-.27 1.579-5.352 3.35-11.87 3.35-6.388 0-10.71-1.725-10.89-3.375l-.015-.12c.023-1.678 4.397-3.468 10.904-3.468zm11.538 12.318l1.344-8.76c.001-.026.006-.05.006-.076C31.786 8.674 25.233 7 18.897 7 12.003 7 7 8.883 7 11.477l.003.061 2.468 19.73c0 2.6 7.852 2.732 9.426 2.732 2.137 0 4.394-.228 6.04-.61a12.74 12.74 0 001.81-.548l.432-.167c.844-.321 1.57-.598 1.564-1.331l1.18-7.684c.655.158 1.197.24 1.63.24.58-.001.973-.143 1.21-.428a.982.982 0 00.219-.832c-.127-.681-.923-1.405-2.546-2.327z" fill="#FFF"></path></g></svg>`

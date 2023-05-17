@@ -1,0 +1,88 @@
+# Using regex with JavaScript
+
+Last edit: October 11, 2022 12:27 PM
+
+![Untitled](Using%20regex%20with%20JavaScript%20307fa4d387684165a069fa1e4aad98d2/Untitled.png)
+
+I'm looking to extract the image source from a string of html.
+
+```jsx
+const htmlString = '<h1>Regex and Javascript</h1><h2>It feels good to progress</h2><img src="https://talktree.me/favicon512.png" alt="highliners"/>'
+```
+
+In this case - I'm looking for `https://talktree.me/favicon512.png`
+
+## Without regex
+
+I can use JS functions like `slice()` and `indexOf()` to get the string.
+
+```jsx
+const firstImageBeginning = htmlString.indexOf('<img')
+if (firstImageBeginning > -1) {
+  const firstImageEnd = htmlString.indexOf('/>', firstImageBeginning)
+  const firstImage = htmlString.slice(
+		firstImageBeginning + 10, firstImageEnd - 2
+	)
+}
+```
+
+This wouldn't even work in most cases, I'd need more code.
+
+- If/then statement has to be used since indexOf() returns -1 when the string is not found.
+- '<img src="' is 10 characters, hence the '+ 10; this wouldn't work with an 'alt tag'.
+
+## With regex
+
+It's much easier to use JS's `match()` function instead.
+
+```jsx
+const wholeImgTag = htmlString.match(/<img.+?src=".+?"/)
+```
+
+So it's looking for '<img' followed by anything until 'src="' followed by anything until '"'
+
+Here is the regex deconstructed:
+
+- '/' starts and ends the expression
+- '<img' is interpreted literally, it looks for those characters
+- '.' is a special character, it represents any character
+- '+' is also a special character to match the previous character
+- '?' is also a special character for 'if followed by'
+- 'src=" ' and '"' are interpreted literally
+
+### Javascript doesn't just return the string with `match()`
+
+```jsx
+[
+  0: "<img alt="highliners" src="https://talktree.me/favicon512.png"",
+  groups: undefined,
+  index: 63,
+  input: "<h1>Regex and Javascript</h1><h2>It feels good to …ners" src="https://talktree.me/favicon512.png" />",
+]
+```
+
+The response we normally want is [0]. But in this case, I want the URL and not the whole <img> tag so I'm going to use regex's grouping property `( )`.
+
+```jsx
+const wholeImgTag = htmlString.match(/<img.+?src="(.+?)"/)
+```
+
+I added parentheses around the second `.+?`. Now `match()` returns:
+
+```jsx
+[
+  0: "<img alt="highliners" src="https://talktree.me/favicon512.png"",
+  1: "https://talktree.me/favicon512.png",
+  groups: undefined,
+  index: 63,
+  input: "<h1>Regex and Javascript</h1><h2>It feels good to …ners" src="https://talktree.me/favicon512.png" />",
+]
+
+```
+
+I can access the exact string I want under the `[1]` property: `https://talktree.me/favicon512.png`
+
+> If you use the global tag, `/g` in the regex, `match()` will return an array with the matched strings and not contain groups, index, or input.
+> 
+
+I don't use regex often enough to remember all the rules, but when there is a situation it can be used, I spend the time. The code is more predictable, more concise, and saves me time in the long run.
