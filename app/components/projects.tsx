@@ -1,6 +1,7 @@
 "use client"
 import Tilt from "react-parallax-tilt"
 import { Github } from "./icons"
+import Image from "next/image"
 
 export default function Projects() {
   return (
@@ -29,7 +30,7 @@ export default function Projects() {
           >
             <a href="https://trailguesser.com" target="_blank">
             <div className="z-10 flex flex-col">
-              <img width={200} src="/trailguesser.png"></img>
+              <Image alt="trailguesser" width={200} height={200} src="/projectImages/trailguesser.png"></Image>
               <div className="text-2xl font-extrabold">Trail Guesser</div>
               <div>Mountain bike trail guessing game</div>
               <div>
@@ -62,7 +63,7 @@ export default function Projects() {
           <div className="p-6 pb-4 border border-gray-300 rounded-lg cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter">
             <a href="https://timebar.me" target="_blank">
             <div className="z-10 flex flex-col">
-              <img width={200} src="/buildInpublicpagescreenshot.png"></img>
+              <Image alt="timebar" width={200} height={200} src="/projectImages/timebar.png"></Image>
               <div className="text-2xl font-extrabold">Time Bar</div>
               <div>Habit tracking app</div>
               <div>Built with Nextjs, SST with AWS CDK</div>
@@ -92,7 +93,7 @@ export default function Projects() {
           {" "}
           <div className="p-6 pb-4 border border-gray-300 rounded-lg break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter">
             <div className="z-10 flex flex-col">
-              <img width={200} src="/gtyusa-min.png"></img>
+              <Image alt="geoff personal page" width={200} height={200} src="/projectImages/gtyusa.png"></Image>
               <div className="text-2xl font-extrabold">GTYUSA</div>
               <div>Personal page</div>
               <div>Built with Vite, SST, react-globe.gl</div>
@@ -121,7 +122,7 @@ export default function Projects() {
           {" "}
           <div className="p-6 pb-4 border border-gray-300 rounded-lg break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter">
             <div className="z-10 flex flex-col">
-              <img width={100} src="/treeFavicon.svg"></img>
+              <Image alt="tree" width={100} height={100} src="/projectImages/treeFavicon.svg"></Image>
               <div className="text-2xl font-extrabold">Note Tree</div>
               <div>On demand consulting web app</div>
               <div>

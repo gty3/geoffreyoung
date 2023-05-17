@@ -1,3 +1,9 @@
+---
+title: Using regex with JavaScript
+date: 2021-12-24
+---
+
+
 # Using regex with JavaScript
 
 Last edit: October 11, 2022 12:27 PM
@@ -17,7 +23,7 @@ In this case - I'm looking for `https://talktree.me/favicon512.png`
 I can use JS functions like `slice()` and `indexOf()` to get the string.
 
 ```jsx
-const firstImageBeginning = htmlString.indexOf('<img')
+const firstImageBeginning = htmlString.indexOf('&ltimg')
 if (firstImageBeginning > -1) {
   const firstImageEnd = htmlString.indexOf('/>', firstImageBeginning)
   const firstImage = htmlString.slice(
@@ -29,22 +35,22 @@ if (firstImageBeginning > -1) {
 This wouldn't even work in most cases, I'd need more code.
 
 - If/then statement has to be used since indexOf() returns -1 when the string is not found.
-- '<img src="' is 10 characters, hence the '+ 10; this wouldn't work with an 'alt tag'.
+- '&ltimg src="' is 10 characters, hence the '+ 10; this wouldn't work with an 'alt tag'.
 
 ## With regex
 
 It's much easier to use JS's `match()` function instead.
 
 ```jsx
-const wholeImgTag = htmlString.match(/<img.+?src=".+?"/)
+const wholeImgTag = htmlString.match(/&ltimg.+?src=".+?"/)
 ```
 
-So it's looking for '<img' followed by anything until 'src="' followed by anything until '"'
+So it's looking for '&ltimg' followed by anything until 'src="' followed by anything until '"'
 
 Here is the regex deconstructed:
 
 - '/' starts and ends the expression
-- '<img' is interpreted literally, it looks for those characters
+- '&ltimg' is interpreted literally, it looks for those characters
 - '.' is a special character, it represents any character
 - '+' is also a special character to match the previous character
 - '?' is also a special character for 'if followed by'
@@ -54,24 +60,24 @@ Here is the regex deconstructed:
 
 ```jsx
 [
-  0: "<img alt="highliners" src="https://talktree.me/favicon512.png"",
+  0: "&ltimg alt="highliners" src="https://talktree.me/favicon512.png"",
   groups: undefined,
   index: 63,
   input: "<h1>Regex and Javascript</h1><h2>It feels good to …ners" src="https://talktree.me/favicon512.png" />",
 ]
 ```
 
-The response we normally want is [0]. But in this case, I want the URL and not the whole <img> tag so I'm going to use regex's grouping property `( )`.
+The response we normally want is [0]. But in this case, I want the URL and not the whole &ltimg> tag so I'm going to use regex's grouping property `( )`.
 
 ```jsx
-const wholeImgTag = htmlString.match(/<img.+?src="(.+?)"/)
+const wholeImgTag = htmlString.match(/&ltimg.+?src="(.+?)"/)
 ```
 
 I added parentheses around the second `.+?`. Now `match()` returns:
 
 ```jsx
 [
-  0: "<img alt="highliners" src="https://talktree.me/favicon512.png"",
+  0: "&ltimg alt="highliners" src="https://talktree.me/favicon512.png"",
   1: "https://talktree.me/favicon512.png",
   groups: undefined,
   index: 63,

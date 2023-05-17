@@ -11,7 +11,7 @@ export default function ImGeoff() {
           className="flex items-center justify-center py-2 mx-auto space-x-2 overflow-hidden transition-all bg-blue-100 rounded-full max-w-fit px-7 hover:bg-blue-200"
         > */}
           <Instagram className="h-5 w-5 text-[#1d9bf0]" />
-          <p className="text-sm font-semibold text-[#1d9bf0]">Hi, I'm Geoff</p>
+          <p className="text-sm font-semibold text-[#1d9bf0]">{"Hi, Im Geoff"}</p>
         {/* </a> */}
 
         <h1 className="mt-5 text-5xl font-extrabold leading-tight text-black font-display sm:text-6xl sm:leading-tight">

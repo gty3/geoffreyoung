@@ -1,3 +1,9 @@
+---
+title: Retrieve images from S3 using AWS's serverless image handler
+date: 2021-12-24
+---
+
+
 # Retrieve images from S3 using AWS's serverless image handler
 
 Last edit: October 11, 2022 12:27 PM
@@ -45,7 +51,7 @@ const convertedUrl = process.env.img_cloudfront + "/" + converting
 
 In the above code, we define some JSON and encode it to form the URL. (Some sites like **[Imgix](https://imgix.com/)** allow you to put the image dimensions directly in the URL)
 
-Notice 'const converting' - In this particular instance, I'm working with Next.js, server-rendered React, on the client-side you can use 'window.btoa(STRING)'. Let's say you want the image without resizing it, just leave out the 'edits' key. Here I resize it to 900x675. Then we add that to our base URL our cloudformation outputted. Then we can use that URL in any '<img src="">'.
+Notice 'const converting' - In this particular instance, I'm working with Next.js, server-rendered React, on the client-side you can use 'window.btoa(STRING)'. Let's say you want the image without resizing it, just leave out the 'edits' key. Here I resize it to 900x675. Then we add that to our base URL our cloudformation outputted. Then we can use that URL in any '&ltimg src="">'.
 
 Check out the **[docs](https://docs.aws.amazon.com/solutions/latest/serverless-image-handler/serverless-image-handler.pdf#welcome)**, you can do some cool stuff like smart cropping and content moderation.
 
