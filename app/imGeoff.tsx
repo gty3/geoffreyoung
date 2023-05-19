@@ -8,7 +8,7 @@ export default function ImGeoff() {
     return (
       <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
         <Link
-          href="http://instagram.com/_u/geoffreyoung/"
+          href="instagram://user?username=geoffreyoung"
           className="flex flex-row justify-center w-40 p-1 bg-gray-200 border rounded-lg shadow-sm bg-opacity-30"
         >
           <Image src="/insta.png" alt="insta" height={30} width={30} />

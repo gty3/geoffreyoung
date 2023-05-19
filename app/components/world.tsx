@@ -65,7 +65,7 @@ const World = () => {
     //   <Script src="//unpkg.com/react-globe.gl"></Script>
       <Globe
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
-        height={700}
+        height={600}
         onGlobeClick={(e) => console.log("e", e)}
         animateIn={false}
         arcsData={arcsData}
