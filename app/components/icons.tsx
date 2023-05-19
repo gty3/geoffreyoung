@@ -32,7 +32,7 @@ export function Instagram({ className }: { className?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
+      className={'w-10 h-10'}
       id="instagram"
     >
       <defs>

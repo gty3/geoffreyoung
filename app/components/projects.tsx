@@ -42,7 +42,7 @@ export default function Projects() {
     {
       name: "Geoffrey Young",
       description: "Personal website",
-      builtWith: "Built with Nextjs, Three.js, react-globe.gl, ContentLayer",
+      builtWith: "Built with Nextjs, Three.js, react-globe.gl, ContentLayer, Framer Motion",
       github: "https://github.com/gty3/geoffreyoung",
       image: "/projectImages/gtyusa.png",
     },
@@ -76,7 +76,13 @@ export default function Projects() {
         // className={className}
       >
         {" "}
-        <div className="p-6 pb-4 border border-gray-300 rounded-lg cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter">
+        <div
+          className={
+            url
+              ? "p-6 pb-4 border border-gray-300 rounded-lg cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
+              : "p-6 pb-4 border border-gray-300 rounded-lg break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
+          }
+        >
           <a href={url} target="_blank">
             <div className="z-10 flex flex-col">
               <Image alt={image} width={100} height={100} src={image}></Image>

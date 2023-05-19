@@ -8,14 +8,19 @@ import {
   forwardRef,
   createRef,
 } from "react"
-import Globe from "react-globe.gl"
+import dynamic from "next/dynamic"
+// import Globe from "react-globe.gl"
 import arcAndSvg from "../../lib/arcAndSvg"
 import { ArcsObj, SVGobj } from "./types"
 import Script from "next/script"
 
+const Globe = dynamic(() => import("react-globe.gl"), { ssr: false })
+
 // declare const Globe: any
 
 const World = () => {
+
+
   const ARC_REL_LEN = 0.4
 
   const globeRef = useRef()
@@ -45,6 +50,12 @@ const World = () => {
     ;(globeRef.current as any).controls().enableZoom = false
     arcAndSvg(setSvgData, setArcsData, startTime)
   }, [])
+
+  // const isMobile = () => {
+  //   if (window.innerWidth < 600) {
+  //     return true }
+  //   else { return false }
+  // }
 
   return (
     // <>

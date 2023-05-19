@@ -1,5 +1,5 @@
 import Background from './components/background'
-import ImGeoff from './components/imGeoff'
+import ImGeoff from './imGeoff'
 import Projects from './components/projects'
 import World from './components/world'
 import Image from 'next/image'
@@ -9,14 +9,18 @@ export default function Home() {
   return (
     <>
       <Background />
+      <div className="">
       <ImGeoff />
       <div className="z-0 -my-24">
-        {/* <World /> */}
+        <World />
       </div>
       <div className="">
       <Projects />
       </div>
+      <div className="z-40">
       <Articles />
+      </div>
+      </div>
     </>
   )
 }
