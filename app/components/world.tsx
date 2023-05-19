@@ -40,6 +40,7 @@ const World = () => {
   const startTime = 1000
 
   useEffect(() => {
+    if (!globeRef.current) return
     ;(globeRef.current as any).pointOfView(
       {
         lat: 39.609913,
@@ -51,7 +52,7 @@ const World = () => {
     console.log((globeRef.current as any).controls())
     ;(globeRef.current as any).controls().enableZoom = false
     arcAndSvg(setSvgData, setArcsData, startTime)
-  }, [])
+  }, [globeRef])
 
   // const isMobile = () => {
   //   if (window.innerWidth < 600) {
