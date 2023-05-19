@@ -11,9 +11,9 @@ export default function Home() {
       <Background />
       <div className="">
       <ImGeoff />
-      <div className="z-0 -my-24">
+      {/* <div className="z-0 -my-24">
         <World />
-      </div>
+      </div> */}
       <div className="">
       <Projects />
       </div>

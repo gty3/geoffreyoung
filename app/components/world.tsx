@@ -8,21 +8,15 @@ import {
   forwardRef,
   createRef,
 } from "react"
-import dynamic from "next/dynamic"
 // import Globe from "react-globe.gl"
 import arcAndSvg from "../../lib/arcAndSvg"
 import { ArcsObj, SVGobj } from "./types"
 import Script from "next/script"
-
-
-
+import dynamic from "next/dynamic"
+const Globe = dynamic(() => import("react-globe.gl"), { ssr: false })
 // declare const Globe: any
 
 const World = () => {
-
-  const Globe = dynamic(() => import("react-globe.gl"), { ssr: false })
-
-
   const ARC_REL_LEN = 0.4
 
   const globeRef = useRef()
@@ -40,7 +34,6 @@ const World = () => {
   const startTime = 1000
 
   useEffect(() => {
-    if (!globeRef.current) return
     ;(globeRef.current as any).pointOfView(
       {
         lat: 39.609913,
@@ -52,20 +45,14 @@ const World = () => {
     console.log((globeRef.current as any).controls())
     ;(globeRef.current as any).controls().enableZoom = false
     arcAndSvg(setSvgData, setArcsData, startTime)
-  }, [globeRef])
-
-  // const isMobile = () => {
-  //   if (window.innerWidth < 600) {
-  //     return true }
-  //   else { return false }
-  // }
+  }, [])
 
   return (
     // <>
     //   <Script src="//unpkg.com/react-globe.gl"></Script>
       <Globe
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
-        height={600}
+        height={700}
         onGlobeClick={(e) => console.log("e", e)}
         animateIn={false}
         arcsData={arcsData}
