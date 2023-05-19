@@ -14,11 +14,13 @@ import arcAndSvg from "../../lib/arcAndSvg"
 import { ArcsObj, SVGobj } from "./types"
 import Script from "next/script"
 
-const Globe = dynamic(() => import("react-globe.gl"), { ssr: false })
+
 
 // declare const Globe: any
 
 const World = () => {
+
+  const Globe = dynamic(() => import("react-globe.gl"), { ssr: false })
 
 
   const ARC_REL_LEN = 0.4
