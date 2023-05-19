@@ -1,0 +1,122 @@
+---
+title: Building a 1:1 chat app
+date: 2022-7-23
+---
+
+# Building a 1:1 chat app
+
+Created time: July 23, 2022 3:09 AM
+Last edit: August 6, 2022 12:01 PM
+
+This guide is for building a modern full stack web application. We will be using SST (serverless stack) to deploy both frontend and backend from one folder.
+
+![Untitled](Building%20a%201%201%20chat%20app%20932077bdf4ea42fd9202c8db997bdaf1/Untitled.png)
+
+Requirements:
+
+- minimal understanding of TypeScript, React, and AWS
+- an AWS account
+
+[Check out this guide if you don’t have an AWS account](https://sst.dev/chapters/create-an-aws-account.html)
+
+I really like the idea of 1:1 paid communication, something like [Premium.chat](http://premium.chat). Let’s start building.
+
+Check the live website: [DropinTalk](https://dropintalk.com)
+
+Check the code: [github.com/gty3/dropintalk](https://github.com/gty3/dropintalk)
+
+# Part 1 - Getting started with Next.js and SST
+
+Create a new project:
+
+```json
+npx create-sst@latest --minimal
+```
+
+I’m choosing typescript and calling my project Dropintalk.
+
+![sstTemplate.png](Building%20a%201%201%20chat%20app%20932077bdf4ea42fd9202c8db997bdaf1/sstTemplate.png)
+
+![Untitled](Building%20a%201%201%20chat%20app%20932077bdf4ea42fd9202c8db997bdaf1/Untitled%201.png)
+
+The CLI says to start the app but it doesn’t matter, we just need to open the project.
+
+```tsx
+cd dropInTalk
+code .
+```
+
+So we have our serverless stack created, we need to create our frontend Next.js application inside of it.
+
+![Untitled](Building%20a%201%201%20chat%20app%20932077bdf4ea42fd9202c8db997bdaf1/Untitled%202.png)
+
+```json
+npx create-next-app@latest --ts
+```
+
+We’ll call it ‘frontend’, this will be referenced by our SST stack.
+
+<aside>
+💡 I’m using SST 1.6.1 and Next.js 12.2.3, not all features of Next.js 12 are compatible.
+
+</aside>
+
+Now we need to install `@sls-next/lambda-at-edge` to make our Next.js deployments work in SST. 
+
+```json
+npm install @sls-next/lambda-at-edge
+```
+
+Your workspace might look slightly different, I’ve remove the vitest package as well since we don’t need it. Here’s how my package.json looks:
+
+![Untitled](Building%20a%201%201%20chat%20app%20932077bdf4ea42fd9202c8db997bdaf1/Untitled%203.png)
+
+Let’s connect our frontend to our serverless stack.
+
+MyStack.ts should look like this:
+
+```tsx
+import { StackContext, NextjsSite, Api } from "@serverless-stack/resources";
+
+export function MyStack({ stack }: StackContext) {
+
+  const api = new Api(stack, "Api", {
+    routes: {
+      "GET /": "functions/lambda.handler",
+    },
+  })
+
+  new NextjsSite(stack, "NextSite", {
+    path: "frontend"
+  })
+
+  stack.addOutputs({
+    ApiEndpoint: api.url
+  })
+
+}
+```
+
+We’re adding `new NextjsSite` and referencing the folder we created previously - frontend. 
+
+ We import the`NextjsSite` construct from serverless-stack resources. [Docs](https://docs.sst.dev/constructs/NextjsSite) 
+
+This allows us to deploy our NextjsSite using AWS resources.
+
+Now let’s run, npm i, then npm start
+
+![Screenshot from 2022-07-22 11-53-51.png](Building%20a%201%201%20chat%20app%20932077bdf4ea42fd9202c8db997bdaf1/Screenshot_from_2022-07-22_11-53-51.png)
+
+![Untitled](Building%20a%201%201%20chat%20app%20932077bdf4ea42fd9202c8db997bdaf1/Untitled%204.png)
+
+The serverless stack is up and running locally, let’s get the frontend running, open another CLI, and cd to the frontend folder.
+
+```json
+cd frontend/; npm i; npm run dev
+```
+
+Let’s open up our browser and head to localhost:3000. Our Next.js site is now hosted locally.
+
+![Untitled](Building%20a%201%201%20chat%20app%20932077bdf4ea42fd9202c8db997bdaf1/Untitled%205.png)
+
+Now it’s time to make a rudimentary landing page.

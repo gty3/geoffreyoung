@@ -1,0 +1,134 @@
+---
+title: Deploying a Nextjs app to AWS
+date: 2022-7-27
+---
+
+# 4 - Deploying a Nextjs app to AWS
+
+Created time: July 27, 2022 12:54 PM
+Last edit: August 5, 2022 9:42 AM
+
+Now let’s let everyone know about our app - we need to go to production.
+
+Let’s save everything we have with git. We want just 1 repository for the whole app. We need to remove the .git folder in our frontend that was created by create-next-app.
+
+![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled.png)
+
+```tsx
+rm -rf .git
+```
+
+SST does not initialize a new git repository so we’ll create one
+
+![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled%201.png)
+
+```tsx
+git init
+```
+
+Let’s save to a remote repository. I won’t go into the minutiae. If you aren’t familiar, check out the [GitHub docs](https://docs.github.com/en/get-started/importing-your-projects-to-github/importing-source-code-to-github/adding-locally-hosted-code-to-github).
+
+Let’s see if everything builds
+
+![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled%201.png)
+
+```tsx
+npm run build
+```
+
+![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled%202.png)
+
+<aside>
+💡 Be aware, SST environmental variables are not available to our app at build time. When we configured Amplify, I wrapped the `amplify.configure()` in `try/catch`, as it will fail configuration at build time.
+
+</aside>
+
+We can see our next.js app got built, and the whole SST app was built. Let’s deploy to dev. 
+
+<aside>
+💡 So far we’ve been running SST functions locally, in parallel with our Next.js app, this means our resources like api gateway and database are still deployed, but our backend functions and frontend are run locally. Deploying to dev puts all our resources in the cloud. See [docs](https://docs.sst.dev/live-lambda-development)
+
+</aside>
+
+Before we deploy let’s add to MyStack.ts
+
+![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled%203.png)
+
+```tsx
+stack.addOutputs({
+    siteUrl: site.url
+  })
+```
+
+This will print out our Next.js URL in the console.
+
+![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled%204.png)
+
+```tsx
+npm run deploy
+```
+
+![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled%205.png)
+
+Success
+
+Now if we visit that siteUrl - it should look like our site did on localhost.
+
+# Going prod
+
+I found myself an unregistered .com domain and registered it with AWS Route 53.
+
+If you want a custom domain, purchase one on Route 53, [here’s a guide](https://sst.dev/chapters/purchase-a-domain-with-route-53.html)
+
+[Or if you already have a domain not on Route 53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-transfer-to-route-53.html)
+
+Or if you don’t want a domain, skip this step.
+
+Create a new file .env
+
+![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled%206.png)
+
+```tsx
+DOMAIN_NAME=dropintalk.com
+DOMAIN_ALIAS=www.dropintalk.com
+```
+
+<aside>
+💡 Making a .env file isn’t always necessary, in this case it helps repeatability when cloning the repository.
+
+</aside>
+
+![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled%203.png)
+
+Now in MyStack.ts we add the `customDomain` property to `site`
+
+```tsx
+const site = new NextjsSite(stack, "NextSite", {
+    path: "frontend",
+    environment: {
+      NEXT_PUBLIC_API_URL: api.url,
+      NEXT_PUBLIC_APIGATEWAY_NAME: api.httpApiId,
+      NEXT_PUBLIC_COGNITO_USER_POOL_ID: auth.userPoolId,
+      NEXT_PUBLIC_COGNITO_APP_CLIENT_ID: auth.userPoolClientId,
+      NEXT_PUBLIC_IDENTITY_POOL_ID: auth.cognitoIdentityPoolId ?? "",
+      NEXT_PUBLIC_REGION: stack.region,
+    },
+    customDomain: stack.stage === "prod" ? {
+      domainName: process.env.DOMAIN_NAME ?? "",
+      domainAlias: process.env.DOMAIN_ALIAS
+    } : undefined
+  })
+```
+
+In this case I only want to assign a domain name if in production. If I deploy to dev, it will use the AWS cloudfront address.
+
+Now to deploy to production
+
+```tsx
+npm run deploy -- --stage prod
+```
+
+<aside>
+💡 Notice I’m using npm and not npx, npx would ignore this stage request.
+
+</aside>

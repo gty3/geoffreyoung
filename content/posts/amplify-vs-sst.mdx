@@ -1,0 +1,82 @@
+---
+title: Amplify vs SST
+date: 2022-8-12
+---
+
+# Amplify vs SST
+
+Created time: August 12, 2022 1:11 AM
+Last edit: October 11, 2022 12:27 PM
+
+# What is Amplify?
+
+There are a couple different Amplify tools:
+
+### Amplify Libraries
+
+These are libraries to help interact with AWS resources like Cognito. These libraries are commonly used and not restricted to Amplify apps.
+
+### Amplify Hosting
+
+A CI/CD pipeline (process to streamline builds usually with git). This is a service and is comparable to [Seed](https://seed.run/).
+
+### Amplify CLI / Amplify Studio
+
+The CLI configures and creates AWS resources. After you create a project with the CLI, you can check out the resources in the console with Amplify Studio.
+
+# What is SST?
+
+SST, like Amplify CLI, is used to create and deploy AWS resources except with code. This is IaC or infrastructure as code.
+
+# When to use what?
+
+The Amplify CLI helps abstract complexity which can make for fast development. A developer making a smaller app with a good idea of its structure ahead of time can benefit from Amplify.
+
+But in most scenarios it makes more sense to use SST:
+
+- It’s easier to make changes; it’s easy to change code.
+- The development lifecycle is simpler. Everything can be version controlled with git.
+- You can use an IDE to see resource properties and even implement TypeScript to ensure proper configurations.
+
+# Example
+
+Let’s create some AWS resources.
+
+Here we’re creating an API with a Lambda function that accesses DynamoDB.
+
+## Amplify:
+
+![Screenshot from 2022-08-11 14-32-56.png](Amplify%20vs%20SST%2038875d865f584dd399565c7947cf03e1/Screenshot_from_2022-08-11_14-32-56.png)
+
+![Screenshot from 2022-08-11 14-35-00.png](Amplify%20vs%20SST%2038875d865f584dd399565c7947cf03e1/Screenshot_from_2022-08-11_14-35-00.png)
+
+![Untitled](Amplify%20vs%20SST%2038875d865f584dd399565c7947cf03e1/Untitled.png)
+
+![Untitled](Amplify%20vs%20SST%2038875d865f584dd399565c7947cf03e1/Untitled%201.png)
+
+![Untitled](Amplify%20vs%20SST%2038875d865f584dd399565c7947cf03e1/Untitled%202.png)
+
+![Screenshot from 2022-08-11 14-37-50.png](Amplify%20vs%20SST%2038875d865f584dd399565c7947cf03e1/Screenshot_from_2022-08-11_14-37-50.png)
+
+![Screenshot from 2022-08-11 14-26-02.png](Amplify%20vs%20SST%2038875d865f584dd399565c7947cf03e1/Screenshot_from_2022-08-11_14-26-02.png)
+
+![Screenshot from 2022-08-11 14-38-38.png](Amplify%20vs%20SST%2038875d865f584dd399565c7947cf03e1/Screenshot_from_2022-08-11_14-38-38.png)
+
+## SST:
+
+```tsx
+const demoTable = new Table(stack, 'dynamo2e1dc4eb', {
+    fields: {
+      id: "string",
+    },
+    primaryIndex: { partitionKey: "id" }
+  })
+
+  const demoApi = new Api(stack, "Api", {
+    routes: {
+      "GET /items": "functions/itemsLambda.main"
+    }
+  })
+
+demoApi.attachPermissions([demoTable])
+```

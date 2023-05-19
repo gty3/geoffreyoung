@@ -1,0 +1,430 @@
+---
+title: Saving email addresses, creating an API for a Nextjs app in SST
+date: 2022-7-27
+---
+
+
+# 3 - Saving email addresses, creating an API for a Nextjs app in SST
+
+Created time: July 27, 2022 12:40 PM
+Last edit: August 5, 2022 8:55 AM
+
+We’re going to capture email addresses from our landing page signup form and save them to a database.
+
+![Untitled](3%20-%20Saving%20email%20addresses,%20creating%20an%20API%20for%20a%20%20a719802967424c0abc461867a02b9bdd/Untitled.png)
+
+This will require an API, a database, and authentication.
+
+Why authentication if nobody is logging in yet? We want to protect our API by allowing only users on our site to access it. This requires having unauthenticated users 🙃.
+
+# Building the resources in SST (backend)
+
+Let’s make some changes to /stacks/MyStack.ts.
+
+We already have a rudimentary API stack made for us - hence `new Api`.
+
+- I’m going to give the generic lambda they provide a name - I change the route from ‘GET /’ to ‘POST /mailer’ and change the function name to mailer.handler, as well as the file name to mailer.ts.
+    
+    ```jsx
+      const api = new Api(stack, "Api", {
+        routes: {
+          "POST /mailer": {
+            function: "functions/mailer.handler"
+        }
+      })
+    ```
+    
+
+- We’re also adding the database
+    
+    ```jsx
+    const emailsTable = new Table(stack, 'EmailsTable', {
+        fields: {
+          email: "string"
+        },
+        primaryIndex: { partitionKey: "email" }
+      })
+    ```
+    
+
+- We need the database name in our function - so we add it to our function, as well as permission to access that database.
+    
+    ```jsx
+    const api = new Api(stack, "Api", {
+        routes: {
+          "POST /mailer": {
+            function: {
+    					handler: "functions/mailer.handler",
+    	        environment: {
+    	          emailsTable: emailsTable.tableName
+    					},
+    					permissions: [emailsTable]
+            }
+          },
+        }
+      })
+    ```
+    
+
+- Now authentication.
+    
+    ```tsx
+    const auth = new Auth(stack, "Auth", {
+        login: ["email"],
+      })
+    ```
+    
+    <aside>
+    💡 We use 2 systems for authentication, User Pools and Identity Pools, ([see aws](https://aws.amazon.com/premiumsupport/knowledge-center/cognito-user-pools-identity-pools/)); we only need an Identity Pool at this time, but because the 2 are closely linked, we will create a User Pool as well, this is all done with the `Auth` construct. And when the time comes to have users, they will login with their email address.
+    
+    </aside>
+    
+
+- We need to allow our unauthenticated users access to the api. Set the API authorizer to “iam” - this uses the Identity Pool.
+(We will restrict access later when more API routes are created)
+    
+    ```tsx
+    auth.attachPermissionsForUnauthUsers(stack, [api])
+    ```
+    
+    ```tsx
+    const api = new Api(stack, "Api", {
+        routes: {
+          "POST /mailer": {
+            function: {
+             handler: "functions/mailer.handler",
+             environment: {
+              EMAILS_TABLE: emailsTable.tableName
+             }
+            }
+            authorizer: "iam"
+          },
+        }
+      })
+    ```
+    
+
+- So in order for our frontend to talk with all these resources, we need to pass them over via env variables. We’re going to need a few to configure Amplify, the AWS npm package, on the frontend.
+    
+    ```tsx
+    const site = new NextjsSite(stack, "NextSite", {
+        path: "frontend",
+        environment: {
+          NEXT_PUBLIC_API_URL: api.url,
+          NEXT_PUBLIC_APIGATEWAY_NAME: api.httpApiId,
+    			NEXT_PUBLIC_REGION: stack.region,
+    			NEXT_PUBLIC_COGNITO_USER_POOL_ID: auth.userPoolId,
+          NEXT_PUBLIC_COGNITO_APP_CLIENT_ID: auth.userPoolClientId,
+        }
+      })
+    ```
+    
+    <aside>
+    💡 NEXT_PUBLIC_ is required for the env variable to be accessed in our app, without it, the variable is only accessible on the server-side if/when we decide to add that ([this is a feature of Nextjs](https://nextjs.org/docs/basic-features/environment-variables)).
+    
+    </aside>
+    
+
+![Untitled](3%20-%20Saving%20email%20addresses,%20creating%20an%20API%20for%20a%20%20a719802967424c0abc461867a02b9bdd/Untitled%201.png)
+
+```tsx
+import { StackContext, NextjsSite, Api, Table, Auth } from "@serverless-stack/resources";
+
+export function MyStack({ stack }: StackContext) {
+
+  const auth = new Auth(stack, "Auth", {
+    login: ["email"],
+  })
+
+  const emailsTable = new Table(stack, 'EmailsTable', {
+    fields: {
+      email: "string"
+    },
+    primaryIndex: { partitionKey: "email" }
+  })
+
+  const api = new Api(stack, "Api", {
+    routes: {
+      "POST /mailer": {
+        function: "functions/mailer.handler",
+        environment: {
+          emailsTable: emailsTable.tableName,
+        },
+        authorizer: "iam"
+      },
+    }
+  })
+
+  auth.attachPermissionsForUnauthUsers(stack, [api])
+
+  api.attachPermissions([emailsTable])
+
+  const site = new NextjsSite(stack, "NextSite", {
+    path: "frontend",
+    environment: {
+      NEXT_PUBLIC_API_URL: api.url,
+      NEXT_PUBLIC_APIGATEWAY_NAME: api.httpApiId,
+      NEXT_PUBLIC_COGNITO_USER_POOL_ID: auth.userPoolId,
+      NEXT_PUBLIC_COGNITO_APP_CLIENT_ID: auth.userPoolClientId,
+      NEXT_PUBLIC_IDENTITY_POOL_ID: auth.cognitoIdentityPoolId ?? "",
+      NEXT_PUBLIC_REGION: stack.region
+    }
+  })
+
+  stack.addOutputs({
+    table: emailsTable.tableName,
+    frontendUrl: site.url
+  })
+
+}
+```
+
+<aside>
+💡 stack.addOutputs() simply logs these variables. You’ll want the site.url if you deploy to dev (as opposed to local).
+
+</aside>
+
+## Creating the function that saves the email address (backend)
+
+Let’s visit our mailer.ts function. It’s going to receive an email address, then store it in the email database.
+
+- I plan on sending an email address to the function, if no email address is sent, nothing gets updated; for the sake of debugging, lets respond to the frontend with pertinent info.
+    
+    ```tsx
+    if (!event.body) {
+        return {
+          statusCode: 500,
+          body: 'No event body'
+        }
+      }
+    ```
+    
+
+- The same goes with our database, we will return an error if we don’t have the database name. We provided its name as an environmental variable in MyStack.ts.
+    
+    ```tsx
+    if (!process.env.EMAILS_TABLE) {
+        return {
+          statusCode: 500,
+          body: 'No table env'
+        }
+      }
+    ```
+    
+
+- We haven’t made a call to this API from the frontend yet, but I plan on sending the variable `emailAddress`
+    
+    ```tsx
+    const { emailAddress }: { emailAddress: string } = JSON.parse(event.body)
+    ```
+    
+
+- Then we’ll update the database
+    
+    ```tsx
+    	const newEmailParams = {
+        Item: { email: emailAddress },
+        TableName: process.env.EMAILS_TABLE
+      }
+      await dynamoDb.put(newEmailParams).promise()
+    ```
+    
+
+![Untitled](3%20-%20Saving%20email%20addresses,%20creating%20an%20API%20for%20a%20%20a719802967424c0abc461867a02b9bdd/Untitled%202.png)
+
+```tsx
+import { DynamoDB } from 'aws-sdk'
+import { APIGatewayProxyHandlerV2 } from "aws-lambda";
+const dynamoDb = new DynamoDB.DocumentClient()
+
+export const handler: APIGatewayProxyHandlerV2 = async (event) => {
+
+  if (!event.body) {
+    return {
+      statusCode: 500,
+      body: 'No event body'
+    }
+  } else if (!process.env.emailTable) {
+    return {
+      statusCode: 500,
+      body: 'No table env'
+    }
+  }
+
+  const { email }: { email: string } = JSON.parse(event.body)
+
+  const newEmailParams = {
+    Item: { email: email },
+    TableName: process.env.emailTable
+  }
+  await dynamoDb.put(newEmailParams).promise()
+
+  return {
+    statusCode: 200,
+    headers: { "Content-Type": "text/plain" },
+    body: 'success'
+  }
+}
+```
+
+If you aren’t running SST, go ahead and `npm run start` or if its already running:
+
+![Untitled](3%20-%20Saving%20email%20addresses,%20creating%20an%20API%20for%20a%20%20a719802967424c0abc461867a02b9bdd/Untitled%203.png)
+
+# Frontend
+
+## Configuring Amplify
+
+I’m going to keep things simple and use the AWS frontend framework `aws-amplify`.
+
+```tsx
+npm i aws-amplify email-validator
+```
+
+Create a configureAmplify.ts file and add the following. We passed in these process.env variables from the Backend Stack.
+
+```tsx
+import { Amplify } from 'aws-amplify'
+
+try {
+  Amplify.configure({
+    Auth: {
+      region: process.env.NEXT_PUBLIC_REGION,
+      identityPoolId: process.env.NEXT_PUBLIC_IDENTITY_POOL_ID,
+      userPoolId: process.env.NEXT_PUBLIC_COGNITO_USER_POOL_ID,
+      userPoolWebClientId: process.env.NEXT_PUBLIC_COGNITO_APP_CLIENT_ID,
+    },
+    API: {
+      endpoints: [{ 
+        name: process.env.NEXT_PUBLIC_APIGATEWAY_NAME, 
+        endpoint: process.env.NEXT_PUBLIC_API_URL,
+      }]
+    },
+  })
+} catch () {
+}
+```
+
+<aside>
+💡 While we aren’t using the userPoolId or userPoolWebClientId, they are required. [AWS docs](https://docs.amplify.aws/lib/client-configuration/configuring-amplify-categories/q/platform/js/), [clientId required](https://github.com/aws-amplify/amplify-js/issues/267)
+
+</aside>
+
+Import this file in our Index.ts file
+
+```tsx
+import '../configureAmplify'
+```
+
+Here’s how my app looks:
+
+![Untitled](3%20-%20Saving%20email%20addresses,%20creating%20an%20API%20for%20a%20%20a719802967424c0abc461867a02b9bdd/Untitled%204.png)
+
+This allows us to make calls to the backend functions. Let’s make our landing page ‘Join the Beta’ button submit the user’s address to our mailer.ts function using the API we configured.
+
+## Adding the API call to our landing page
+
+- We’re going to reference the input value (the email address) from a ref, using the React createRef hook.
+
+![Untitled](3%20-%20Saving%20email%20addresses,%20creating%20an%20API%20for%20a%20%20a719802967424c0abc461867a02b9bdd/Untitled%205.png)
+
+```tsx
+const emailRef = createRef<HTMLInputElement>()
+//...
+return (
+	//...
+	<input 
+		ref={emailRef} 
+		placeholder="Your email address" 
+		className="px-2 py-1 mb-2"
+	></input>
+)
+```
+
+- We need to add state too so we can give some UI feedback to whether they signed up or not.
+    
+    ```tsx
+    const [emailState, setEmailState] = useState("")
+    ```
+    
+    ```tsx
+    npm i EmailValidator
+    ```
+    
+
+- And a function that sends the email address
+    
+    <aside>
+    💡 I’m using the npm package EmailValidator here, install it with npm i EmailValidator
+    
+    </aside>
+    
+    ```tsx
+    const submitEmail = async () => {
+        const emailAddress = emailRef.current?.value
+    
+        if (emailAddress && EmailValidator.validate(emailAddress)) {
+          const emailAddressParams = {
+            body: { emailAddress: emailRef.current.value }
+          }
+          if (!process.env.NEXT_PUBLIC_APIGATEWAY_NAME) {
+            setEmailState("failed")
+            return
+          }
+          API.post(process.env.NEXT_PUBLIC_APIGATEWAY_NAME, "/mailer", emailAddressParams)
+          setEmailState("succeeded")
+        } else {
+          setEmailState("failed")
+        }
+    
+      }
+    ```
+    
+
+- And reference that function from our ‘Join the Beta’ button.
+    
+    ```tsx
+    return ( 
+    //...
+    	<button
+        onClick={submitEmail}
+        className="flex items-center justify-center w-full px-5 py-3 mt-4 
+    text-white transition bg-blue-500 rounded-md sm:mt-0 sm:w-auto group focus:outline-none focus:ring-1 focus:ring-yellow-400"
+       >
+    		Join the Beta
+       </button>
+    ```
+    
+
+<aside>
+💡 emailState “failed”, it turns out our `process.env.NEXT_PUBLIC_APIGATEWAY_NAME` is undefined, we need to install a package to be able to work with our env vars in dev
+
+</aside>
+
+From the docs: [https://docs.sst.dev/constructs/NextjsSite](https://docs.sst.dev/constructs/NextjsSite)
+
+- Install the package (still in frontend)
+    
+    ```tsx
+    npm install --save-dev @serverless-stack/static-site-env
+    ```
+    
+
+- Change our dev script in package.json
+    
+    ```tsx
+    "scripts": {  
+    	"dev": "sst-env -- next dev",  
+    	"build": "next build",  
+    	"start": "next start"
+    },
+    ```
+    
+
+Let’s check out our localhost:3000, if you weren’t already running the app: run `npm run start` in ‘DropInTalk/’ and `npm run dev` in ‘DropInTalk/frontend.
+
+Now submit an email address and… 
+
+![Untitled](3%20-%20Saving%20email%20addresses,%20creating%20an%20API%20for%20a%20%20a719802967424c0abc461867a02b9bdd/Untitled%206.png)
+
+Success!

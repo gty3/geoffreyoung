@@ -1,0 +1,135 @@
+---
+title: Styling a Landing Page with Tailwind
+date: 2022-7-26
+---
+
+# 2 - Styling a Landing Page with Tailwind
+
+Created time: July 26, 2022 2:39 AM
+Last edit: August 5, 2022 4:43 AM
+
+Let’s build a landing page, and for the sake of changeability, I’m going to use Tailwind.
+
+<aside>
+💡 In order to use Tailwind styling, you’ll need to follow these instructions: [https://tailwindcss.com/docs/guides/nextjs](https://tailwindcss.com/docs/guides/nextjs)
+
+</aside>
+
+Let’s edit our frontend/pages/index.tsx file.
+
+```tsx
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import Image from 'next/image'
+
+const Home: NextPage = () => {
+  return (
+    <div>
+      <Head>
+        <title>DropinTalk</title>
+        <meta name="description" content="html drop in messenger" />
+        <link rel="icon" href="/phone.svg" />
+      </Head>
+
+      <main className="">
+        <div className="flex justify-center mt-20">
+          Drop-in 1:1 communication.
+        </div>
+      </main>
+
+    </div>
+  )
+}
+
+export default Home
+```
+
+I get rid of favicon.ico and vercel.svg, as well as Home.module.css
+
+At this point I am not concerned with adding meta tags (for sharing on twitter etc) as well as tagging for SEO purposes - I will come back to this.
+
+I changed the title and imported an svg icon from [https://heroicons.com](http://heroicons.com)
+
+Now lets create a cheesy landing page.
+
+![Untitled](2%20-%20Styling%20a%20Landing%20Page%20with%20Tailwind%203227cfbd95fc47a6ba07d86422c75280/Untitled.png)
+
+![Untitled](2%20-%20Styling%20a%20Landing%20Page%20with%20Tailwind%203227cfbd95fc47a6ba07d86422c75280/Untitled%201.png)
+
+To keep the app from getting cluttered, we’re going to make the landing page a seperate component and import it into index.tsx
+
+I’m using an image in the following code, add it to the /public folder and address it with `src="/messagescreen.png"`
+
+[messagescreen.png](2%20-%20Styling%20a%20Landing%20Page%20with%20Tailwind%203227cfbd95fc47a6ba07d86422c75280/messagescreen.png)
+
+```tsx
+import Image from 'next/image'
+
+export default function LandingPage() {
+
+  return (
+    <div className="h-full min-h-screen bg-gray-100 w-100">
+      <div className="flex justify-center pt-4">
+        <div className="absolute z-0 w-11/12 bg-blue-900 bg-opacity-20 md:w-screen 
+    rounded-xl lg:w-10/12 xl:w-8/12 h-[25rem] md:mt-32"></div>
+        <div className="z-10 mt-4 md:mt-0 w-96">
+          <div className="px-4 pt-2">
+            <div className="text-3xl md:mt-36">Make money with 1:1 communication</div>
+            <div className="flex mt-5">
+              <div className="">
+                <div className="">Drop-in Talk is a simple direct messenger that you can add to any site.
+                  Create your account to get your URL and add pay functionality through Stripe.</div>
+                <div className="mt-4 mb-4 ">It's free to use</div>
+                <input placeholder="Your email address" className="px-2 py-1 mb-2"></input>
+                <button
+                  className="flex items-center justify-center w-full px-5 py-3 mt-4 text-white transition bg-blue-500 rounded-md sm:mt-0 sm:w-auto group focus:outline-none focus:ring-1 focus:ring-yellow-400"
+                  >Join the Beta
+                </button>
+                <div className="flex justify-center mt-14 md:hidden md:mt-0">
+                  <Image width="307" height="615" src="/messagescreen.png"></Image>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div className="md:w-8 lg:w-10 xl:w-14 "></div>
+        <div className="hidden mt-6 w-96 md:flex">
+          <Image width="307" height="615" src="/messagescreen.png"></Image>
+        </div>
+      </div>
+    </div>
+  )
+}
+```
+
+Import `LandingPage` in index.tsx
+
+```tsx
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import LandingPage from '../components/landingPage'
+
+const Home: NextPage = () => {
+  return (
+    <div>
+      <Head>
+        <title>Drop-in Talk</title>
+        <meta name="description" content="html drop in messenger" />
+        <link rel="icon" href="/chat.svg" />
+      </Head>
+      <LandingPage />
+    </div>
+  )
+}
+
+export default Home
+```
+
+I expect this email form to get very little signups, if any; let’s keep it simple and just save all the emails that get submitted. For this we’ll need to add an API and a database.
+
+previous
+
+home
+
+next

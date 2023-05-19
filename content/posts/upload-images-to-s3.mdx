@@ -1,0 +1,144 @@
+---
+title: How to upload images to S3 using Quill, React, and Amplify
+date: 2022-9-14
+---
+
+
+# How to upload images to S3 using Quill, React, and Amplify
+
+Created time: September 14, 2022 8:45 AM
+Last edit: October 11, 2022 12:27 PM
+
+Note: I have abandoned this post as I moved my image processing to outside providers. 
+
+## **The lazy way with Cognito Identity**
+
+I'm making a blogging app with Quill.js (react-quill) and want to save the contents on a server to be displayed like a blog, like this. I will need to:
+
+- upload images to S3
+- serve those images from CloudFront
+- save that URL in DynamoDB
+
+You'll need basic knowledge of AWS and have an application that uses Quill.js
+
+## **Let's create a backend that can receive images**
+
+If you haven't already, create an S3 bucket. Leave **Block *all* public access** checked.
+
+![Untitled](How%20to%20upload%20images%20to%20S3%20using%20Quill,%20React,%20and%2070e200c77af1472fabca26238c0da1a8/Untitled.png)
+
+Open the S3 bucket - head to permissions - then CORS, paste in the following:
+
+```json
+[{
+  "AllowedHeaders": "*" ],
+  "AllowedMethods": [ "GET", "HEAD", "PUT", "POST", "DELETE" ],
+  "AllowedOrigins": [ "*" ],
+  "ExposeHeaders": [ "x-amz-server-side-encryption", "x-amz-request-id", "x-amz-id-2", "ETag" ],
+  "MaxAgeSeconds": 3000
+}]
+```
+
+We're also going to need to create an Identity Pool to allow access to our S3 bucket.
+
+Since I want authenticated users uploading images, I'm going to create an Identity Pool and link my existing authentication, Cognito User Pool, as shown below. I'm going to ignore unauthenticated access for now - permissions can be changed anytime. If you're not using any authentication, you'll still need the Identity Pool, follow the next step using 'unauthenticated' instead of 'authenticated'.
+
+![createIdentity.png](How%20to%20upload%20images%20to%20S3%20using%20Quill,%20React,%20and%2070e200c77af1472fabca26238c0da1a8/createIdentity.png)
+
+Let's make Cognito Identity have the correct permissions. Take note of the Authenticated role, head over to IAM, and find that role.
+
+Open the permissions policy and edit the JSON.
+
+```json
+{ "Version": "2012-10-17",
+  "Statement": [
+        { "Action": [ "mobileanalytics:PutEvents", "cognito-sync:*", "cognito-identity:*" ],
+          "Resource": "*",
+          "Effect": "Allow" },
+
+        { "Action": [ "s3:*" ],
+          "Resource": [ "arn:aws:s3:::YOUR_BUCKET_NAME/public/*" ],
+          "Effect": "Allow" }
+    ]
+}
+
+```
+
+I added the second action, s3, and am giving the users complete access, '*', because I'm lazy. Make sure you replace YOUR_BUCKET_NAME. We include /public/, that's where Amplify sends the images - **[see "File Access Levels" in the documentation for more info.](https://docs.amplify.aws/lib/storage/configureaccess/q/platform/js)**
+
+Now let's configure our front end to use these resources. I add 'identityPoolId' and 'Storage'. The bucket is simply "bucket_name", and identity "us-east-1:########-####-etc"
+
+```jsx
+import Amplify from '@aws-amplify/core'
+
+Amplify.configure({
+  Auth: {
+    region: process.env.cognito.REGION,
+    userPoolId: process.env.cognito.USER_POOL_ID,
+    userPoolWebClientId: process.env.cognito.APP_CLIENT_ID,
+    identityPoolId: process.env.cognito.IDENTITY
+  },
+  Storage: {
+    AWSS3: {
+      bucket: process.env.storage.BUCKET,
+      region: process.env.storage.REGION
+    }
+  }
+})
+
+```
+
+Now we can upload images to our backend.
+
+## **Let's get our Quill component to upload images to our S3 bucket**
+
+I'm using react-quill in my app. Below I define what buttons to have on the quill toolbar using react-quill's module property and define the image handler to use a custom function imageHander().
+
+```jsx
+import React from 'react'
+import ReactQuill from 'react-quill'
+import Storage from '@aws-amplify/storage'
+import Auth from '@aws-amplify/Auth'
+
+const Blog = () => {
+
+  const imageHandler = () => {
+    const input = document.createElement('input')
+    input.setAttribute('type', 'file')
+    input.click()
+    input.onchange = async () => {
+      const file = input.files[0]
+      try {
+        const checkIdentity = await Auth.currentCredentials()
+        console.log(checkIdentity.identityId)
+        const s3res = await Storage.put(file.name, file)
+      } catch (err) {
+        console.log('Storage err: ', err)
+      }
+    }
+  }
+
+  const modules = {
+    toolbar:  {
+      container: [
+        [{ 'header': [1, 2, false] }],
+        ['bold', 'italic', 'underline','strike', 'blockquote', 'code-block'],
+        [{'list': 'bullet'}],
+        [ 'link', 'image' ]
+      ],
+      handlers: { image: () => imageHandler() }
+   }
+  }
+
+  return (
+    <div>
+      <ReactQuill modules={modules} />
+    </div>
+  )
+}
+
+```
+
+When declaring a custom handler, the Quill function is overwritten; we recreate the file input, then after the selection of the file there is some unneeded code await Auth.currentCredentials(), this is to verify I have an IdentityId. We should be able to check our S3 bucket and see the image. I delete the credential check after I see it successfully stored.
+
+Now let's display those images using a serverless image handler: [Retrieving images from S3](https://notetree.me/gty/retrieve-images-from-s3-using-awss-serverless-image-handler).
