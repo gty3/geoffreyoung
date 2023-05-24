@@ -42,7 +42,8 @@ export default function Projects() {
     {
       name: "Geoffrey Young",
       description: "Personal website",
-      builtWith: "Built with Nextjs, Three.js, react-globe.gl, ContentLayer, Framer Motion",
+      builtWith:
+        "Built with Nextjs, Three.js, react-globe.gl, ContentLayer, Framer Motion",
       github: "https://github.com/gty3/geoffreyoung",
       image: "/projectImages/gtyusa.png",
     },
@@ -64,6 +65,19 @@ export default function Projects() {
     url,
     builtWith,
   }: CardProps) => {
+    const GithubButton = () => {
+      return (
+        <a
+          className="flex items-center justify-center w-40 px-5 py-2 space-x-2 transition-all bg-white border border-gray-300 rounded-full shadow-lg hover:border-gray-800"
+          href={github}
+          target="_blank"
+          // rel="noreferrer"
+        >
+          <Github className="w-5 h-5 text-black" />
+          <p className="text-sm">GitHub</p>
+        </a>
+      )
+    }
     return (
       <Tilt
         glareEnable={true}
@@ -84,20 +98,12 @@ export default function Projects() {
           }
         >
           <a href={url} target="_blank">
-            <div className="z-10 flex flex-col">
+            <div className="flex flex-col">
               <Image alt={image} width={100} height={100} src={image}></Image>
               <div className="text-2xl font-extrabold">{name}</div>
-              <div>{description}</div>
-              <div>{builtWith}</div>
-              <a
-                className="flex items-center justify-center w-40 px-5 py-2 space-x-2 transition-all bg-white border border-gray-300 rounded-full shadow-lg hover:border-gray-800"
-                href={github}
-                target="_blank"
-                // rel="noreferrer"
-              >
-                <Github className="w-5 h-5 text-black" />
-                <p className="text-sm">GitHub</p>
-              </a>
+              <div className="mb-1.5 -mt-1.5 font-medium">{description}</div>
+              <div className="mb-1">{builtWith}</div>
+              <GithubButton />
             </div>
           </a>
         </div>

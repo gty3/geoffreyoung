@@ -9,7 +9,7 @@ export default function ImGeoff() {
       <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
         <Link
           href="http://instagram.com/_u/geoffreyoung/"
-          className="flex flex-row justify-center w-40 p-1 bg-gray-200 border rounded-lg shadow-sm bg-opacity-30"
+          className="flex flex-row justify-center w-40 p-1 border rounded-lg shadow-sm bg-clip-padding bg-white/20"
         >
           <Image src="/insta.png" alt="insta" height={30} width={30} />
           <p className="text-sm font-semibold text-[#1d9bf0] mt-1.5 mx-1">
@@ -27,7 +27,7 @@ export default function ImGeoff() {
           <Button />
         </div>
 
-        <h1 className="mt-5 text-5xl font-extrabold leading-tight text-black font-display sm:text-6xl sm:leading-tight">
+        <h1 className="mt-5 text-5xl font-extrabold text-black sm:text-6xl">
           Fullstack Dev
         </h1>
       </div>

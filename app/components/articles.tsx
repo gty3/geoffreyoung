@@ -1,17 +1,19 @@
+"use client"
 import Link from "next/link"
 import { compareDesc, format, parseISO } from "date-fns"
 import { allPosts, Post } from "contentlayer/generated"
+import { motion } from "framer-motion"
 
 function PostCard(post: Post) {
   return (
-    <div className="prose dark:prose-invert">
-      <article key={post._id}>
+      <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.96 }} key={post._id}>
         <Link href={post.slug}>
-          <h2>{post.title}</h2>
+          <div className="p-4 m-4 border border-gray-300 rounded-lg cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter">
+          <h2 className="mx-1 text-xl font-semibold">{post.title}</h2>
+          </div>
         </Link>
         {post.description && <p>{post.description}</p>}
-      </article>
-    </div>
+      </motion.div>
   )
 }
 
@@ -22,7 +24,7 @@ export default function Articles() {
   )
 
   return (
-    <div className="max-w-xl py-8 mx-auto">
+    <div className="max-w-xl py-8 mx-auto ">
       <h1 className="mb-8 text-4xl font-black text-center sm:text-5xl">
         Articles
       </h1>
