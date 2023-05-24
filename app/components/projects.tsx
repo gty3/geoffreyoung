@@ -48,6 +48,7 @@ export default function Projects() {
         glareBorderRadius="8px"
         tiltMaxAngleX={10}
         tiltMaxAngleY={10}
+        gyroscope={true}
         // className={className}
       >
         <div
