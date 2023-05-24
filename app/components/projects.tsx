@@ -2,6 +2,9 @@
 import Tilt from "react-parallax-tilt"
 import { Github } from "./icons"
 import Image from "next/image"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import projectslist from "@/lib/projects"
 
 interface CardProps {
   url?: string
@@ -13,50 +16,7 @@ interface CardProps {
 }
 
 export default function Projects() {
-  const projectslist = [
-    {
-      name: "Trail Guesser",
-      description: "Mountain bike trail guessing game",
-      builtWith:
-        "Built with Vite, SST with AWS CDK, AWS Serverless Image Handler",
-      github: "https://github.com/gty3/trailguesser",
-      image: "/projectImages/trailguesser.png",
-      url: "https://trailguesser.com",
-    },
-    {
-      name: "Time Bar",
-      description: "Habit tracking app",
-      builtWith: "Built with Nextjs, SST with AWS CDK",
-      github: "https://github.com/gty3/timebar",
-      image: "/projectImages/timebar.png",
-      url: "https://timebar.me",
-    },
-    {
-      name: "Convo Improv",
-      description: "Chat app for practicing social skills",
-      builtWith: "Built with Nextjs, Vercel, Pusher, Tailwind",
-      github: "https://github.com/gty3/convoimprov",
-      image: "/projectImages/convoImprov.png",
-      url: "https://convoimprov.vercel.app",
-    },
-    {
-      name: "Geoffrey Young",
-      description: "Personal website",
-      builtWith:
-        "Built with Nextjs, Three.js, react-globe.gl, ContentLayer, Framer Motion",
-      github: "https://github.com/gty3/geoffreyoung",
-      image: "/projectImages/gtyusa.png",
-    },
-    {
-      name: "Note Tree",
-      description: "On demand consulting with blog",
-      builtWith:
-        "Built with Nextjs, Next-pwa with push notifications, Serverless Framework, Vonage communication API, and Stripe",
-      github: "https://github.com/gty3/notetree",
-      image: "/projectImages/treeFavicon.svg",
-    },
-  ]
-
+  const router = useRouter()
   const Card = ({
     name,
     description,
@@ -67,7 +27,7 @@ export default function Projects() {
   }: CardProps) => {
     const GithubButton = () => {
       return (
-        <a
+        <Link
           className="flex items-center justify-center w-40 px-5 py-2 space-x-2 transition-all bg-white border border-gray-300 rounded-full shadow-lg hover:border-gray-800"
           href={github}
           target="_blank"
@@ -75,9 +35,10 @@ export default function Projects() {
         >
           <Github className="w-5 h-5 text-black" />
           <p className="text-sm">GitHub</p>
-        </a>
+        </Link>
       )
     }
+
     return (
       <Tilt
         glareEnable={true}
@@ -89,7 +50,6 @@ export default function Projects() {
         tiltMaxAngleY={10}
         // className={className}
       >
-        {" "}
         <div
           className={
             url
@@ -97,7 +57,7 @@ export default function Projects() {
               : "p-6 pb-4 border border-gray-300 rounded-lg break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
           }
         >
-          <a href={url} target="_blank">
+          <div onClick={() => url && window.open(url)}>
             <div className="flex flex-col">
               <Image alt={image} width={100} height={100} src={image}></Image>
               <div className="text-2xl font-extrabold">{name}</div>
@@ -105,7 +65,7 @@ export default function Projects() {
               <div className="mb-1">{builtWith}</div>
               <GithubButton />
             </div>
-          </a>
+          </div>
         </div>
       </Tilt>
     )

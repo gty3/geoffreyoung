@@ -14,14 +14,12 @@ import dynamic from "next/dynamic"
 
 const GlobeTmpl = dynamic(() => import("./globeWrapper"), {
   ssr: false,
-});
+})
 const Globe = forwardRef((props: any, ref) => (
   <GlobeTmpl {...props} forwardRef={ref} />
-));
-
+))
 
 const World = () => {
-
   const ARC_REL_LEN = 0.4
 
   const globeRef = useRef()
@@ -39,13 +37,10 @@ const World = () => {
 
   const startTime = 1000
 
-
   useEffect(() => {
-    console.log(globeRef.current)
-
-    if (!globeRef.current) { 
+    if (!globeRef.current) {
       return
-     }
+    }
     ;(globeRef.current as any).pointOfView(
       {
         lat: 39.609913,
@@ -57,14 +52,12 @@ const World = () => {
     ;(globeRef.current as any).controls().enableZoom = false
     arcAndSvg(setSvgData, setArcsData, startTime)
   }, [globeReady])
-  
 
   return (
     <>
       <Globe
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
         onGlobeReady={() => setGlobeReady(true)}
-        
         height={700}
         // onGlobeClick={(e) => console.log("e", e)}
         animateIn={false}

@@ -18,7 +18,7 @@ export default function Home() {
         <World />
       </div>
       <div className="">
-      {/* <Projects /> */}
+      <Projects />
       </div>
       <div className="z-10">
       {/* <Articles /> */}
