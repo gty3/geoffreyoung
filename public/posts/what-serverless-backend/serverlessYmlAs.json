@@ -1,0 +1,488 @@
+{
+   "service": "tt3-operational",
+   "provider": {
+      "name": "aws",
+      "runtime": "nodejs14.x",
+      "environment": {
+         "stage": "${self:custom.stage}",
+         "resourcesStage": "${self:custom.resourcesStage}"
+      },
+      "region": "us-east-1",
+      "apiGateway": {
+         "restApiId": {
+            "Fn::ImportValue": "${self:custom.stage}-ExtApiGatewayRestApiId"
+         },
+         "restApiRootResourceId": {
+            "Fn::ImportValue": "${self:custom.stage}-ExtApiGatewayRestApiRootResourceId"
+         }
+      }
+   },
+   "custom": {
+      "stage": "${opt:stage, self:provider.stage}",
+      "resourcesStages": {
+         "prod": "prod",
+         "dev": "dev"
+      },
+      "resourcesStage": "${self:custom.resourcesStages.${self:custom.stage}, self:custom.resourcesStages.dev}",
+      "ConvoData": "${self:custom.stage}-ConvoData",
+      "CustomerTable": "${self:custom.stage}-CustomerTable",
+      "IdentityTable": "${self:custom.stage}-IdentityTable",
+      "UsersTable": "${self:custom.stage}-UsersTable",
+      "PrivateUsers": "${self:custom.stage}-PrivateUsers",
+      "SessionData": "${self:custom.stage}-SessionData",
+      "StripeReceivers": "${self:custom.stage}-StripeReceivers",
+      "Subscriptions": "${self:custom.stage}-Subscriptions",
+      "UserRating": "${self:custom.stage}-UserRating",
+      "STRIPE_SECRET_KEY": "${file(../config.${opt:stage, self:provider.stage, 'dev'}.json):STRIPE_SECRET_KEY}",
+      "TOKBOX_API_KEY": "${file(../config.${opt:stage, self:provider.stage, 'dev'}.json):TOKBOX_API_KEY}",
+      "TOKBOX_SECRET": "${file(../config.${opt:stage, self:provider.stage, 'dev'}.json):TOKBOX_SECRET}",
+      "VAPID_PRIVATE_KEY": "${file(../config.${opt:stage, self:provider.stage, 'dev'}.json):VAPID_PRIVATE_KEY}",
+      "VAPID_PUBLIC_KEY": "${file(../config.${opt:stage, self:provider.stage, 'dev'}.json):VAPID_PUBLIC_KEY}",
+      "stripe_accountUpdated_endpoint_secret": "${file(../config.${opt:stage, self:provider.stage, 'dev'}.json):stripe_accountUpdated_endpoint_secret}",
+      "stripe_payment_endpoint_secret": "${file(../config.${opt:stage, self:provider.stage, 'dev'}.json):stripe_payment_endpoint_secret}"
+   },
+   "functions": {
+      "accountUpdated": {
+         "handler": "accountUpdated.handler",
+         "events": [
+            {
+               "http": {
+                  "path": "accountUpdated",
+                  "method": "post",
+                  "cors": true
+               }
+            }
+         ],
+         "role": "sessionWebhookRole",
+         "environment": {
+            "CustomerTable": "${self:custom.CustomerTable}",
+            "StripeReceivers": "${self:custom.StripeReceivers}",
+            "UsersTable": "${self:custom.UsersTable}",
+            "STRIPE_SECRET_KEY": "${self:custom.STRIPE_SECRET_KEY}",
+            "stripe_accountUpdated_endpoint_secret": "${self:custom.stripe_accountUpdated_endpoint_secret}"
+         }
+      },
+      "createTipIntent": {
+         "handler": "createTipIntent.handler",
+         "events": [
+            {
+               "http": {
+                  "path": "createTipIntent",
+                  "method": "post",
+                  "integration": "lambda",
+                  "cors": true,
+                  "request": {
+                     "passThrough": "WHEN_NO_TEMPLATES",
+                     "template": {
+                        "application/json": "${file(./mappingtemplates/createTipIntent.txt)}",
+                        "application/x-www-form-urlencoded": "${file(./mappingtemplates/createTipIntent.txt)}"
+                     }
+                  }
+               }
+            }
+         ],
+         "role": "createIntentRole",
+         "environment": {
+            "STRIPE_SECRET_KEY": "${self:custom.STRIPE_SECRET_KEY}",
+            "CustomerTable": "${self:custom.CustomerTable}",
+            "StripeReceivers": "${self:custom.StripeReceivers}"
+         }
+      },
+      "createUnpaidSession": {
+         "handler": "createUnpaidSession.handler",
+         "events": [
+            {
+               "http": {
+                  "path": "createUnpaidSession",
+                  "method": "post",
+                  "cors": true
+               }
+            }
+         ],
+         "role": "createSessionRole",
+         "environment": {
+            "PrivateUsers": "${self:custom.stage}-PrivateUsers",
+            "Subscriptions": "${self:custom.stage}-Subscriptions",
+            "UsersTable": "${self:custom.stage}-UsersTable",
+            "SessionData": "${self:custom.stage}-SessionData",
+            "CustomerTable": "${self:custom.CustomerTable}",
+            "StripeReceivers": "${self:custom.StripeReceivers}",
+            "TOKBOX_API_KEY": "${self:custom.TOKBOX_API_KEY}",
+            "TOKBOX_SECRET": "${self:custom.TOKBOX_SECRET}",
+            "VAPID_PRIVATE_KEY": "${self:custom.VAPID_PRIVATE_KEY}",
+            "VAPID_PUBLIC_KEY": "${self:custom.VAPID_PUBLIC_KEY}"
+         }
+      },
+      "deleteCard": {
+         "handler": "deleteCard.handler",
+         "events": [
+            {
+               "http": {
+                  "authorizer": {
+                     "type": "COGNITO_USER_POOLS",
+                     "authorizerId": {
+                        "Fn::ImportValue": "${self:custom.stage}-ApiGatewayAuthorizerId"
+                     },
+                     "claims": [
+                        "username"
+                     ]
+                  },
+                  "path": "deleteCard",
+                  "method": "post",
+                  "integration": "lambda",
+                  "cors": true,
+                  "request": {
+                     "passThrough": "WHEN_NO_TEMPLATES",
+                     "template": {
+                        "application/json": "${file(./mappingtemplates/deleteCard.txt)}",
+                        "text/plain": "${file(./mappingtemplates/deleteCard.txt)}"
+                     }
+                  }
+               }
+            }
+         ],
+         "role": "deleteCardRole",
+         "environment": {
+            "UsersTable": "${self:custom.UsersTable}",
+            "CustomerTable": "${self:custom.CustomerTable}",
+            "STRIPE_SECRET_KEY": "${self:custom.STRIPE_SECRET_KEY}"
+         }
+      },
+      "disconnectCall": {
+         "handler": "disconnectCall.handler",
+         "events": [
+            {
+               "http": {
+                  "path": "disconnectCall",
+                  "method": "post",
+                  "integration": "lambda",
+                  "cors": true,
+                  "request": {
+                     "parameters": {
+                        "validateRequestParameters": {
+                           "Type": "String"
+                        },
+                        "querystrings": {
+                           "receiver": true,
+                           "sessionId": true
+                        }
+                     },
+                     "passThrough": "WHEN_NO_TEMPLATES",
+                     "template": {
+                        "application/json": "${file(./mappingtemplates/disconnectCall.txt)}",
+                        "text/plain": "${file(./mappingtemplates/disconnectCall.txt)}",
+                        "application/x-www-form-urlencoded": "${file(./mappingtemplates/disconnectCall.txt)}"
+                     }
+                  }
+               }
+            }
+         ],
+         "role": "updateUserRole2",
+         "environment": {
+            "PrivateUsers": "${self:custom.PrivateUsers}",
+            "VAPID_PRIVATE_KEY": "${self:custom.VAPID_PRIVATE_KEY}",
+            "VAPID_PUBLIC_KEY": "${self:custom.VAPID_PUBLIC_KEY}",
+            "Subscriptions": "${self:custom.Subscriptions}",
+            "StripeReceivers": "${self:custom.StripeReceivers}"
+         }
+      },
+      "forceUserInactive": {
+         "description": "websplashC doesn't get picked up either by phone being inactive, or user somehow left active:true",
+         "handler": "forceUserInactive.handler",
+         "events": [
+            {
+               "http": {
+                  "path": "userstatus/forceInactive",
+                  "method": "post",
+                  "integration": "lambda",
+                  "cors": true,
+                  "request": {
+                     "passThrough": "WHEN_NO_TEMPLATES",
+                     "template": {
+                        "application/json": "${file(./mappingtemplates/forceUserInactive.txt)}"
+                     }
+                  }
+               }
+            }
+         ],
+         "role": "updateUserRole2",
+         "environment": {
+            "UsersTable": "${self:custom.UsersTable}",
+            "PrivateUsers": "${self:custom.PrivateUsers}"
+         }
+      },
+      "getReceiver": {
+         "handler": "getReceiver.handler",
+         "events": [
+            {
+               "http": {
+                  "path": "getReceiver",
+                  "method": "post",
+                  "integration": "lambda",
+                  "cors": true,
+                  "request": {
+                     "passThrough": "WHEN_NO_TEMPLATES",
+                     "template": {
+                        "application/json": "${file(./mappingtemplates/getReceiver.txt)}"
+                     }
+                  }
+               }
+            }
+         ],
+         "role": "createIntentRole",
+         "environment": {
+            "StripeReceivers": "${self:custom.StripeReceivers}"
+         }
+      },
+      "getSession": {
+         "handler": "getSession.handler",
+         "events": [
+            {
+               "http": {
+                  "path": "getSession",
+                  "method": "get",
+                  "cors": true,
+                  "authorizer": {
+                     "type": "COGNITO_USER_POOLS",
+                     "authorizerId": {
+                        "Fn::ImportValue": "${self:custom.stage}-ApiGatewayAuthorizerId"
+                     }
+                  }
+               }
+            }
+         ],
+         "role": "getSessionRole",
+         "environment": {
+            "PrivateUsers": "${self:custom.PrivateUsers}"
+         }
+      },
+      "getVapid": {
+         "handler": "getVapid.handler",
+         "events": [
+            {
+               "http": {
+                  "path": "register",
+                  "method": "get",
+                  "integration": "lambda",
+                  "cors": true,
+                  "authorizer": {
+                     "type": "COGNITO_USER_POOLS",
+                     "authorizerId": {
+                        "Fn::ImportValue": "${self:custom.stage}-ApiGatewayAuthorizerId"
+                     }
+                  }
+               }
+            }
+         ],
+         "environment": {
+            "VAPID_PRIVATE_KEY": "${self:custom.VAPID_PRIVATE_KEY}",
+            "VAPID_PUBLIC_KEY": "${self:custom.VAPID_PUBLIC_KEY}"
+         }
+      },
+      "logIdentity": {
+         "handler": "logIdentity.handler",
+         "events": [
+            {
+               "http": {
+                  "authorizer": "aws_iam",
+                  "path": "logIdentity",
+                  "method": "post",
+                  "cors": true
+               }
+            }
+         ],
+         "role": "createSessionRole",
+         "environment": {
+            "IdentityTable": "${self:custom.IdentityTable}",
+            "STRIPE_SECRET_KEY": "${self:custom.STRIPE_SECRET_KEY}"
+         }
+      },
+      "onboard": {
+         "handler": "onboard.handler",
+         "events": [
+            {
+               "http": {
+                  "authorizer": {
+                     "type": "COGNITO_USER_POOLS",
+                     "authorizerId": {
+                        "Fn::ImportValue": "${self:custom.stage}-ApiGatewayAuthorizerId"
+                     }
+                  },
+                  "path": "onboard",
+                  "method": "get",
+                  "integration": "lambda",
+                  "cors": true,
+                  "request": {
+                     "passThrough": "WHEN_NO_TEMPLATES",
+                     "template": {
+                        "application/json": "${file(./mappingtemplates/onboard.txt)}",
+                        "text/plain": "${file(./mappingtemplates/onboard.txt)}"
+                     }
+                  }
+               }
+            }
+         ],
+         "role": "onboardRole",
+         "environment": {
+            "STRIPE_SECRET_KEY": "${self:custom.STRIPE_SECRET_KEY}",
+            "StripeReceivers": "${self:custom.StripeReceivers}",
+            "UsersTable": "${self:custom.UsersTable}",
+            "STAGE": "${self:custom.stage}"
+         }
+      },
+      "register": {
+         "handler": "register.handler",
+         "events": [
+            {
+               "http": {
+                  "authorizer": {
+                     "type": "COGNITO_USER_POOLS",
+                     "authorizerId": {
+                        "Fn::ImportValue": "${self:custom.stage}-ApiGatewayAuthorizerId"
+                     },
+                     "claims": [
+                        "username"
+                     ]
+                  },
+                  "path": "register",
+                  "method": "post",
+                  "integration": "lambda",
+                  "cors": true,
+                  "request": {
+                     "passThrough": "WHEN_NO_TEMPLATES",
+                     "template": {
+                        "application/json": "${file(./mappingtemplates/register.txt)}",
+                        "application/x-www-form-urlencoded": "${file(./mappingtemplates/register.txt)}"
+                     }
+                  }
+               }
+            }
+         ],
+         "role": "registerRole",
+         "environment": {
+            "VAPID_PRIVATE_KEY": "${self:custom.VAPID_PRIVATE_KEY}",
+            "VAPID_PUBLIC_KEY": "${self:custom.VAPID_PUBLIC_KEY}",
+            "Subscriptions": "${self:custom.Subscriptions}",
+            "UsersTable": "${self:custom.UsersTable}"
+         }
+      },
+      "paymentWebhook": {
+         "handler": "paymentWebhook.handler",
+         "events": [
+            {
+               "http": {
+                  "path": "paymentWebhook",
+                  "method": "post",
+                  "cors": true
+               }
+            }
+         ],
+         "role": "sessionWebhookRole",
+         "environment": {
+            "CustomerTable": "${self:custom.CustomerTable}",
+            "StripeReceivers": "${self:custom.StripeReceivers}",
+            "UsersTable": "${self:custom.UsersTable}",
+            "STRIPE_SECRET_KEY": "${self:custom.STRIPE_SECRET_KEY}"
+         }
+      },
+      "sessionWebhook": {
+         "handler": "sessionWebhook.handler",
+         "events": [
+            {
+               "http": {
+                  "path": "sessionWebhook",
+                  "method": "post",
+                  "integration": "lambda",
+                  "cors": true,
+                  "request": {
+                     "passThrough": "WHEN_NO_TEMPLATES",
+                     "template": {
+                        "application/json": "${file(./mappingtemplates/sessionWebhook.txt)}"
+                     }
+                  }
+               }
+            }
+         ],
+         "role": "sessionWebhookRole",
+         "environment": {
+            "ConvoData": "${self:custom.ConvoData}",
+            "CustomerTable": "${self:custom.CustomerTable}",
+            "SessionData": "${self:custom.SessionData}",
+            "StripeReceivers": "${self:custom.StripeReceivers}",
+            "UsersTable": "${self:custom.UsersTable}",
+            "STRIPE_SECRET_KEY": "${self:custom.STRIPE_SECRET_KEY}"
+         }
+      },
+      "textMessage": {
+         "handler": "textMessage.handler",
+         "events": [
+            {
+               "http": {
+                  "path": "textMessage",
+                  "method": "post",
+                  "cors": true
+               }
+            }
+         ],
+         "role": "createSessionRole",
+         "environment": {
+            "Subscriptions": "${self:custom.stage}-Subscriptions",
+            "VAPID_PRIVATE_KEY": "${self:custom.VAPID_PRIVATE_KEY}",
+            "VAPID_PUBLIC_KEY": "${self:custom.VAPID_PUBLIC_KEY}"
+         }
+      },
+      "updateUserInactive": {
+         "handler": "updateUserInactive.handler",
+         "events": [
+            {
+               "http": {
+                  "path": "updateUserInactive",
+                  "method": "post",
+                  "authorizer": {
+                     "type": "COGNITO_USER_POOLS",
+                     "authorizerId": {
+                        "Fn::ImportValue": "${self:custom.stage}-ApiGatewayAuthorizerId"
+                     }
+                  },
+                  "cors": true
+               }
+            }
+         ],
+         "role": "updateUserRole2",
+         "environment": {
+            "UsersTable": "${self:custom.UsersTable}"
+         }
+      },
+      "createPaidSession": {
+         "handler": "createPaidSession.handler",
+         "events": [
+            {
+               "http": {
+                  "authorizer": "aws_iam",
+                  "path": "createPaidSession",
+                  "method": "post",
+                  "cors": true
+               }
+            }
+         ],
+         "role": "createSessionRole",
+         "environment": {
+            "IdentityTable": "${self:custom.IdentityTable}",
+            "STRIPE_SECRET_KEY": "${self:custom.STRIPE_SECRET_KEY}",
+            "PrivateUsers": "${self:custom.stage}-PrivateUsers",
+            "Subscriptions": "${self:custom.stage}-Subscriptions",
+            "UsersTable": "${self:custom.stage}-UsersTable",
+            "SessionData": "${self:custom.stage}-SessionData",
+            "CustomerTable": "${self:custom.CustomerTable}",
+            "StripeReceivers": "${self:custom.StripeReceivers}",
+            "TOKBOX_API_KEY": "${self:custom.TOKBOX_API_KEY}",
+            "TOKBOX_SECRET": "${self:custom.TOKBOX_SECRET}",
+            "VAPID_PRIVATE_KEY": "${self:custom.VAPID_PRIVATE_KEY}",
+            "VAPID_PUBLIC_KEY": "${self:custom.VAPID_PUBLIC_KEY}"
+         }
+      }
+   },
+   "resources": [
+      "${file(./IAM.yml)}"
+   ]
+}

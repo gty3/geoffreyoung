@@ -9,19 +9,19 @@ Next.js is a framework that wraps React - essentially a way of organizing your r
 
 When I was learning React I was confused enough, I didn't need more by incorporating Next.js. But by using Next.js I was able to offload a lot of work onto the framework.
 
-![badPerforamnce.png](Next%20js%20vs%20React%206ebfc12162a14d558c3fcb9955f66ffe/badPerforamnce.png)
+![badPerforamnce.png](nextjs-vs-react/badPerforamnce.png)
 
 Here is my Lighthouse score using just React (Lighthouse tool is found in chrome dev tools).
 
 A big difference between Next.js and React is pages. Every file in the 'pages' folder is rendered as a separate page; folders create sub-directories. Navigating pages is essentially the same as using React Router, you just use next/router instead.
 
-![pagesnextreact.png](Next%20js%20vs%20React%206ebfc12162a14d558c3fcb9955f66ffe/pagesnextreact.png)
+![pagesnextreact.png](nextjs-vs-react/pagesnextreact.png)
 
 You can now start using Next.js. **`npx create-next-app`**, with Typescript **`--ts`**, and with Tailwind **`-e with-tailwindcss`**.
 
 In my React app, I had all my routes on one page; I had to import the components then give them a path, while not necessarily difficult, it was cumbersome. It also negatively affected the performance of my app as shown above - I would need to split it up.
 
-![AppjsMini.png](Next%20js%20vs%20React%206ebfc12162a14d558c3fcb9955f66ffe/AppjsMini.png)
+![AppjsMini.png](nextjs-vs-react/AppjsMini.png)
 
 But instead of splitting the above file up, I'm able to get rid of it altogether. The pages are automatically created with their filenames as their URL. They are also prerendered by Next, so when fetching the page, you get the html, this helps google crawl your pages, as Google crawling bots will fail to crawl if the JavaScript takes a long time. But your still able to interact with the page like any other React app.
 
@@ -38,7 +38,7 @@ Static site generation - SSG, server side rendering - SSR, and incremental stati
 
 After rebuilding my app with Next.js:
 
-![Screenshot from 2021-04-24 16-31-03.png](Next%20js%20vs%20React%206ebfc12162a14d558c3fcb9955f66ffe/Screenshot_from_2021-04-24_16-31-03.png)
+![Screenshot from 2021-04-24 16-31-03.png](nextjs-vs-react/Screenshot_from_2021-04-24_16-31-03.png)
 
 Each has its own best use cases, my web app is a blog, so I have the blog posts set up with ISR, while other pages like account settings use SSG.
 

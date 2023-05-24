@@ -17,7 +17,7 @@ You'll need basic knowledge of AWS and have an application that uses Quill.js
 
 If you haven't already, create an S3 bucket. Leave **Block *all* public access** checked.
 
-![Untitled](How%20to%20upload%20images%20to%20S3%20using%20Quill,%20React,%20and%2070e200c77af1472fabca26238c0da1a8/Untitled.png)
+![publicAccess](upload-images-to-S3/publicAccess.png)
 
 Open the S3 bucket - head to permissions - then CORS, paste in the following:
 
@@ -35,7 +35,7 @@ We're also going to need to create an Identity Pool to allow access to our S3 bu
 
 Since I want authenticated users uploading images, I'm going to create an Identity Pool and link my existing authentication, Cognito User Pool, as shown below. I'm going to ignore unauthenticated access for now - permissions can be changed anytime. If you're not using any authentication, you'll still need the Identity Pool, follow the next step using 'unauthenticated' instead of 'authenticated'.
 
-![createIdentity.png](How%20to%20upload%20images%20to%20S3%20using%20Quill,%20React,%20and%2070e200c77af1472fabca26238c0da1a8/createIdentity.png)
+![createIdentity.png](upload-images-to-S3/createIdentity.png)
 
 Let's make Cognito Identity have the correct permissions. Take note of the Authenticated role, head over to IAM, and find that role.
 
@@ -133,4 +133,4 @@ const Blog = () => {
 
 When declaring a custom handler, the Quill function is overwritten; we recreate the file input, then after the selection of the file there is some unneeded code await Auth.currentCredentials(), this is to verify I have an IdentityId. We should be able to check our S3 bucket and see the image. I delete the credential check after I see it successfully stored.
 
-Now let's display those images using a serverless image handler: [Retrieving images from S3](https://notetree.me/gty/retrieve-images-from-s3-using-awss-serverless-image-handler).
+Now let's display those images using a serverless image handler: [Retrieving images from S3](retrieve-images-from-s3-using-aws-serverless-image-handler).

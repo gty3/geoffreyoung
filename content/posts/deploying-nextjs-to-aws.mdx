@@ -7,7 +7,7 @@ Now let’s let everyone know about our app - we need to go to production.
 
 Let’s save everything we have with git. We want just 1 repository for the whole app. We need to remove the .git folder in our frontend that was created by create-next-app.
 
-![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled.png)
+![Untitled](deploying-nextjs-to-aws/Untitled.png)
 
 ```tsx
 rm -rf .git
@@ -15,7 +15,7 @@ rm -rf .git
 
 SST does not initialize a new git repository so we’ll create one
 
-![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled%201.png)
+![Untitled](deploying-nextjs-to-aws/Untitled%201.png)
 
 ```tsx
 git init
@@ -25,13 +25,13 @@ Let’s save to a remote repository. I won’t go into the minutiae. If you aren
 
 Let’s see if everything builds
 
-![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled%201.png)
+![Untitled](deploying-nextjs-to-aws/Untitled%201.png)
 
 ```tsx
 npm run build
 ```
 
-![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled%202.png)
+![Untitled](deploying-nextjs-to-aws/Untitled%202.png)
 
 <aside>
 💡 Be aware, SST environmental variables are not available to our app at build time. When we configured Amplify, I wrapped the `amplify.configure()` in `try/catch`, as it will fail configuration at build time.
@@ -47,7 +47,7 @@ We can see our next.js app got built, and the whole SST app was built. Let’s d
 
 Before we deploy let’s add to MyStack.ts
 
-![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled%203.png)
+![Untitled](deploying-nextjs-to-aws/Untitled%203.png)
 
 ```tsx
 stack.addOutputs({
@@ -57,13 +57,13 @@ stack.addOutputs({
 
 This will print out our Next.js URL in the console.
 
-![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled%204.png)
+![Untitled](deploying-nextjs-to-aws/Untitled%204.png)
 
 ```tsx
 npm run deploy
 ```
 
-![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled%205.png)
+![Untitled](deploying-nextjs-to-aws/Untitled%205.png)
 
 Success
 
@@ -81,7 +81,7 @@ Or if you don’t want a domain, skip this step.
 
 Create a new file .env
 
-![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled%206.png)
+![Untitled](deploying-nextjs-to-aws/Untitled%206.png)
 
 ```tsx
 DOMAIN_NAME=dropintalk.com
@@ -93,7 +93,7 @@ DOMAIN_ALIAS=www.dropintalk.com
 
 </aside>
 
-![Untitled](4%20-%20Deploying%20a%20Nextjs%20app%20to%20AWS%20056c1f5b75864d55a3c33865fea9be3c/Untitled%203.png)
+![Untitled](deploying-nextjs-to-aws/Untitled%203.png)
 
 Now in MyStack.ts we add the `customDomain` property to `site`
 

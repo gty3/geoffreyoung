@@ -1,0 +1,3137 @@
+{
+  "Resources": {
+    "SSTMetadata": {
+      "Type": "AWS::CDK::Metadata",
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/SSTMetadata"
+      }
+    },
+    "ApiCD##AAA#": {
+      "Type": "AWS::ApiGatewayV#::Api",
+      "Properties": {
+        "CorsConfiguration": {
+          "AllowHeaders": [
+            "*"
+          ],
+          "AllowMethods": [
+            "*"
+          ],
+          "AllowOrigins": [
+            "*"
+          ]
+        },
+        "Name": "local-nt-Api",
+        "ProtocolType": "HTTP"
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Api/Resource"
+      }
+    },
+    "ApiDefaultStage#AAE###B": {
+      "Type": "AWS::ApiGatewayV#::Stage",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "StageName": "$default",
+        "AccessLogSettings": {
+          "DestinationArn": {
+            "Fn::GetAtt": [
+              "ApiLogGroup####FE##",
+              "Arn"
+            ]
+          },
+          "Format": "{\"requestTime\":\"$context.requestTime\",\"requestId\":\"$context.requestId\",\"httpMethod\":\"$context.httpMethod\",\"path\":\"$context.path\",\"routeKey\":\"$context.routeKey\",\"status\":$context.status,\"responseLatency\":$context.responseLatency,\"integrationRequestId\":\"$context.integration.requestId\",\"integrationStatus\":\"$context.integration.status\",\"integrationLatency\":\"$context.integration.latency\",\"integrationServiceStatus\":\"$context.integration.integrationStatus\",\"ip\":\"$context.identity.sourceIp\",\"userAgent\":\"$context.identity.userAgent\",\"cognitoIdentityId\":\"$context.identity.cognitoIdentityId\"}"
+        },
+        "AutoDeploy": true
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Api/DefaultStage/Resource"
+      }
+    },
+    "ApiLogGroup####FE##": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Join": [
+            "",
+            [
+              "/aws/vendedlogs/apis/local-nt-Api-",
+              {
+                "Ref": "ApiCD##AAA#"
+              },
+              "/default"
+            ]
+          ]
+        },
+        "RetentionInDays": ###
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/LogGroup/Resource"
+      }
+    },
+    "ApiLambdaGETgetUsersServiceRole#E##AB##": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_GET_--getUsers/ServiceRole/Resource"
+      }
+    },
+    "ApiLambdaGETgetUsersServiceRoleDefaultPolicy##AB###D": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": "s#:*",
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr/*"
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "ses:*",
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "PolicyName": "ApiLambdaGETgetUsersServiceRoleDefaultPolicy##AB###D",
+        "Roles": [
+          {
+            "Ref": "ApiLambdaGETgetUsersServiceRole#E##AB##"
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_GET_--getUsers/ServiceRole/DefaultPolicy/Resource"
+      }
+    },
+    "ApiLambdaGETgetUsers####F###": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S#Bucket": {
+            "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#Bucket###C####"
+          },
+          "S#Key": {
+            "Fn::Join": [
+              "",
+              [
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "ApiLambdaGETgetUsersServiceRole#E##AB##",
+            "Arn"
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "UsersTable": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefUsersTable####E#C#########"
+            },
+            "PrivateUser": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefPrivateUsers#B#D######D#####"
+            },
+            "TOKBOX_API_KEY": "########",
+            "TOKBOX_SECRET": "a##e#######c##b#####a####fc#####b##fc###",
+            "VAPID_EMAIL": "geoff@talktree.me",
+            "VAPID_PUBLIC_KEY": "BOOVtqTDhJ#klbngfhCFcJqzLQsv#eoEsP_XSg#gPp#NhFeeoOsuiR##jZwgQfd#Q#W#JO#EfLGvEl_##d#zugY",
+            "VAPID_PRIVATE_KEY": "lYjFdpJqQa#ArjN#nf#PVSwAzSlyxU#ONIJtyEWMpvU",
+            "SST_DEBUG_SRC_PATH": ".",
+            "SST_DEBUG_SRC_HANDLER": "src/getUsers.handler",
+            "SST_DEBUG_ENDPOINT": "wss://#vqrb#j###.execute-api.us-east-#.amazonaws.com/local",
+            "SST_DEBUG_BUCKET_NAME": "local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "#",
+            "SST_DEBUG_IS_API_ROUTE": "#"
+          }
+        },
+        "Handler": "index.main",
+        "MemorySize": ####,
+        "Runtime": "nodejs##.x",
+        "Timeout": ##,
+        "TracingConfig": {
+          "Mode": "Active"
+        }
+      },
+      "DependsOn": [
+        "ApiLambdaGETgetUsersServiceRoleDefaultPolicy##AB###D",
+        "ApiLambdaGETgetUsersServiceRole#E##AB##"
+      ],
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_GET_--getUsers/Resource",
+        "aws:asset:path": "asset.aa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##ae.zip",
+        "aws:asset:property": "Code"
+      }
+    },
+    "ApiLambdaGETgetUsersEventInvokeConfig###FF###": {
+      "Type": "AWS::Lambda::EventInvokeConfig",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "ApiLambdaGETgetUsers####F###"
+        },
+        "Qualifier": "$LATEST",
+        "MaximumRetryAttempts": #
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_GET_--getUsers/EventInvokeConfig/Resource"
+      }
+    },
+    "ApiRouteGETgetUserslocalntapiApiRouteGETgetUsers########PermissionC#E###B#": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ApiLambdaGETgetUsers####F###",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-#:############:",
+              {
+                "Ref": "ApiCD##AAA#"
+              },
+              "/*/*/getUsers"
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_GET_--getUsers/localntapiApiRouteGETgetUsers########-Permission"
+      }
+    },
+    "ApiRouteGETgetUsersHttpIntegration#a##d#####b##b#d#d#ad###fdc#fc##F###CB##": {
+      "Type": "AWS::ApiGatewayV#::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::GetAtt": [
+            "ApiLambdaGETgetUsers####F###",
+            "Arn"
+          ]
+        },
+        "PayloadFormatVersion": "#.#"
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_GET_--getUsers/HttpIntegration-#a##d#####b##b#d#d#ad###fdc#fc##/Resource"
+      }
+    },
+    "ApiRouteGETgetUsers#EFBA#B#": {
+      "Type": "AWS::ApiGatewayV#::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "RouteKey": "GET /getUsers",
+        "AuthorizationType": "AWS_IAM",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "ApiRouteGETgetUsersHttpIntegration#a##d#####b##b#d#d#ad###fdc#fc##F###CB##"
+              }
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_GET_--getUsers/Resource"
+      }
+    },
+    "ApiLambdaPOSTcreateUnpaidSessionServiceRole##E##B##": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--createUnpaidSession/ServiceRole/Resource"
+      }
+    },
+    "ApiLambdaPOSTcreateUnpaidSessionServiceRoleDefaultPolicy#C##E###": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": "s#:*",
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr/*"
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "ses:*",
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "PolicyName": "ApiLambdaPOSTcreateUnpaidSessionServiceRoleDefaultPolicy#C##E###",
+        "Roles": [
+          {
+            "Ref": "ApiLambdaPOSTcreateUnpaidSessionServiceRole##E##B##"
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--createUnpaidSession/ServiceRole/DefaultPolicy/Resource"
+      }
+    },
+    "ApiLambdaPOSTcreateUnpaidSession###C#CEF": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S#Bucket": {
+            "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#Bucket###C####"
+          },
+          "S#Key": {
+            "Fn::Join": [
+              "",
+              [
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTcreateUnpaidSessionServiceRole##E##B##",
+            "Arn"
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "UsersTable": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefUsersTable####E#C#########"
+            },
+            "PrivateUser": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefPrivateUsers#B#D######D#####"
+            },
+            "TOKBOX_API_KEY": "########",
+            "TOKBOX_SECRET": "a##e#######c##b#####a####fc#####b##fc###",
+            "VAPID_EMAIL": "geoff@talktree.me",
+            "VAPID_PUBLIC_KEY": "BOOVtqTDhJ#klbngfhCFcJqzLQsv#eoEsP_XSg#gPp#NhFeeoOsuiR##jZwgQfd#Q#W#JO#EfLGvEl_##d#zugY",
+            "VAPID_PRIVATE_KEY": "lYjFdpJqQa#ArjN#nf#PVSwAzSlyxU#ONIJtyEWMpvU",
+            "SST_DEBUG_SRC_PATH": ".",
+            "SST_DEBUG_SRC_HANDLER": "src/createUnpaidSession.handler",
+            "SST_DEBUG_ENDPOINT": "wss://#vqrb#j###.execute-api.us-east-#.amazonaws.com/local",
+            "SST_DEBUG_BUCKET_NAME": "local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "#",
+            "SST_DEBUG_IS_API_ROUTE": "#"
+          }
+        },
+        "Handler": "index.main",
+        "MemorySize": ####,
+        "Runtime": "nodejs##.x",
+        "Timeout": ##,
+        "TracingConfig": {
+          "Mode": "Active"
+        }
+      },
+      "DependsOn": [
+        "ApiLambdaPOSTcreateUnpaidSessionServiceRoleDefaultPolicy#C##E###",
+        "ApiLambdaPOSTcreateUnpaidSessionServiceRole##E##B##"
+      ],
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--createUnpaidSession/Resource",
+        "aws:asset:path": "asset.aa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##ae.zip",
+        "aws:asset:property": "Code"
+      }
+    },
+    "ApiLambdaPOSTcreateUnpaidSessionEventInvokeConfig######AD": {
+      "Type": "AWS::Lambda::EventInvokeConfig",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "ApiLambdaPOSTcreateUnpaidSession###C#CEF"
+        },
+        "Qualifier": "$LATEST",
+        "MaximumRetryAttempts": #
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--createUnpaidSession/EventInvokeConfig/Resource"
+      }
+    },
+    "ApiRoutePOSTcreateUnpaidSessionlocalntapiApiRoutePOSTcreateUnpaidSessionAF#BA#BEPermission#B####FC": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTcreateUnpaidSession###C#CEF",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-#:############:",
+              {
+                "Ref": "ApiCD##AAA#"
+              },
+              "/*/*/createUnpaidSession"
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--createUnpaidSession/localntapiApiRoutePOSTcreateUnpaidSessionAF#BA#BE-Permission"
+      }
+    },
+    "ApiRoutePOSTcreateUnpaidSessionHttpIntegration#f#d#f#edc###dad#ca##ed####d####CB##A###": {
+      "Type": "AWS::ApiGatewayV#::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTcreateUnpaidSession###C#CEF",
+            "Arn"
+          ]
+        },
+        "PayloadFormatVersion": "#.#"
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--createUnpaidSession/HttpIntegration-#f#d#f#edc###dad#ca##ed####d####/Resource"
+      }
+    },
+    "ApiRoutePOSTcreateUnpaidSessionC###CEAA": {
+      "Type": "AWS::ApiGatewayV#::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "RouteKey": "POST /createUnpaidSession",
+        "AuthorizationType": "AWS_IAM",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "ApiRoutePOSTcreateUnpaidSessionHttpIntegration#f#d#f#edc###dad#ca##ed####d####CB##A###"
+              }
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--createUnpaidSession/Resource"
+      }
+    },
+    "ApiLambdaPOSTgetUserServiceRole#E##F###": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--getUser/ServiceRole/Resource"
+      }
+    },
+    "ApiLambdaPOSTgetUserServiceRoleDefaultPolicy#E######": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": "s#:*",
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr/*"
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "ses:*",
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "PolicyName": "ApiLambdaPOSTgetUserServiceRoleDefaultPolicy#E######",
+        "Roles": [
+          {
+            "Ref": "ApiLambdaPOSTgetUserServiceRole#E##F###"
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--getUser/ServiceRole/DefaultPolicy/Resource"
+      }
+    },
+    "ApiLambdaPOSTgetUserE####C#C": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S#Bucket": {
+            "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#Bucket###C####"
+          },
+          "S#Key": {
+            "Fn::Join": [
+              "",
+              [
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTgetUserServiceRole#E##F###",
+            "Arn"
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "UsersTable": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefUsersTable####E#C#########"
+            },
+            "PrivateUser": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefPrivateUsers#B#D######D#####"
+            },
+            "TOKBOX_API_KEY": "########",
+            "TOKBOX_SECRET": "a##e#######c##b#####a####fc#####b##fc###",
+            "VAPID_EMAIL": "geoff@talktree.me",
+            "VAPID_PUBLIC_KEY": "BOOVtqTDhJ#klbngfhCFcJqzLQsv#eoEsP_XSg#gPp#NhFeeoOsuiR##jZwgQfd#Q#W#JO#EfLGvEl_##d#zugY",
+            "VAPID_PRIVATE_KEY": "lYjFdpJqQa#ArjN#nf#PVSwAzSlyxU#ONIJtyEWMpvU",
+            "SST_DEBUG_SRC_PATH": ".",
+            "SST_DEBUG_SRC_HANDLER": "src/getUser.handler",
+            "SST_DEBUG_ENDPOINT": "wss://#vqrb#j###.execute-api.us-east-#.amazonaws.com/local",
+            "SST_DEBUG_BUCKET_NAME": "local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "#",
+            "SST_DEBUG_IS_API_ROUTE": "#"
+          }
+        },
+        "Handler": "index.main",
+        "MemorySize": ####,
+        "Runtime": "nodejs##.x",
+        "Timeout": ##,
+        "TracingConfig": {
+          "Mode": "Active"
+        }
+      },
+      "DependsOn": [
+        "ApiLambdaPOSTgetUserServiceRoleDefaultPolicy#E######",
+        "ApiLambdaPOSTgetUserServiceRole#E##F###"
+      ],
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--getUser/Resource",
+        "aws:asset:path": "asset.aa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##ae.zip",
+        "aws:asset:property": "Code"
+      }
+    },
+    "ApiLambdaPOSTgetUserEventInvokeConfig####C###": {
+      "Type": "AWS::Lambda::EventInvokeConfig",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "ApiLambdaPOSTgetUserE####C#C"
+        },
+        "Qualifier": "$LATEST",
+        "MaximumRetryAttempts": #
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--getUser/EventInvokeConfig/Resource"
+      }
+    },
+    "ApiRoutePOSTgetUserlocalntapiApiRoutePOSTgetUser######ACPermissionA#D#####": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTgetUserE####C#C",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-#:############:",
+              {
+                "Ref": "ApiCD##AAA#"
+              },
+              "/*/*/getUser"
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--getUser/localntapiApiRoutePOSTgetUser######AC-Permission"
+      }
+    },
+    "ApiRoutePOSTgetUserHttpIntegration#ba##e######d#bad#e####ee#f##aa###FA####": {
+      "Type": "AWS::ApiGatewayV#::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTgetUserE####C#C",
+            "Arn"
+          ]
+        },
+        "PayloadFormatVersion": "#.#"
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--getUser/HttpIntegration-#ba##e######d#bad#e####ee#f##aa#/Resource"
+      }
+    },
+    "ApiRoutePOSTgetUserF##F#DC#": {
+      "Type": "AWS::ApiGatewayV#::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "RouteKey": "POST /getUser",
+        "AuthorizationType": "AWS_IAM",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "ApiRoutePOSTgetUserHttpIntegration#ba##e######d#bad#e####ee#f##aa###FA####"
+              }
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--getUser/Resource"
+      }
+    },
+    "ApiLambdaPOSTsaveNotionIdServiceRole#####D#A": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--saveNotionId/ServiceRole/Resource"
+      }
+    },
+    "ApiLambdaPOSTsaveNotionIdServiceRoleDefaultPolicy###F####": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": "s#:*",
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr/*"
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "ses:*",
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "PolicyName": "ApiLambdaPOSTsaveNotionIdServiceRoleDefaultPolicy###F####",
+        "Roles": [
+          {
+            "Ref": "ApiLambdaPOSTsaveNotionIdServiceRole#####D#A"
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--saveNotionId/ServiceRole/DefaultPolicy/Resource"
+      }
+    },
+    "ApiLambdaPOSTsaveNotionId#CF#FCF#": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S#Bucket": {
+            "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#Bucket###C####"
+          },
+          "S#Key": {
+            "Fn::Join": [
+              "",
+              [
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTsaveNotionIdServiceRole#####D#A",
+            "Arn"
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "UsersTable": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefUsersTable####E#C#########"
+            },
+            "PrivateUser": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefPrivateUsers#B#D######D#####"
+            },
+            "TOKBOX_API_KEY": "########",
+            "TOKBOX_SECRET": "a##e#######c##b#####a####fc#####b##fc###",
+            "VAPID_EMAIL": "geoff@talktree.me",
+            "VAPID_PUBLIC_KEY": "BOOVtqTDhJ#klbngfhCFcJqzLQsv#eoEsP_XSg#gPp#NhFeeoOsuiR##jZwgQfd#Q#W#JO#EfLGvEl_##d#zugY",
+            "VAPID_PRIVATE_KEY": "lYjFdpJqQa#ArjN#nf#PVSwAzSlyxU#ONIJtyEWMpvU",
+            "SST_DEBUG_SRC_PATH": ".",
+            "SST_DEBUG_SRC_HANDLER": "src/saveNotionId.handler",
+            "SST_DEBUG_ENDPOINT": "wss://#vqrb#j###.execute-api.us-east-#.amazonaws.com/local",
+            "SST_DEBUG_BUCKET_NAME": "local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "#",
+            "SST_DEBUG_IS_API_ROUTE": "#"
+          }
+        },
+        "Handler": "index.main",
+        "MemorySize": ####,
+        "Runtime": "nodejs##.x",
+        "Timeout": ##,
+        "TracingConfig": {
+          "Mode": "Active"
+        }
+      },
+      "DependsOn": [
+        "ApiLambdaPOSTsaveNotionIdServiceRoleDefaultPolicy###F####",
+        "ApiLambdaPOSTsaveNotionIdServiceRole#####D#A"
+      ],
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--saveNotionId/Resource",
+        "aws:asset:path": "asset.aa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##ae.zip",
+        "aws:asset:property": "Code"
+      }
+    },
+    "ApiLambdaPOSTsaveNotionIdEventInvokeConfigA###F#ED": {
+      "Type": "AWS::Lambda::EventInvokeConfig",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "ApiLambdaPOSTsaveNotionId#CF#FCF#"
+        },
+        "Qualifier": "$LATEST",
+        "MaximumRetryAttempts": #
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--saveNotionId/EventInvokeConfig/Resource"
+      }
+    },
+    "ApiRoutePOSTsaveNotionIdlocalntapiApiRoutePOSTsaveNotionId####E###PermissionD#ACB##C": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTsaveNotionId#CF#FCF#",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-#:############:",
+              {
+                "Ref": "ApiCD##AAA#"
+              },
+              "/*/*/saveNotionId"
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--saveNotionId/localntapiApiRoutePOSTsaveNotionId####E###-Permission"
+      }
+    },
+    "ApiRoutePOSTsaveNotionIdHttpIntegration#f#######e#c#####a####d###f###faCA#CD###": {
+      "Type": "AWS::ApiGatewayV#::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTsaveNotionId#CF#FCF#",
+            "Arn"
+          ]
+        },
+        "PayloadFormatVersion": "#.#"
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--saveNotionId/HttpIntegration-#f#######e#c#####a####d###f###fa/Resource"
+      }
+    },
+    "ApiRoutePOSTsaveNotionId###AF#AC": {
+      "Type": "AWS::ApiGatewayV#::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "RouteKey": "POST /saveNotionId",
+        "AuthorizationType": "AWS_IAM",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "ApiRoutePOSTsaveNotionIdHttpIntegration#f#######e#c#####a####d###f###faCA#CD###"
+              }
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--saveNotionId/Resource"
+      }
+    },
+    "ApiLambdaPOSTsaveUsernameServiceRole########": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--saveUsername/ServiceRole/Resource"
+      }
+    },
+    "ApiLambdaPOSTsaveUsernameServiceRoleDefaultPolicy#E#E#D##": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": "s#:*",
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr/*"
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "ses:*",
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "PolicyName": "ApiLambdaPOSTsaveUsernameServiceRoleDefaultPolicy#E#E#D##",
+        "Roles": [
+          {
+            "Ref": "ApiLambdaPOSTsaveUsernameServiceRole########"
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--saveUsername/ServiceRole/DefaultPolicy/Resource"
+      }
+    },
+    "ApiLambdaPOSTsaveUsername#E#CA###": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S#Bucket": {
+            "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#Bucket###C####"
+          },
+          "S#Key": {
+            "Fn::Join": [
+              "",
+              [
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTsaveUsernameServiceRole########",
+            "Arn"
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "UsersTable": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefUsersTable####E#C#########"
+            },
+            "PrivateUser": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefPrivateUsers#B#D######D#####"
+            },
+            "TOKBOX_API_KEY": "########",
+            "TOKBOX_SECRET": "a##e#######c##b#####a####fc#####b##fc###",
+            "VAPID_EMAIL": "geoff@talktree.me",
+            "VAPID_PUBLIC_KEY": "BOOVtqTDhJ#klbngfhCFcJqzLQsv#eoEsP_XSg#gPp#NhFeeoOsuiR##jZwgQfd#Q#W#JO#EfLGvEl_##d#zugY",
+            "VAPID_PRIVATE_KEY": "lYjFdpJqQa#ArjN#nf#PVSwAzSlyxU#ONIJtyEWMpvU",
+            "SST_DEBUG_SRC_PATH": ".",
+            "SST_DEBUG_SRC_HANDLER": "src/saveUsername.handler",
+            "SST_DEBUG_ENDPOINT": "wss://#vqrb#j###.execute-api.us-east-#.amazonaws.com/local",
+            "SST_DEBUG_BUCKET_NAME": "local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "#",
+            "SST_DEBUG_IS_API_ROUTE": "#"
+          }
+        },
+        "Handler": "index.main",
+        "MemorySize": ####,
+        "Runtime": "nodejs##.x",
+        "Timeout": ##,
+        "TracingConfig": {
+          "Mode": "Active"
+        }
+      },
+      "DependsOn": [
+        "ApiLambdaPOSTsaveUsernameServiceRoleDefaultPolicy#E#E#D##",
+        "ApiLambdaPOSTsaveUsernameServiceRole########"
+      ],
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--saveUsername/Resource",
+        "aws:asset:path": "asset.aa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##ae.zip",
+        "aws:asset:property": "Code"
+      }
+    },
+    "ApiLambdaPOSTsaveUsernameEventInvokeConfig##F#B###": {
+      "Type": "AWS::Lambda::EventInvokeConfig",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "ApiLambdaPOSTsaveUsername#E#CA###"
+        },
+        "Qualifier": "$LATEST",
+        "MaximumRetryAttempts": #
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--saveUsername/EventInvokeConfig/Resource"
+      }
+    },
+    "ApiRoutePOSTsaveUsernamelocalntapiApiRoutePOSTsaveUsername#AECA##DPermission###B##D#": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTsaveUsername#E#CA###",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-#:############:",
+              {
+                "Ref": "ApiCD##AAA#"
+              },
+              "/*/*/saveUsername"
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--saveUsername/localntapiApiRoutePOSTsaveUsername#AECA##D-Permission"
+      }
+    },
+    "ApiRoutePOSTsaveUsernameHttpIntegrationa#######e##a#####f####b#bd##b#ecE#######": {
+      "Type": "AWS::ApiGatewayV#::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTsaveUsername#E#CA###",
+            "Arn"
+          ]
+        },
+        "PayloadFormatVersion": "#.#"
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--saveUsername/HttpIntegration-a#######e##a#####f####b#bd##b#ec/Resource"
+      }
+    },
+    "ApiRoutePOSTsaveUsernameCE##B##D": {
+      "Type": "AWS::ApiGatewayV#::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "RouteKey": "POST /saveUsername",
+        "AuthorizationType": "AWS_IAM",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "ApiRoutePOSTsaveUsernameHttpIntegrationa#######e##a#####f####b#bd##b#ecE#######"
+              }
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--saveUsername/Resource"
+      }
+    },
+    "ApiLambdaGETgetSelfServiceRoleE##B#B##": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_GET_--getSelf/ServiceRole/Resource"
+      }
+    },
+    "ApiLambdaGETgetSelfServiceRoleDefaultPolicyE#D#E#AE": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": "s#:*",
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr/*"
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "ses:*",
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "PolicyName": "ApiLambdaGETgetSelfServiceRoleDefaultPolicyE#D#E#AE",
+        "Roles": [
+          {
+            "Ref": "ApiLambdaGETgetSelfServiceRoleE##B#B##"
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_GET_--getSelf/ServiceRole/DefaultPolicy/Resource"
+      }
+    },
+    "ApiLambdaGETgetSelf#C#A#A##": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S#Bucket": {
+            "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#Bucket###C####"
+          },
+          "S#Key": {
+            "Fn::Join": [
+              "",
+              [
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "ApiLambdaGETgetSelfServiceRoleE##B#B##",
+            "Arn"
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "UsersTable": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefUsersTable####E#C#########"
+            },
+            "PrivateUser": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefPrivateUsers#B#D######D#####"
+            },
+            "TOKBOX_API_KEY": "########",
+            "TOKBOX_SECRET": "a##e#######c##b#####a####fc#####b##fc###",
+            "VAPID_EMAIL": "geoff@talktree.me",
+            "VAPID_PUBLIC_KEY": "BOOVtqTDhJ#klbngfhCFcJqzLQsv#eoEsP_XSg#gPp#NhFeeoOsuiR##jZwgQfd#Q#W#JO#EfLGvEl_##d#zugY",
+            "VAPID_PRIVATE_KEY": "lYjFdpJqQa#ArjN#nf#PVSwAzSlyxU#ONIJtyEWMpvU",
+            "SST_DEBUG_SRC_PATH": ".",
+            "SST_DEBUG_SRC_HANDLER": "src/getSelf.handler",
+            "SST_DEBUG_ENDPOINT": "wss://#vqrb#j###.execute-api.us-east-#.amazonaws.com/local",
+            "SST_DEBUG_BUCKET_NAME": "local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "#",
+            "SST_DEBUG_IS_API_ROUTE": "#"
+          }
+        },
+        "Handler": "index.main",
+        "MemorySize": ####,
+        "Runtime": "nodejs##.x",
+        "Timeout": ##,
+        "TracingConfig": {
+          "Mode": "Active"
+        }
+      },
+      "DependsOn": [
+        "ApiLambdaGETgetSelfServiceRoleDefaultPolicyE#D#E#AE",
+        "ApiLambdaGETgetSelfServiceRoleE##B#B##"
+      ],
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_GET_--getSelf/Resource",
+        "aws:asset:path": "asset.aa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##ae.zip",
+        "aws:asset:property": "Code"
+      }
+    },
+    "ApiLambdaGETgetSelfEventInvokeConfig#AB##F##": {
+      "Type": "AWS::Lambda::EventInvokeConfig",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "ApiLambdaGETgetSelf#C#A#A##"
+        },
+        "Qualifier": "$LATEST",
+        "MaximumRetryAttempts": #
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_GET_--getSelf/EventInvokeConfig/Resource"
+      }
+    },
+    "ApiRouteGETgetSelflocalntapiApiRouteGETgetSelf##B###C#Permission###AD##F": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ApiLambdaGETgetSelf#C#A#A##",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-#:############:",
+              {
+                "Ref": "ApiCD##AAA#"
+              },
+              "/*/*/getSelf"
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_GET_--getSelf/localntapiApiRouteGETgetSelf##B###C#-Permission"
+      }
+    },
+    "ApiRouteGETgetSelfHttpIntegration##fd#b###adf##da#a##db#d####aa#c###FF#E#": {
+      "Type": "AWS::ApiGatewayV#::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::GetAtt": [
+            "ApiLambdaGETgetSelf#C#A#A##",
+            "Arn"
+          ]
+        },
+        "PayloadFormatVersion": "#.#"
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_GET_--getSelf/HttpIntegration-##fd#b###adf##da#a##db#d####aa#c/Resource"
+      }
+    },
+    "ApiRouteGETgetSelfA###DA#F": {
+      "Type": "AWS::ApiGatewayV#::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "RouteKey": "GET /getSelf",
+        "AuthorizationType": "AWS_IAM",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "ApiRouteGETgetSelfHttpIntegration##fd#b###adf##da#a##db#d####aa#c###FF#E#"
+              }
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_GET_--getSelf/Resource"
+      }
+    },
+    "ApiLambdaPOSTupdateAvailabilityServiceRole##ACD###": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--updateAvailability/ServiceRole/Resource"
+      }
+    },
+    "ApiLambdaPOSTupdateAvailabilityServiceRoleDefaultPolicyF#C#AAA#": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": "s#:*",
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr/*"
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "ses:*",
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "PolicyName": "ApiLambdaPOSTupdateAvailabilityServiceRoleDefaultPolicyF#C#AAA#",
+        "Roles": [
+          {
+            "Ref": "ApiLambdaPOSTupdateAvailabilityServiceRole##ACD###"
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--updateAvailability/ServiceRole/DefaultPolicy/Resource"
+      }
+    },
+    "ApiLambdaPOSTupdateAvailability#####B##": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S#Bucket": {
+            "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#Bucket###C####"
+          },
+          "S#Key": {
+            "Fn::Join": [
+              "",
+              [
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTupdateAvailabilityServiceRole##ACD###",
+            "Arn"
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "UsersTable": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefUsersTable####E#C#########"
+            },
+            "PrivateUser": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefPrivateUsers#B#D######D#####"
+            },
+            "TOKBOX_API_KEY": "########",
+            "TOKBOX_SECRET": "a##e#######c##b#####a####fc#####b##fc###",
+            "VAPID_EMAIL": "geoff@talktree.me",
+            "VAPID_PUBLIC_KEY": "BOOVtqTDhJ#klbngfhCFcJqzLQsv#eoEsP_XSg#gPp#NhFeeoOsuiR##jZwgQfd#Q#W#JO#EfLGvEl_##d#zugY",
+            "VAPID_PRIVATE_KEY": "lYjFdpJqQa#ArjN#nf#PVSwAzSlyxU#ONIJtyEWMpvU",
+            "SST_DEBUG_SRC_PATH": ".",
+            "SST_DEBUG_SRC_HANDLER": "src/updateAvailability.handler",
+            "SST_DEBUG_ENDPOINT": "wss://#vqrb#j###.execute-api.us-east-#.amazonaws.com/local",
+            "SST_DEBUG_BUCKET_NAME": "local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "#",
+            "SST_DEBUG_IS_API_ROUTE": "#"
+          }
+        },
+        "Handler": "index.main",
+        "MemorySize": ####,
+        "Runtime": "nodejs##.x",
+        "Timeout": ##,
+        "TracingConfig": {
+          "Mode": "Active"
+        }
+      },
+      "DependsOn": [
+        "ApiLambdaPOSTupdateAvailabilityServiceRoleDefaultPolicyF#C#AAA#",
+        "ApiLambdaPOSTupdateAvailabilityServiceRole##ACD###"
+      ],
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--updateAvailability/Resource",
+        "aws:asset:path": "asset.aa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##ae.zip",
+        "aws:asset:property": "Code"
+      }
+    },
+    "ApiLambdaPOSTupdateAvailabilityEventInvokeConfigC#######": {
+      "Type": "AWS::Lambda::EventInvokeConfig",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "ApiLambdaPOSTupdateAvailability#####B##"
+        },
+        "Qualifier": "$LATEST",
+        "MaximumRetryAttempts": #
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--updateAvailability/EventInvokeConfig/Resource"
+      }
+    },
+    "ApiRoutePOSTupdateAvailabilitylocalntapiApiRoutePOSTupdateAvailabilityF#####D#Permission##BEE##C": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTupdateAvailability#####B##",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-#:############:",
+              {
+                "Ref": "ApiCD##AAA#"
+              },
+              "/*/*/updateAvailability"
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--updateAvailability/localntapiApiRoutePOSTupdateAvailabilityF#####D#-Permission"
+      }
+    },
+    "ApiRoutePOSTupdateAvailabilityHttpIntegrationf##c###a########bc###deb#d##cd####D#DB#D": {
+      "Type": "AWS::ApiGatewayV#::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTupdateAvailability#####B##",
+            "Arn"
+          ]
+        },
+        "PayloadFormatVersion": "#.#"
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--updateAvailability/HttpIntegration-f##c###a########bc###deb#d##cd##/Resource"
+      }
+    },
+    "ApiRoutePOSTupdateAvailability#FFBC##E": {
+      "Type": "AWS::ApiGatewayV#::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "RouteKey": "POST /updateAvailability",
+        "AuthorizationType": "AWS_IAM",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "ApiRoutePOSTupdateAvailabilityHttpIntegrationf##c###a########bc###deb#d##cd####D#DB#D"
+              }
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--updateAvailability/Resource"
+      }
+    },
+    "ApiLambdaPOSTtextMessageServiceRoleB####CA#": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--textMessage/ServiceRole/Resource"
+      }
+    },
+    "ApiLambdaPOSTtextMessageServiceRoleDefaultPolicy##BF#CC#": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": "s#:*",
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr/*"
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "ses:*",
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "PolicyName": "ApiLambdaPOSTtextMessageServiceRoleDefaultPolicy##BF#CC#",
+        "Roles": [
+          {
+            "Ref": "ApiLambdaPOSTtextMessageServiceRoleB####CA#"
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--textMessage/ServiceRole/DefaultPolicy/Resource"
+      }
+    },
+    "ApiLambdaPOSTtextMessageFAA#AA#A": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S#Bucket": {
+            "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#Bucket###C####"
+          },
+          "S#Key": {
+            "Fn::Join": [
+              "",
+              [
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTtextMessageServiceRoleB####CA#",
+            "Arn"
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "UsersTable": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefUsersTable####E#C#########"
+            },
+            "PrivateUser": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefPrivateUsers#B#D######D#####"
+            },
+            "TOKBOX_API_KEY": "########",
+            "TOKBOX_SECRET": "a##e#######c##b#####a####fc#####b##fc###",
+            "VAPID_EMAIL": "geoff@talktree.me",
+            "VAPID_PUBLIC_KEY": "BOOVtqTDhJ#klbngfhCFcJqzLQsv#eoEsP_XSg#gPp#NhFeeoOsuiR##jZwgQfd#Q#W#JO#EfLGvEl_##d#zugY",
+            "VAPID_PRIVATE_KEY": "lYjFdpJqQa#ArjN#nf#PVSwAzSlyxU#ONIJtyEWMpvU",
+            "SST_DEBUG_SRC_PATH": ".",
+            "SST_DEBUG_SRC_HANDLER": "src/textMessage.handler",
+            "SST_DEBUG_ENDPOINT": "wss://#vqrb#j###.execute-api.us-east-#.amazonaws.com/local",
+            "SST_DEBUG_BUCKET_NAME": "local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "#",
+            "SST_DEBUG_IS_API_ROUTE": "#"
+          }
+        },
+        "Handler": "index.main",
+        "MemorySize": ####,
+        "Runtime": "nodejs##.x",
+        "Timeout": ##,
+        "TracingConfig": {
+          "Mode": "Active"
+        }
+      },
+      "DependsOn": [
+        "ApiLambdaPOSTtextMessageServiceRoleDefaultPolicy##BF#CC#",
+        "ApiLambdaPOSTtextMessageServiceRoleB####CA#"
+      ],
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--textMessage/Resource",
+        "aws:asset:path": "asset.aa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##ae.zip",
+        "aws:asset:property": "Code"
+      }
+    },
+    "ApiLambdaPOSTtextMessageEventInvokeConfig#A#F##F#": {
+      "Type": "AWS::Lambda::EventInvokeConfig",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "ApiLambdaPOSTtextMessageFAA#AA#A"
+        },
+        "Qualifier": "$LATEST",
+        "MaximumRetryAttempts": #
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--textMessage/EventInvokeConfig/Resource"
+      }
+    },
+    "ApiRoutePOSTtextMessagelocalntapiApiRoutePOSTtextMessage####D#B#Permission#CB###B#": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTtextMessageFAA#AA#A",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-#:############:",
+              {
+                "Ref": "ApiCD##AAA#"
+              },
+              "/*/*/textMessage"
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--textMessage/localntapiApiRoutePOSTtextMessage####D#B#-Permission"
+      }
+    },
+    "ApiRoutePOSTtextMessageHttpIntegration####e####eeeae####a#bdf###b##ccdDC##B###": {
+      "Type": "AWS::ApiGatewayV#::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTtextMessageFAA#AA#A",
+            "Arn"
+          ]
+        },
+        "PayloadFormatVersion": "#.#"
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--textMessage/HttpIntegration-####e####eeeae####a#bdf###b##ccd/Resource"
+      }
+    },
+    "ApiRoutePOSTtextMessage#A##AFCB": {
+      "Type": "AWS::ApiGatewayV#::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "RouteKey": "POST /textMessage",
+        "AuthorizationType": "AWS_IAM",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "ApiRoutePOSTtextMessageHttpIntegration####e####eeeae####a#bdf###b##ccdDC##B###"
+              }
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--textMessage/Resource"
+      }
+    },
+    "ApiLambdaGETgetSessionServiceRoleC####D##": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_GET_--getSession/ServiceRole/Resource"
+      }
+    },
+    "ApiLambdaGETgetSessionServiceRoleDefaultPolicy##FE#BAB": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": "s#:*",
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr/*"
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "ses:*",
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "PolicyName": "ApiLambdaGETgetSessionServiceRoleDefaultPolicy##FE#BAB",
+        "Roles": [
+          {
+            "Ref": "ApiLambdaGETgetSessionServiceRoleC####D##"
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_GET_--getSession/ServiceRole/DefaultPolicy/Resource"
+      }
+    },
+    "ApiLambdaGETgetSessionE#####D#": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S#Bucket": {
+            "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#Bucket###C####"
+          },
+          "S#Key": {
+            "Fn::Join": [
+              "",
+              [
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "ApiLambdaGETgetSessionServiceRoleC####D##",
+            "Arn"
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "UsersTable": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefUsersTable####E#C#########"
+            },
+            "PrivateUser": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefPrivateUsers#B#D######D#####"
+            },
+            "TOKBOX_API_KEY": "########",
+            "TOKBOX_SECRET": "a##e#######c##b#####a####fc#####b##fc###",
+            "VAPID_EMAIL": "geoff@talktree.me",
+            "VAPID_PUBLIC_KEY": "BOOVtqTDhJ#klbngfhCFcJqzLQsv#eoEsP_XSg#gPp#NhFeeoOsuiR##jZwgQfd#Q#W#JO#EfLGvEl_##d#zugY",
+            "VAPID_PRIVATE_KEY": "lYjFdpJqQa#ArjN#nf#PVSwAzSlyxU#ONIJtyEWMpvU",
+            "SST_DEBUG_SRC_PATH": ".",
+            "SST_DEBUG_SRC_HANDLER": "src/getSession.handler",
+            "SST_DEBUG_ENDPOINT": "wss://#vqrb#j###.execute-api.us-east-#.amazonaws.com/local",
+            "SST_DEBUG_BUCKET_NAME": "local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "#",
+            "SST_DEBUG_IS_API_ROUTE": "#"
+          }
+        },
+        "Handler": "index.main",
+        "MemorySize": ####,
+        "Runtime": "nodejs##.x",
+        "Timeout": ##,
+        "TracingConfig": {
+          "Mode": "Active"
+        }
+      },
+      "DependsOn": [
+        "ApiLambdaGETgetSessionServiceRoleDefaultPolicy##FE#BAB",
+        "ApiLambdaGETgetSessionServiceRoleC####D##"
+      ],
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_GET_--getSession/Resource",
+        "aws:asset:path": "asset.aa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##ae.zip",
+        "aws:asset:property": "Code"
+      }
+    },
+    "ApiLambdaGETgetSessionEventInvokeConfig##BB####": {
+      "Type": "AWS::Lambda::EventInvokeConfig",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "ApiLambdaGETgetSessionE#####D#"
+        },
+        "Qualifier": "$LATEST",
+        "MaximumRetryAttempts": #
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_GET_--getSession/EventInvokeConfig/Resource"
+      }
+    },
+    "ApiRouteGETgetSessionlocalntapiApiRouteGETgetSession#A#A#A#BPermission###EBBCB": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ApiLambdaGETgetSessionE#####D#",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-#:############:",
+              {
+                "Ref": "ApiCD##AAA#"
+              },
+              "/*/*/getSession"
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_GET_--getSession/localntapiApiRouteGETgetSession#A#A#A#B-Permission"
+      }
+    },
+    "ApiRouteGETgetSessionHttpIntegration##a#d#######b##aeef#c###d#e###b###E##CCE": {
+      "Type": "AWS::ApiGatewayV#::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::GetAtt": [
+            "ApiLambdaGETgetSessionE#####D#",
+            "Arn"
+          ]
+        },
+        "PayloadFormatVersion": "#.#"
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_GET_--getSession/HttpIntegration-##a#d#######b##aeef#c###d#e###b#/Resource"
+      }
+    },
+    "ApiRouteGETgetSessionFC##A###": {
+      "Type": "AWS::ApiGatewayV#::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "RouteKey": "GET /getSession",
+        "AuthorizationType": "AWS_IAM",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "ApiRouteGETgetSessionHttpIntegration##a#d#######b##aeef#c###d#e###b###E##CCE"
+              }
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_GET_--getSession/Resource"
+      }
+    },
+    "ApiLambdaPOSTtokboxHookServiceRoleF####B#D": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--tokboxHook/ServiceRole/Resource"
+      }
+    },
+    "ApiLambdaPOSTtokboxHookServiceRoleDefaultPolicy##B##AFA": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "xray:PutTraceSegments",
+                "xray:PutTelemetryRecords"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": "s#:*",
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+                "arn:aws:s#:::local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr/*"
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttUsersTable####E#C#Arn####EF##"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "dynamodb:*",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputFnGetAttPrivateUsers#B#D####ArnBEF##FDB"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": "ses:*",
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "####-##-##"
+        },
+        "PolicyName": "ApiLambdaPOSTtokboxHookServiceRoleDefaultPolicy##B##AFA",
+        "Roles": [
+          {
+            "Ref": "ApiLambdaPOSTtokboxHookServiceRoleF####B#D"
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--tokboxHook/ServiceRole/DefaultPolicy/Resource"
+      }
+    },
+    "ApiLambdaPOSTtokboxHookB##C#AA#": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S#Bucket": {
+            "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#Bucket###C####"
+          },
+          "S#Key": {
+            "Fn::Join": [
+              "",
+              [
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Fn::Select": [
+                    #,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTtokboxHookServiceRoleF####B#D",
+            "Arn"
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "UsersTable": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefUsersTable####E#C#########"
+            },
+            "PrivateUser": {
+              "Fn::ImportValue": "local-nt-dynamodb:ExportsOutputRefPrivateUsers#B#D######D#####"
+            },
+            "TOKBOX_API_KEY": "########",
+            "TOKBOX_SECRET": "a##e#######c##b#####a####fc#####b##fc###",
+            "VAPID_EMAIL": "geoff@talktree.me",
+            "VAPID_PUBLIC_KEY": "BOOVtqTDhJ#klbngfhCFcJqzLQsv#eoEsP_XSg#gPp#NhFeeoOsuiR##jZwgQfd#Q#W#JO#EfLGvEl_##d#zugY",
+            "VAPID_PRIVATE_KEY": "lYjFdpJqQa#ArjN#nf#PVSwAzSlyxU#ONIJtyEWMpvU",
+            "SST_DEBUG_SRC_PATH": ".",
+            "SST_DEBUG_SRC_HANDLER": "src/tokboxHook.handler",
+            "SST_DEBUG_ENDPOINT": "wss://#vqrb#j###.execute-api.us-east-#.amazonaws.com/local",
+            "SST_DEBUG_BUCKET_NAME": "local-nt-debug-stack-bucket#####e##-#c#ri##aov#nr",
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "#",
+            "SST_DEBUG_IS_API_ROUTE": "#"
+          }
+        },
+        "Handler": "index.main",
+        "MemorySize": ####,
+        "Runtime": "nodejs##.x",
+        "Timeout": ##,
+        "TracingConfig": {
+          "Mode": "Active"
+        }
+      },
+      "DependsOn": [
+        "ApiLambdaPOSTtokboxHookServiceRoleDefaultPolicy##B##AFA",
+        "ApiLambdaPOSTtokboxHookServiceRoleF####B#D"
+      ],
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--tokboxHook/Resource",
+        "aws:asset:path": "asset.aa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##ae.zip",
+        "aws:asset:property": "Code"
+      }
+    },
+    "ApiLambdaPOSTtokboxHookEventInvokeConfigC####C#F": {
+      "Type": "AWS::Lambda::EventInvokeConfig",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "ApiLambdaPOSTtokboxHookB##C#AA#"
+        },
+        "Qualifier": "$LATEST",
+        "MaximumRetryAttempts": #
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Lambda_POST_--tokboxHook/EventInvokeConfig/Resource"
+      }
+    },
+    "ApiRoutePOSTtokboxHooklocalntapiApiRoutePOSTtokboxHookBCD###D#PermissionC#######": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTtokboxHookB##C#AA#",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-#:############:",
+              {
+                "Ref": "ApiCD##AAA#"
+              },
+              "/*/*/tokboxHook"
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--tokboxHook/localntapiApiRoutePOSTtokboxHookBCD###D#-Permission"
+      }
+    },
+    "ApiRoutePOSTtokboxHookHttpIntegrationd#####b######f##a#e##d##c####eb#B###A###": {
+      "Type": "AWS::ApiGatewayV#::Integration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::GetAtt": [
+            "ApiLambdaPOSTtokboxHookB##C#AA#",
+            "Arn"
+          ]
+        },
+        "PayloadFormatVersion": "#.#"
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--tokboxHook/HttpIntegration-d#####b######f##a#e##d##c####eb#/Resource"
+      }
+    },
+    "ApiRoutePOSTtokboxHookCC#BF#CA": {
+      "Type": "AWS::ApiGatewayV#::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "ApiCD##AAA#"
+        },
+        "RouteKey": "POST /tokboxHook",
+        "AuthorizationType": "NONE",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "ApiRoutePOSTtokboxHookHttpIntegrationd#####b######f##a#e##d##c####eb#B###A###"
+              }
+            ]
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "local-nt-api/Api/Route_POST_--tokboxHook/Resource"
+      }
+    }
+  },
+  "Parameters": {
+    "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#Bucket###C####": {
+      "Type": "String",
+      "Description": "S# bucket for asset \"aa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##ae\""
+    },
+    "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeS#VersionKey####BE##": {
+      "Type": "String",
+      "Description": "S# key for asset version \"aa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##ae\""
+    },
+    "AssetParametersaa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##aeArtifactHashFABCE##B": {
+      "Type": "String",
+      "Description": "Artifact hash for asset \"aa#cf#d#####c#a##b#e#f#######e####d###a###a##f####d##e#f##ca##ae\""
+    }
+  },
+  "Outputs": {
+    "ApiEndpoint": {
+      "Value": {
+        "Fn::GetAtt": [
+          "ApiCD##AAA#",
+          "ApiEndpoint"
+        ]
+      }
+    },
+    "Routes": {
+      "Value": "[\"GET /getUsers\",\"POST /createUnpaidSession\",\"POST /getUser\",\"POST /saveNotionId\",\"POST /saveUsername\",\"GET /getSelf\",\"POST /updateAvailability\",\"POST /textMessage\",\"GET /getSession\",\"POST /tokboxHook\"]"
+    },
+    "ExportsOutputRefApiCD##AAA#A####A##": {
+      "Value": {
+        "Ref": "ApiCD##AAA#"
+      },
+      "Export": {
+        "Name": "local-nt-api:ExportsOutputRefApiCD##AAA#A####A##"
+      }
+    }
+  }
+}

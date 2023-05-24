@@ -46,7 +46,7 @@ export async function getStaticPaths() {
 
 So now when we visit that new page we actually get the new page, albeit a little slower to load. But now if you go to a nonexistent page, it 500 errors, not 404. This causes problems with Google Search. Say a user creates a page, then deletes it - Google will keep the page indexed despite returning a 500 error.
 
-![urlIsOnGoogle.png](Prevent%20Next%20js%20500%20error%20with%20proper%20404%20page%20con%20c63cb723b9dd4bbea73c5d3f996f2a14/urlIsOnGoogle.png)
+![urlIsOnGoogle.png](prevent-nextjs-500/urlIsOnGoogle.png)
 
 Once a user deletes their page, we don't want it showing up in our Google search results. We need the page to return 404.
 
@@ -70,7 +70,7 @@ The behaviour of the app is as follows:
 
 Below is what we want to see when indexing a non existent page.
 
-![index404.png](Prevent%20Next%20js%20500%20error%20with%20proper%20404%20page%20con%20c63cb723b9dd4bbea73c5d3f996f2a14/index404.png)
+![index404.png](prevent-nextjs-500/index404.png)
 
 Now that the 404 page is being properly served, you can customize it by creating a 404.js file in your pages folder.
 

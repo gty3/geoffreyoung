@@ -5,7 +5,7 @@ date: 2022-7-27
 
 We’re going to capture email addresses from our landing page signup form and save them to a database.
 
-![Untitled](3%20-%20Saving%20email%20addresses,%20creating%20an%20API%20for%20a%20%20a719802967424c0abc461867a02b9bdd/Untitled.png)
+![Untitled](saving-email-address-api/Untitled.png)
 
 This will require an API, a database, and authentication.
 
@@ -119,7 +119,7 @@ We already have a rudimentary API stack made for us - hence `new Api`.
     </aside>
     
 
-![Untitled](3%20-%20Saving%20email%20addresses,%20creating%20an%20API%20for%20a%20%20a719802967424c0abc461867a02b9bdd/Untitled%201.png)
+![Untitled](saving-email-address-api/Untitled%201.png)
 
 ```tsx
 import { StackContext, NextjsSite, Api, Table, Auth } from "@serverless-stack/resources";
@@ -224,7 +224,7 @@ Let’s visit our mailer.ts function. It’s going to receive an email address, 
     ```
     
 
-![Untitled](3%20-%20Saving%20email%20addresses,%20creating%20an%20API%20for%20a%20%20a719802967424c0abc461867a02b9bdd/Untitled%202.png)
+![Untitled](saving-email-address-api/Untitled%202.png)
 
 ```tsx
 import { DynamoDB } from 'aws-sdk'
@@ -263,7 +263,7 @@ export const handler: APIGatewayProxyHandlerV2 = async (event) => {
 
 If you aren’t running SST, go ahead and `npm run start` or if its already running:
 
-![Untitled](3%20-%20Saving%20email%20addresses,%20creating%20an%20API%20for%20a%20%20a719802967424c0abc461867a02b9bdd/Untitled%203.png)
+![Untitled](saving-email-address-api/Untitled%203.png)
 
 # Frontend
 
@@ -312,7 +312,7 @@ import '../configureAmplify'
 
 Here’s how my app looks:
 
-![Untitled](3%20-%20Saving%20email%20addresses,%20creating%20an%20API%20for%20a%20%20a719802967424c0abc461867a02b9bdd/Untitled%204.png)
+![Untitled](saving-email-address-api/Untitled%204.png)
 
 This allows us to make calls to the backend functions. Let’s make our landing page ‘Join the Beta’ button submit the user’s address to our mailer.ts function using the API we configured.
 
@@ -320,7 +320,7 @@ This allows us to make calls to the backend functions. Let’s make our landing 
 
 - We’re going to reference the input value (the email address) from a ref, using the React createRef hook.
 
-![Untitled](3%20-%20Saving%20email%20addresses,%20creating%20an%20API%20for%20a%20%20a719802967424c0abc461867a02b9bdd/Untitled%205.png)
+![Untitled](saving-email-address-api/Untitled%205.png)
 
 ```tsx
 const emailRef = createRef<HTMLInputElement>()
@@ -419,6 +419,6 @@ Let’s check out our localhost:3000, if you weren’t already running the app: 
 
 Now submit an email address and… 
 
-![Untitled](3%20-%20Saving%20email%20addresses,%20creating%20an%20API%20for%20a%20%20a719802967424c0abc461867a02b9bdd/Untitled%206.png)
+![Untitled](saving-email-address-api/Untitled%206.png)
 
 Success!

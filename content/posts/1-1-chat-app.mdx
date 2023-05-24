@@ -5,7 +5,7 @@ date: 2022-7-23
 
 This guide is for building a modern full stack web application. We will be using SST (serverless stack) to deploy both frontend and backend from one folder.
 
-![Untitled](Building%20a%201%201%20chat%20app%20932077bdf4ea42fd9202c8db997bdaf1/Untitled.png)
+![Untitled](1-1-chat-app/Untitled.png)
 
 Requirements:
 
@@ -30,9 +30,9 @@ npx create-sst@latest --minimal
 
 I’m choosing typescript and calling my project Dropintalk.
 
-![sstTemplate.png](Building%20a%201%201%20chat%20app%20932077bdf4ea42fd9202c8db997bdaf1/sstTemplate.png)
+![sstTemplate.png](1-1-chat-app/sstTemplate.png)
 
-![Untitled](Building%20a%201%201%20chat%20app%20932077bdf4ea42fd9202c8db997bdaf1/Untitled%201.png)
+![Untitled](1-1-chat-app/Untitled%201.png)
 
 The CLI says to start the app but it doesn’t matter, we just need to open the project.
 
@@ -43,7 +43,7 @@ code .
 
 So we have our serverless stack created, we need to create our frontend Next.js application inside of it.
 
-![Untitled](Building%20a%201%201%20chat%20app%20932077bdf4ea42fd9202c8db997bdaf1/Untitled%202.png)
+![Untitled](1-1-chat-app/Untitled%202.png)
 
 ```json
 npx create-next-app@latest --ts
@@ -64,7 +64,7 @@ npm install @sls-next/lambda-at-edge
 
 Your workspace might look slightly different, I’ve remove the vitest package as well since we don’t need it. Here’s how my package.json looks:
 
-![Untitled](Building%20a%201%201%20chat%20app%20932077bdf4ea42fd9202c8db997bdaf1/Untitled%203.png)
+![Untitled](1-1-chat-app/Untitled%203.png)
 
 Let’s connect our frontend to our serverless stack.
 
@@ -100,9 +100,9 @@ This allows us to deploy our NextjsSite using AWS resources.
 
 Now let’s run, npm i, then npm start
 
-![Screenshot from 2022-07-22 11-53-51.png](Building%20a%201%201%20chat%20app%20932077bdf4ea42fd9202c8db997bdaf1/Screenshot_from_2022-07-22_11-53-51.png)
+![Screenshot from 2022-07-22 11-53-51.png](1-1-chat-app/Screenshot_from_2022-07-22_11-53-51.png)
 
-![Untitled](Building%20a%201%201%20chat%20app%20932077bdf4ea42fd9202c8db997bdaf1/Untitled%204.png)
+![Untitled](1-1-chat-app/Untitled%204.png)
 
 The serverless stack is up and running locally, let’s get the frontend running, open another CLI, and cd to the frontend folder.
 
@@ -112,6 +112,6 @@ cd frontend/; npm i; npm run dev
 
 Let’s open up our browser and head to localhost:3000. Our Next.js site is now hosted locally.
 
-![Untitled](Building%20a%201%201%20chat%20app%20932077bdf4ea42fd9202c8db997bdaf1/Untitled%205.png)
+![Untitled](1-1-chat-app/Untitled%205.png)
 
 Now it’s time to make a rudimentary landing page.

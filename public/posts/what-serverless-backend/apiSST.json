@@ -1,0 +1,41 @@
+import * as sst from "@serverless-stack/resources";
+import { CorsHttpMethod } from "@aws-cdk/aws-apigatewayv2"
+
+export default class ApiStack extends sst.Stack {
+  api
+  constructor(scope: sst.App, id: string, props: any) {
+    super(scope, id, props);
+    const { 
+      usersTable, 
+      receiversTable,
+      privateUsers,
+      sessionData
+     }  = props;
+
+    this.api = new sst.Api(this, "Api", {
+      cors: true,
+      defaultAuthorizationType: sst.ApiAuthorizationType.AWS_IAM,
+      defaultFunctionProps: {
+        environment: {
+          UsersTable: usersTable.tableName,
+          ReceiversTable: receiversTable.tableName,
+          PrivateUser: privateUsers.tableName,
+          SessionData: sessionData.tableName,
+        },
+      },
+      routes: {
+        "GET /getUsers": "src/getUsers.handler",
+        "POST /createUnpaidSession": "src/createUnpaidSession.handler",
+        "POST /getUser": "src/getUser.handler",
+        "POST /saveNotionId": "src/saveNotionId.handler" 
+      },
+    });
+    this.api.attachPermissions([usersTable, receiversTable, privateUsers, sessionData, "ses"]);
+
+    // Show the endpoint in the output
+    this.addOutputs({
+      "ApiEndpoint": this.api.url,
+      "Routes": JSON.stringify(this.api.routes),
+    });
+  }
+}
