@@ -37,9 +37,6 @@ const World = () => {
 
   const startTime = 1000
 
-  if (typeof window !== 'undefined') {
-    // detect window screen width function
-  }
 
   useEffect(() => {
     if (!globeRef.current) {
@@ -57,14 +54,12 @@ const World = () => {
     arcAndSvg(setSvgData, setArcsData, startTime)
   }, [globeReady])
 
-  window
-
   return (
     <>
       <Globe
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
         onGlobeReady={() => setGlobeReady(true)}
-        height={window && window.innerWidth > 575 ? 700 : 500}
+        height={typeof window !== "undefined" && window.innerWidth > 575 ? 700 : 500 }
         // onGlobeClick={(e) => console.log("e", e)}
         animateIn={false}
         arcsData={arcsData}
