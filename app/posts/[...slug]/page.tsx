@@ -54,15 +54,15 @@ export default async function PostPage({ params }: PostProps) {
     <>
     {/* <Background /> */}
     <div className="mx-4 sm:flex sm:justify-center">
-    <article className="z-10 py-6 prose dark:prose-invert">
+    <article className="z-10 py-6 prose">
       <h1 className="mb-2">{post.title}</h1>
       {post.description && (
-        <p className="mt-0 text-xl text-slate-700 dark:text-slate-200">
+        <p className="mt-0 text-xl text-slate-700 ">
           {post.description}
         </p>
       )}
       <div className="flex flex-row mt-4">
-      <div className="px-2 py-1 -ml-2 tracking-tighter rounded-md bg-neutral-100 dark:bg-neutral-800">
+      <div className="px-2 py-1 -ml-2 tracking-tighter rounded-md bg-neutral-100 ">
         {new Date(post.date).toISOString().split('T')[0]}
       </div>
       <hr className="w-8/12 my-4 ml-2 sm:w-10/12 " />
