@@ -21,7 +21,7 @@ export default function Home() {
       <Projects />
       </div>
       <div className="z-10">
-      {/* <Articles /> */}
+      <Articles />
       </div>
       </div>
     </>
