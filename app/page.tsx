@@ -14,7 +14,7 @@ export default function Home() {
       
       <div className="">
       <ImGeoff />
-      <div className="z-0 sm:-my-24 -my-10 sm:h-[700px] h-[500px]">
+      <div className="z-0 sm:-my-24 -my-10 sm:h-[700px] h-[480px]">
         <World />
       </div>
       <div className="">

@@ -53,7 +53,7 @@ export default async function PostPage({ params }: PostProps) {
   return (
     <>
     {/* <Background /> */}
-    <div className="flex justify-center">
+    <div className="mx-4 sm:flex sm:justify-center">
     <article className="z-10 py-6 prose dark:prose-invert">
       <h1 className="mb-2">{post.title}</h1>
       {post.description && (
@@ -61,11 +61,11 @@ export default async function PostPage({ params }: PostProps) {
           {post.description}
         </p>
       )}
-      <div className="flex flex-row">
+      <div className="flex flex-row mt-4">
       <div className="px-2 py-1 -ml-2 tracking-tighter rounded-md bg-neutral-100 dark:bg-neutral-800">
         {new Date(post.date).toISOString().split('T')[0]}
       </div>
-      <hr className="w-10/12 my-4 ml-2 " />
+      <hr className="w-8/12 my-4 ml-2 sm:w-10/12 " />
       </div>
       <Mdx code={post.body.code} />
     </article>

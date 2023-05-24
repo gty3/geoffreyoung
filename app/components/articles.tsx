@@ -9,9 +9,11 @@ function PostCard(post: Post) {
       <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.96 }} key={post._id}>
         <Link href={post.slug}>
           <div className="p-4 m-4 border border-gray-300 rounded-lg cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter">
-          <h2 className="mx-1 text-xl font-semibold">{post.title}</h2>
+          <h2 className="text-xl font-semibold">{post.title}</h2>
+          <div className="pt-1 text-xs sm:text-sm">{new Date(post.date).toISOString().split('T')[0]}</div>
           </div>
         </Link>
+        
         {post.description && <p>{post.description}</p>}
       </motion.div>
   )

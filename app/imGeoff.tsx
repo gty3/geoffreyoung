@@ -22,7 +22,7 @@ export default function ImGeoff() {
 
   return (
     <div className="flex justify-center">
-      <div className="z-10 mt-10">
+      <div className="z-10 mt-5 sm:mt-10">
         <div className="flex justify-center pr-2">
           <Button />
         </div>

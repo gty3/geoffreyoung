@@ -4,9 +4,7 @@ import {
   useState,
   useEffect,
   useRef,
-  useCallback,
   forwardRef,
-  createRef,
 } from "react"
 import arcAndSvg from "../../lib/arcAndSvg"
 import { ArcsObj, SVGobj } from "./types"
@@ -37,7 +35,6 @@ const World = () => {
 
   const startTime = 1000
 
-
   useEffect(() => {
     if (!globeRef.current) {
       return
@@ -60,7 +57,6 @@ const World = () => {
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
         onGlobeReady={() => setGlobeReady(true)}
         height={typeof window !== "undefined" && window.innerWidth > 575 ? 700 : 500 }
-        // onGlobeClick={(e) => console.log("e", e)}
         animateIn={false}
         arcsData={arcsData}
         arcColor={() => "orange"}

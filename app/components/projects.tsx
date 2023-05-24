@@ -54,18 +54,23 @@ export default function Projects() {
         <div
           className={
             url
-              ? "p-6 pb-4 border border-gray-300 rounded-lg cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
-              : "p-6 pb-4 border border-gray-300 rounded-lg break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
+              ? "p-4 sm:p-6 border border-gray-300 rounded-lg cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
+              : "p-4 /*  */sm:p-6 border border-gray-300 rounded-lg break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
           }
         >
           <div onClick={() => url && window.open(url)}>
-            <div className="flex flex-col">
+            <div className="flex">
               <Image alt={image} width={100} height={100} src={image}></Image>
-              <div className="text-2xl font-extrabold">{name}</div>
-              <div className="mb-1.5 -mt-1.5 font-medium">{description}</div>
-              <div className="mb-1">{builtWith}</div>
-              <GithubButton />
+              <div className="flex flex-col pl-4">
+                <div className="text-2xl font-extrabold">{name}</div>
+                <div className="font-medium ">{description}</div>
+              </div>
+
             </div>
+            <div className="flex flex-col py-2">
+                <div className="my-1">{builtWith}</div>
+                <GithubButton />
+              </div>
           </div>
         </div>
       </Tilt>
@@ -80,7 +85,7 @@ export default function Projects() {
         </div>
       </div>
 
-      <div className="max-w-6xl py-8 mx-2 space-y-6 sm:columns-2 sm:gap-6 xl:columns-3">
+      <div className="max-w-6xl py-8 mx-4 space-y-6 sm:columns-2 sm:gap-6 xl:columns-3">
         {projectslist.map((project, idx) => (
           <Card key={idx} {...project} />
         ))}
