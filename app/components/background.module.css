@@ -10,7 +10,6 @@
   display: flex;
   justify-content: center;
   padding: 120px 24px 160px 24px;
-  pointer-events: none;
 }
 
 .main:before {
@@ -57,4 +56,5 @@
   filter: blur(100px) saturate(150%);
   top: 80px;
   opacity: 0.15;
+  visibility: visible;
 }
