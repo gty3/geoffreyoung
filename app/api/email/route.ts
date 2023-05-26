@@ -5,6 +5,7 @@ export async function POST(request: Request) {
   const requestJson = await request.text()
   console.log(requestJson)
 
+  if (process.env.NODE_ENV !== "development") {
     try {
       await new SESClient({ region: "us-east-1" }).send(
         new SendEmailCommand({
@@ -27,6 +28,7 @@ export async function POST(request: Request) {
     } catch (err) {
       console.log("SES-ERR:::", err)
     }
+  }
 
   return new Response(JSON.stringify({ statusCode: 200 }))
 }

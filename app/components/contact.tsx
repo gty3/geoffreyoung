@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { useRef, useState } from "react"
 import { Variants, motion } from "framer-motion"
+import LoadingBalls from "./loadingBalls"
 
 const itemVariants: Variants = {
   open: {
@@ -19,24 +20,28 @@ const submitMessage = async (
   message: string | undefined
 ) => {
   if (!email || !message) {
-    return
+    return false
   }
   const messageSent = await fetch("/api/email", {
     method: "POST",
     body: JSON.stringify({ email: email, message: message }),
   })
   console.log(messageSent)
+  return true
 }
 
 const Contact = () => {
   const [emailOpen, setEmailOpen] = useState(false)
-  const [contacted, setContacted] = useState(false)
+  const [contacted, setContacted] = useState("")
 
   const emailRef = useRef<HTMLInputElement>(null)
   const messageRef = useRef<HTMLTextAreaElement>(null)
 
-  const clickSubmit = () => {
-    const contacted = submitMessage(emailRef.current?.value, messageRef.current?.value)
+  const clickSubmit = async () => {
+    // setContacted("sending")
+    const success = await submitMessage(emailRef.current?.value, messageRef.current?.value)
+    // setContacted("")
+    if (success) { setEmailOpen(false) }
     
   }
 
@@ -45,7 +50,7 @@ const Contact = () => {
     <motion.div
       initial={false}
       animate={emailOpen ? "open" : "closed"}
-      className="flex justify-center mt-10 mb-40"
+      className="flex justify-center mt-10 mb-32"
     >
       <div className="">
         <div className="flex flex-row justify-center backdrop-filter">
@@ -112,13 +117,13 @@ const Contact = () => {
               ref={messageRef}
             ></textarea>
           </motion.div>
-          <motion.button
+          {contacted !== "sending" ? <motion.button
             onClick={clickSubmit}
             className="px-3 py-2 mt-2 font-semibold bg-gray-100 border border-gray-300 rounded-lg bg-white/20"
             variants={itemVariants}
           >
             Submit
-          </motion.button>
+          </motion.button> : <LoadingBalls />}
         </motion.div>
       </div>
     </motion.div>
