@@ -52,7 +52,7 @@ export default async function PostPage({ params }: PostProps) {
 
   return (
     <>
-    {/* <Background /> */}
+    <Background />
     <div className="mx-4 sm:flex sm:justify-center">
     <article className="z-10 py-6 prose">
       <h1 className="mb-2">{post.title}</h1>
