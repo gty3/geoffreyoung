@@ -3,7 +3,7 @@ import { Metadata } from "next"
 import { allPosts } from "contentlayer/generated"
 
 import { Mdx } from "../../components/mdx-components"
-import Background from "@/app/components/background"
+import Background from "./background"
 
 interface PostProps {
   params: {
