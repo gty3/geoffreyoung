@@ -53,8 +53,8 @@ const Contact = () => {
       className="flex justify-center mt-10 mb-32"
     >
       <div className="">
-        <div className="flex flex-row justify-center backdrop-filter">
-          <Image src="/favicon.ico" height={60} width={60} alt="Geoff" />
+        <div className="flex flex-row justify-center">
+          <Image className="opacity-90" src="/favicon.ico" height={60} width={60} alt="Geoff" />
 
           <div>
             <motion.button
@@ -105,21 +105,21 @@ const Contact = () => {
         >
           <motion.div className="mt-4 mb-3" variants={itemVariants}>
             <input
-              className="p-1 px-2 mt-2 rounded w-80 sm:w-[500px]"
+              className="p-1 px-2 mt-2 rounded w-80 sm:w-[500px] bg-white/70"
               placeholder="Email address"
               ref={emailRef}
             ></input>
           </motion.div>
           <motion.div variants={itemVariants}>
             <textarea
-              className="h-32 p-1 px-2 rounded w-80 sm:w-[500px]"
+              className="h-32 p-1 px-2 rounded w-80 sm:w-[500px] bg-white/70"
               placeholder="Message"
               ref={messageRef}
             ></textarea>
           </motion.div>
           {contacted !== "sending" ? <motion.button
             onClick={clickSubmit}
-            className="px-3 py-2 mt-2 font-semibold bg-gray-100 border border-gray-300 rounded-lg bg-white/20"
+            className="px-3 py-2 mt-2 font-semibold border border-gray-300 rounded-lg bg-white/20"
             variants={itemVariants}
           >
             Submit
