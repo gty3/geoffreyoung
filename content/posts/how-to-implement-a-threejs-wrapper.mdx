@@ -1,0 +1,86 @@
+---
+title: How to implement a three.js wrapper - react.globe.gl in Next.js
+date: 2023-5-26
+image: /posts/globe-shot.png
+---
+
+Implementing a client side component like [react.globe.gl](http://react.globe.gl) isn’t straightforward.
+
+We need to wait for the client side to be rendered before we can import our globe. We do this by creating a client side component that we can dynamically import.
+
+```tsx
+"use client"
+
+import GlobeTmpl from "react-globe.gl";
+
+const Globe = ({ forwardRef, ...otherProps }: any) => (
+  <GlobeTmpl {...otherProps} ref={forwardRef} />
+);
+
+export default Globe;
+```
+
+Now let’s import this component to use. Since we need to reference the component to make changes to it (in this case change the point of view and disable zoom), we’ll need to forward our ref.
+
+```tsx
+"use client"
+
+import {
+  useState,
+  useEffect,
+  useRef,
+  forwardRef,
+} from "react"
+import dynamic from "next/dynamic"
+
+const Globe = dynamic(() => import("./globeWrapper"), {
+  ssr: false,
+})
+const Globe = forwardRef((props: any, ref) => (
+  <GlobeTmpl {...props} forwardRef={ref} />
+))
+
+const World = () => {
+
+  const globeRef = useRef()
+
+  const [globeReady, setGlobeReady] = useState(false)
+
+  const startTime = 1000
+
+  useEffect(() => {
+    if (!globeRef.current) {
+      return
+    }
+    ;(globeRef.current as any).pointOfView(
+      {
+        lat: 39.609913,
+        lng: -105.962477,
+        altitude: 2.5,
+      },
+      startTime
+    )
+    ;(globeRef.current as any).controls().enableZoom = false
+  }, [globeReady])
+
+  return (
+    <>
+      <Globe
+        globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
+        onGlobeReady={() => setGlobeReady(true)}
+        height={500}
+        animateIn={false}
+        ref={globeRef}
+      />
+    </>
+  )
+}
+
+export default World
+```
+
+We also need to add a dependency for our useEffect because if we reference our globeRef on page load - it will be undefined!
+
+[React.globe.gl](http://React.globe.gl) has an onGlobeReady property we will utilize. When the globe is ready, we will update state, and our useEffect will be triggered. We can finally access our globe ref! 
+
+No more errors!
