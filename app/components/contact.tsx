@@ -25,7 +25,7 @@ const submitMessage = async (
     method: "POST",
     body: JSON.stringify({ email: email, message: message }),
   })
-  console.log(messageSent)
+  
   return true
 }
 
@@ -77,7 +77,7 @@ const Contact = () => {
 
           <div>
             <motion.button
-              className="flex flex-row p-3 mx-4 text-2xl font-semibold border border-gray-300 rounded-lg cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
+              className="flex flex-row px-3 py-2 mx-4 mt-1.5 text-2xl font-semibold border border-gray-300 rounded-lg cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
               whileTap={{ scale: 0.97 }}
               onClick={pressContact}
             >
@@ -145,6 +145,7 @@ const Contact = () => {
             onClick={clickSubmit}
             className="px-3 py-2 mt-2 font-semibold border border-gray-300 rounded-lg bg-white/20"
             variants={itemVariants}
+            whileTap={{ scale: 0.97 }}
           >
             Submit
           </motion.button>
