@@ -10,7 +10,7 @@ import arcAndSvg from "../../lib/arcAndSvg"
 import { ArcsObj, SVGobj } from "./types"
 import dynamic from "next/dynamic"
 
-const GlobeTmpl = dynamic(() => import("./globeWrapper"), {
+const GlobeTmpl = dynamic(() => import("react-globe.gl"), {
   ssr: false,
 })
 const Globe = forwardRef((props: any, ref) => (
