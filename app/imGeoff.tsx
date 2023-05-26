@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 
 export default function ImGeoff() {
+  
   const Button = () => {
     return (
       <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
@@ -22,7 +23,7 @@ export default function ImGeoff() {
 
   return (
     <div className="flex justify-center">
-      <div className="z-10 mt-5 sm:mt-10">
+      <div className="z-10 mt-10">
         <div className="flex justify-center pr-2">
           <Button />
         </div>

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.338.0",
     "@tailwindcss/typography": "^0.5.9",
     "@tweenjs/tween.js": "^20.0.3",
     "@types/node": "20.1.7",
