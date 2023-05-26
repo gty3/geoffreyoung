@@ -53,8 +53,8 @@ export default async function PostPage({ params }: PostProps) {
   return (
     <>
     <Background />
-    <div className="z-30 mx-4 sm:flex sm:justify-center">
-    <article className="py-6 prose backdrop-blur-none">
+    <div className="z-30 mx-4 sm:flex sm:justify-center backdrop-blur-md">
+    <article className="py-6 prose ">
       <h1 className="mb-2">{post.title}</h1>
       {post.description && (
         <p className="mt-0 text-xl text-slate-700 ">

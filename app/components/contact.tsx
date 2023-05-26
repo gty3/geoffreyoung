@@ -9,11 +9,10 @@ const itemVariants: Variants = {
   open: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.2  },
+    transition: { duration: 0.2 },
   },
   closed: { opacity: 0, y: 20, transition: { duration: 0.2 } },
 }
-
 
 const submitMessage = async (
   email: string | undefined,
@@ -32,17 +31,32 @@ const submitMessage = async (
 
 const Contact = () => {
   const [emailOpen, setEmailOpen] = useState(false)
-  const [contacted, setContacted] = useState("")
+  const [contacted, setContacted] = useState(false)
 
   const emailRef = useRef<HTMLInputElement>(null)
   const messageRef = useRef<HTMLTextAreaElement>(null)
 
   const clickSubmit = async () => {
-    // setContacted("sending")
-    const success = await submitMessage(emailRef.current?.value, messageRef.current?.value)
-    // setContacted("")
-    if (success) { setEmailOpen(false) }
-    
+    if (!emailRef.current?.value || !messageRef.current?.value) {
+      return
+    }
+    const success = await submitMessage(
+      emailRef.current.value,
+      messageRef.current.value
+    )
+
+    if (success) {
+      setEmailOpen(false)
+      setContacted(true)
+      emailRef.current.value = ""
+      messageRef.current.value = ""
+    }
+  }
+  const pressContact = () => {
+    if (!emailOpen) {
+      setContacted(false)
+    }
+    setEmailOpen(!emailOpen)
   }
 
   return (
@@ -53,13 +67,19 @@ const Contact = () => {
     >
       <div className="">
         <div className="flex flex-row justify-center">
-          <Image className="opacity-90" src="/favicon.ico" height={60} width={60} alt="Geoff" />
+          <Image
+            className="opacity-90"
+            src="/favicon.ico"
+            height={60}
+            width={60}
+            alt="Geoff"
+          />
 
           <div>
             <motion.button
               className="flex flex-row p-3 mx-4 text-2xl font-semibold border border-gray-300 rounded-lg cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
               whileTap={{ scale: 0.97 }}
-              onClick={() => setEmailOpen(!emailOpen)}
+              onClick={pressContact}
             >
               Contact me
               <motion.div
@@ -78,6 +98,11 @@ const Contact = () => {
             </motion.button>
           </div>
         </div>
+        {contacted && (
+          <div className="flex justify-center mt-5 ml-4 text-lg backdrop-blur-none">
+            Message sent
+          </div>
+        )}
         <motion.div
           className="m-4"
           variants={{
@@ -116,13 +141,13 @@ const Contact = () => {
               ref={messageRef}
             ></textarea>
           </motion.div>
-          {contacted !== "sending" ? <motion.button
+          <motion.button
             onClick={clickSubmit}
             className="px-3 py-2 mt-2 font-semibold border border-gray-300 rounded-lg bg-white/20"
             variants={itemVariants}
           >
             Submit
-          </motion.button> : <LoadingBalls />}
+          </motion.button>
         </motion.div>
       </div>
     </motion.div>
