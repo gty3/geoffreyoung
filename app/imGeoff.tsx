@@ -9,7 +9,7 @@ export default function ImGeoff() {
     return (
       <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }}>
         <div
-          onClick={() => {window && window.open("http://instagram.com/geoffreyoung/")}}
+          onClick={() => {window && window.open("http://instagram.com/geoffreyoung")}}
           className="flex flex-row justify-center w-40 p-1 border rounded-lg shadow-sm bg-clip-padding bg-white/20"
         >
           <Image src="/insta.png" alt="insta" height={30} width={30} />
