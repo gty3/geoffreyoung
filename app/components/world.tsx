@@ -10,12 +10,12 @@ import arcAndSvg from "../../lib/arcAndSvg"
 import { ArcsObj, SVGobj } from "./types"
 import dynamic from "next/dynamic"
 
-const GlobeTmpl = dynamic(() => import("./globeWrapper"), {
+const Globe = dynamic(() => import("./globeWrapper"), {
   ssr: false,
 })
-const Globe = forwardRef((props: any, ref) => (
-  <GlobeTmpl {...props} forwardRef={ref} />
-))
+// const Globe = forwardRef((props: any, ref) => (
+//   <GlobeTmpl {...props} forwardRef={ref} />
+// ))
 
 const World = () => {
   const ARC_REL_LEN = 0.4
