@@ -45,7 +45,7 @@ export default function Articles() {
 
   return (
     <div className="max-w-xl py-8 mx-auto ">
-      <h1 className="mb-8 text-4xl font-extrabold text-center backdrop-blur-lg sm:text-5xl">
+      <h1 className="mb-8 text-4xl font-extrabold text-center backdrop-blur-none sm:text-5xl">
         Articles
       </h1>
       {posts.map((post, idx) => (
