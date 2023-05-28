@@ -51,7 +51,7 @@ export default async function PostPage({ params }: PostProps) {
   }
 
   return (
-    <>
+    <div id={post._id}>
     <Background />
     <div className="z-30 mx-4 mb-40 sm:flex sm:justify-center backdrop-blur-md">
     <article className="py-6 prose ">
@@ -70,6 +70,6 @@ export default async function PostPage({ params }: PostProps) {
       <Mdx code={post.body.code} />
     </article>
     </div>
-    </>
+    </div>
   )
 }

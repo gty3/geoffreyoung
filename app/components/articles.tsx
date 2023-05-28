@@ -6,14 +6,14 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 
 function PostCard(post: Post) {
-  // console.log(post.slug)
+  console.log(post)
   return (
     <motion.div
       whileHover={{ scale: 1.01 }}
       whileTap={{ scale: 0.96 }}
       key={post._id}
     >
-      <Link href={post.slug}>
+      <Link href={post.slug + "/#"}>
         <div className="p-4 m-4 border border-gray-300 rounded-lg cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter">
           <div className="grid justify-start grid-flow-col">
             {post.image && (
