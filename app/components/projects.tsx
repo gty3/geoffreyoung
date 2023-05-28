@@ -47,7 +47,7 @@ export default function Projects() {
         className={
           url
             ? "p-4 sm:p-6 border border-gray-300 rounded-lg cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
-            : "p-4 /*  */sm:p-6 border border-gray-300 rounded-lg break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
+            : "p-4 sm:p-6 border border-gray-300 rounded-lg break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
         }
       >
         <div onClick={() => url && window.open(url)}>

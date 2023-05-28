@@ -49,7 +49,7 @@ const World = () => {
     )
     ;(globeRef.current as any).controls().enableZoom = false
     // ;(globeRef.current as any).controls().enablePan = false
-    ;(globeRef.current as any).controls().enableRotate = false
+    // ;(globeRef.current as any).controls().enableRotate = false
     arcAndSvg(setSvgData, setArcsData, startTime)
   }, [globeReady])
 
@@ -60,7 +60,7 @@ const World = () => {
         className="z-0"
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
         onGlobeReady={() => setGlobeReady(true)}
-        height={typeof window !== "undefined" && window.innerWidth > 575 ? 700 : 500 }
+        height={typeof window !== "undefined" && window.innerWidth > 575 ? 700 : 440 }
         animateIn={false}
         arcsData={arcsData}
         arcColor={() => "orange"}
