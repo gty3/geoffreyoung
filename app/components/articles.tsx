@@ -1,12 +1,11 @@
 "use client"
 import Link from "next/link"
-import { compareDesc, format, parseISO } from "date-fns"
+import { compareDesc } from "date-fns"
 import { allPosts, Post } from "contentlayer/generated"
 import { motion } from "framer-motion"
 import Image from "next/image"
 
 function PostCard(post: Post) {
-  console.log(post)
   return (
     <motion.div
       whileHover={{ scale: 1.01 }}

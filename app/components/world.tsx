@@ -48,12 +48,16 @@ const World = () => {
       startTime
     )
     ;(globeRef.current as any).controls().enableZoom = false
+    // ;(globeRef.current as any).controls().enablePan = false
+    ;(globeRef.current as any).controls().enableRotate = false
     arcAndSvg(setSvgData, setArcsData, startTime)
   }, [globeReady])
 
   return (
     <>
       <Globe
+        enablePointerInteraction={false}
+        className="z-0"
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
         onGlobeReady={() => setGlobeReady(true)}
         height={typeof window !== "undefined" && window.innerWidth > 575 ? 700 : 500 }
