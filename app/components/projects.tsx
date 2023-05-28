@@ -1,10 +1,11 @@
 "use client"
-import Tilt from "react-parallax-tilt"
+
 import { Github } from "./icons"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import projectslist from "@/lib/projects"
+import { motion } from "framer-motion"
 
 interface CardProps {
   url?: string
@@ -40,40 +41,29 @@ export default function Projects() {
     }
 
     return (
-      <Tilt
-        glareEnable={true}
-        glareMaxOpacity={0.3}
-        glareColor="#ffffff"
-        glarePosition="all"
-        glareBorderRadius="8px"
-        tiltMaxAngleX={10}
-        tiltMaxAngleY={10}
-        gyroscope={true}
-        // className={className}
+      <motion.div
+        whileHover={url && { scale: 1.01 }}
+        whileTap={url && { scale: 0.96 }}
+        className={
+          url
+            ? "p-4 sm:p-6 border border-gray-300 rounded-lg cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
+            : "p-4 /*  */sm:p-6 border border-gray-300 rounded-lg break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
+        }
       >
-        <div
-          className={
-            url
-              ? "p-4 sm:p-6 border border-gray-300 rounded-lg cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
-              : "p-4 /*  */sm:p-6 border border-gray-300 rounded-lg break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
-          }
-        >
-          <div onClick={() => url && window.open(url)}>
-            <div className="flex">
-              <Image alt={image} width={100} height={100} src={image}></Image>
-              <div className="flex flex-col pl-4">
-                <div className="text-2xl font-extrabold">{name}</div>
-                <div className="font-medium ">{description}</div>
-              </div>
-
+        <div onClick={() => url && window.open(url)}>
+          <div className="flex">
+            <Image alt={image} width={100} height={100} src={image}></Image>
+            <div className="flex flex-col pl-4">
+              <div className="text-2xl font-extrabold">{name}</div>
+              <div className="font-medium ">{description}</div>
             </div>
-            <div className="flex flex-col py-2">
-                <div className="my-1">{builtWith}</div>
-                <GithubButton />
-              </div>
+          </div>
+          <div className="flex flex-col py-2">
+            <div className="my-1">{builtWith}</div>
+            <GithubButton />
           </div>
         </div>
-      </Tilt>
+      </motion.div>
     )
   }
 

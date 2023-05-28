@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 
 function PostCard(post: Post) {
+  // console.log(post.slug)
   return (
     <motion.div
       whileHover={{ scale: 1.01 }}
