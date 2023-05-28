@@ -28,7 +28,7 @@ export default function ImGeoff() {
           <Button />
         </div>
 
-        <h1 className="mt-5 text-5xl font-extrabold text-black sm:text-6xl">
+        <h1 className="pb-10 mt-5 text-5xl font-extrabold text-black sm:text-6xl">
           Fullstack Dev
         </h1>
       </div>
