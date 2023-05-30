@@ -35,7 +35,7 @@ export default function Projects() {
             : "p-4 sm:p-6 border border-gray-300 rounded-lg break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
         }
       >
-        <div onClick={(e) => url && window.open(url)} className="z-10">
+        <div onClick={() => url && window.open(url)} >
           <div className="flex">
             <Image alt={image} width={100} height={100} src={image}></Image>
             <div className="flex flex-col pl-4">
@@ -55,7 +55,7 @@ export default function Projects() {
   return (
     <div className="flex flex-col items-center">
       <div className="flex justify-center">
-        <div className="z-10 pt-8 text-4xl font-extrabold leading-tight text-black font-display sm:text-5xl sm:leading-tight">
+        <div className="pt-8 text-4xl font-extrabold leading-tight text-black font-display sm:text-5xl sm:leading-tight">
           Projects
         </div>
       </div>
