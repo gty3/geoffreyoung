@@ -55,7 +55,7 @@ export default function Projects() {
   return (
     <div className="flex flex-col items-center">
       <div className="flex justify-center">
-        <div className="pt-8 text-4xl font-extrabold leading-tight text-black font-display sm:text-5xl sm:leading-tight">
+        <div className="pt-8 text-4xl font-extrabold leading-tight text-black backdrop-blur-none font-display sm:text-5xl sm:leading-tight">
           Projects
         </div>
       </div>
