@@ -77,7 +77,8 @@ const Contact = () => {
 
           <div>
             <motion.button
-              className="flex flex-row px-3 py-2 mx-4 mt-1.5 text-2xl font-semibold border border-gray-300 rounded-lg cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
+              className="flex flex-row px-3 py-2 mx-4 mt-1.5 text-2xl font-semibold border border-gray-300 rounded-lg
+               cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
               whileTap={{ scale: 0.97 }}
               onClick={pressContact}
             >
@@ -99,7 +100,7 @@ const Contact = () => {
           </div>
         </div>
         {contacted && (
-          <div className="flex justify-center mt-5 ml-4 text-lg backdrop-blur-none">
+          <div className="flex justify-center pl-4 mt-5 text-lg backdrop-blur-none">
             Message sent
           </div>
         )}

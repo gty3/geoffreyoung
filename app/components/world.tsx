@@ -54,7 +54,7 @@ const World = () => {
   }, [globeReady])
 
   return (
-    <>
+    <div className="z-0 sm:-my-24 -mb-10 sm:h-[700px] h-[400px] -mt-20">
       <Globe
         enablePointerInteraction={false}
         className="z-0"
@@ -75,7 +75,7 @@ const World = () => {
         htmlElement={(d: any) => htmlFunction(d as SVGobj)}
         ref={globeRef}
       />
-    </>
+      </div>
   )
 }
 
