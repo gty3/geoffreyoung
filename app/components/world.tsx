@@ -49,7 +49,7 @@ const World = () => {
   }, [globeReady])
 
   return (
-    <div className="z-30 sm:-my-24 -mb-10 sm:h-[700px] h-[400px] -mt-20 flex justify-center">
+    <div className="sm:-my-24 -mb-10 sm:h-[700px] h-[400px] -mt-20 flex justify-center">
       <Globe
       showAtmosphere={false}
         enablePointerInteraction={false}

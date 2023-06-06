@@ -16,7 +16,6 @@ interface CardProps {
 }
 
 export default function Projects() {
-
   const Card = ({
     name,
     description,
@@ -35,7 +34,7 @@ export default function Projects() {
             : "p-4 sm:p-6 border border-gray-300 rounded-lg break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter"
         }
       >
-        <div onClick={() => url && window.open(url)} >
+        <div onClick={() => url && window.open(url)}>
           <div className="flex">
             <Image alt={image} width={100} height={100} src={image}></Image>
             <div className="flex flex-col pl-4">
@@ -53,17 +52,16 @@ export default function Projects() {
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="flex justify-center">
-        <div className="pt-8 text-4xl font-extrabold leading-tight text-black backdrop-blur-none font-display sm:text-5xl sm:leading-tight">
-          Projects
-        </div>
+    <div>
+      <div className="pt-8 text-4xl font-extrabold leading-tight text-center text-black backdrop-blur-none font-display sm:text-5xl sm:leading-tight">
+        Projects
       </div>
-
-      <div className="max-w-6xl py-8 mx-4 space-y-6 sm:columns-2 sm:gap-6 xl:columns-3">
-        {projectslist.map((project, idx) => (
-          <Card key={idx} {...project} />
-        ))}
+      <div className="flex flex-col items-center">
+        <div className="max-w-6xl py-8 mx-4 space-y-6 sm:columns-2 sm:gap-6 xl:columns-3">
+          {projectslist.map((project, idx) => (
+            <Card key={idx} {...project} />
+          ))}
+        </div>
       </div>
     </div>
   )
