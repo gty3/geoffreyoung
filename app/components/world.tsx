@@ -1,11 +1,6 @@
 "use client"
 
-import {
-  useState,
-  useEffect,
-  useRef,
-  forwardRef,
-} from "react"
+import { useState, useEffect, useRef, forwardRef } from "react"
 import arcAndSvg from "../../lib/arcAndSvg"
 import { ArcsObj, SVGobj } from "./types"
 import dynamic from "next/dynamic"
@@ -54,13 +49,17 @@ const World = () => {
   }, [globeReady])
 
   return (
-    <div className="z-0 sm:-my-24 -mb-10 sm:h-[700px] h-[400px] -mt-20">
+    <div className="z-30 sm:-my-24 -mb-10 sm:h-[700px] h-[400px] -mt-20 flex justify-center">
       <Globe
         enablePointerInteraction={false}
-        className="z-0"
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
         onGlobeReady={() => setGlobeReady(true)}
-        height={typeof window !== "undefined" && window.innerWidth > 575 ? 700 : 440 }
+        width={
+          typeof window !== "undefined" && window.innerWidth > 575 ? 540 : 330
+        }
+        height={
+          typeof window !== "undefined" && window.innerWidth > 575 ? 700 : 440
+        }
         animateIn={false}
         arcsData={arcsData}
         arcColor={() => "orange"}
@@ -75,7 +74,7 @@ const World = () => {
         htmlElement={(d: any) => htmlFunction(d as SVGobj)}
         ref={globeRef}
       />
-      </div>
+    </div>
   )
 }
 
