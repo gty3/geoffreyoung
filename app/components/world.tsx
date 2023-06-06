@@ -43,8 +43,6 @@ const World = () => {
       startTime
     )
     ;(globeRef.current as any).controls().enableZoom = false
-    // ;(globeRef.current as any).controls().enablePan = false
-    // ;(globeRef.current as any).controls().enableRotate = false
     arcAndSvg(setSvgData, setArcsData, startTime)
   }, [globeReady])
 
