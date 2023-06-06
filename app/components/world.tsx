@@ -51,11 +51,12 @@ const World = () => {
   return (
     <div className="z-30 sm:-my-24 -mb-10 sm:h-[700px] h-[400px] -mt-20 flex justify-center">
       <Globe
+      showAtmosphere={false}
         enablePointerInteraction={false}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
         onGlobeReady={() => setGlobeReady(true)}
         width={
-          typeof window !== "undefined" && window.innerWidth > 575 ? 540 : 330
+          typeof window !== "undefined" && window.innerWidth > 575 ? 460 : 288
         }
         height={
           typeof window !== "undefined" && window.innerWidth > 575 ? 700 : 440
