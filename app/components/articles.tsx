@@ -48,7 +48,7 @@ export default function Articles() {
       <h1 className="mb-8 text-4xl font-extrabold text-center backdrop-blur-none sm:text-5xl">
         Articles
       </h1>
-      <button>toggle cards</button>
+      {/* <button>toggle cards</button> */}
       {posts.map((post, idx) => (
         <PostCard key={idx} {...post} />
       ))}
