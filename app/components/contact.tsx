@@ -61,7 +61,7 @@ const Contact = () => {
 
   return (
     <>
-    <div className="mt-4 text-lg text-center backdrop-blur-none">I'm available for hire</div>
+    <div className="mt-4 text-lg text-center backdrop-blur-none">{"I'm available for hire"}</div>
     <motion.div
       initial={false}
       animate={emailOpen ? "open" : "closed"}
