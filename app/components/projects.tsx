@@ -10,7 +10,7 @@ interface CardProps {
   url?: string
   name: string
   description: string
-  github: string
+  github?: string
   image: string
   builtWith: string
 }
@@ -40,8 +40,6 @@ const Card = ({
   url,
   builtWith,
 }: CardProps) => {
-
-
   return (
     <motion.div
       whileHover={url && { scale: 1.01 }}
@@ -54,7 +52,7 @@ const Card = ({
     >
       <div onClick={() => url && window.open(url)}>
         <div className="flex">
-          <Image alt={image} width={100} height={100} src={image}></Image>
+          <div><Image alt={image} width={100} height={100} src={image}></Image></div>
           <div className="flex flex-col pl-4">
             <div className="text-2xl font-extrabold">{name}</div>
             <div className="font-medium ">{description}</div>
@@ -62,7 +60,7 @@ const Card = ({
         </div>
         <div className="flex flex-col py-2">
           <div className="my-1">{builtWith}</div>
-          <GithubButton github={github} />
+          {github && <GithubButton github={github} />}
         </div>
       </div>
     </motion.div>

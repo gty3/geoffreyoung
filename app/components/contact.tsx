@@ -60,10 +60,12 @@ const Contact = () => {
   }
 
   return (
+    <>
+    <div className="mt-4 text-lg text-center backdrop-blur-none">I'm available for hire</div>
     <motion.div
       initial={false}
       animate={emailOpen ? "open" : "closed"}
-      className="flex justify-center mt-10 mb-32"
+      className="flex justify-center mt-8 mb-32"
     >
       <div className="">
         <div className="flex flex-row justify-center">
@@ -153,6 +155,7 @@ const Contact = () => {
         </motion.div>
       </div>
     </motion.div>
+    </>
   )
 }
 

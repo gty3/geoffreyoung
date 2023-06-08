@@ -1,5 +1,14 @@
 const projectslist = [
   {
+    name: "Cocoon Data",
+    description: "Demo Landing Page",
+    builtWith:
+      "Recreated a WordPress page with Nextjs and TailwindCSS",
+    // github: "https://github.com/gty3/trailguesser",
+    image: "/projectImages/cocoonData.png",
+    // url: "https://trailguesser.com",
+  },
+  {
     name: "Trail Guesser",
     description: "Mountain bike trail guessing game",
     builtWith:
