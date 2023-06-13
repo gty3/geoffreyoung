@@ -23,10 +23,10 @@ export default function ImGeoff() {
 
   return (
     <div className="flex justify-center">
-      <div className="z-10 mt-10">
-        <div className="flex justify-center pr-2">
+      <div className="z-10 mt-16">
+        {/* <div className="flex justify-center pr-2">
           <Button />
-        </div>
+        </div> */}
 
         <h1 className="pb-10 mt-5 text-5xl font-extrabold text-black sm:text-6xl">
           Fullstack Dev

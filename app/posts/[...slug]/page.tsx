@@ -52,7 +52,6 @@ export default async function PostPage({ params }: PostProps) {
 
   return (
     <div id={post._id}>
-    <Background />
     <div className="z-30 mx-4 mb-40 sm:flex sm:justify-center backdrop-blur-md">
     <article className="py-6 prose ">
       <h1 className="mb-2">{post.title}</h1>
@@ -61,7 +60,7 @@ export default async function PostPage({ params }: PostProps) {
           {post.description}
         </p>
       )}
-      <div className="flex flex-row mt-4">
+      <div className="flex flex-row pb-12 mt-4">
       <div className="px-2 py-1 -ml-2 tracking-tighter rounded-md bg-neutral-100 ">
         {new Date(post.date).toISOString().split('T')[0]}
       </div>
