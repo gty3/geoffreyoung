@@ -3,7 +3,7 @@
 import Background from "./components/background"
 import ImGeoff from "./imGeoff"
 import Projects from "./components/projects"
-// import World from "./components/world"
+import World from "./components/world"
 import Articles from "./components/articles"
 import Contact from "./components/contact"
 
@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <Background />
       <ImGeoff />
-      {/* <World /> */}
+      <World />
       <Projects />
       <Articles />
       <Contact />
