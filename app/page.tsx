@@ -12,11 +12,10 @@ export default function Home() {
     <>
       <Background />
       <ImGeoff />
-      
+      <World />
       <Projects />
       <Articles />
       <Contact />
-      <World />
     </>
   )
 }
