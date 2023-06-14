@@ -1,6 +1,6 @@
+
 import Header from "../header"
-import Background from "./[...slug]/background"
-import Sidebar from "./sidebar"
+import Background from "../posts/[...slug]/background"
 
 export default function BlogLayout({
   children,
@@ -10,9 +10,8 @@ export default function BlogLayout({
   return (
     <>
     <Background />
-    <Header page="blog"/>
+    <Header page="about"/>
       <div className="flex max-w-4xl py-32 mx-auto">
-        <div className="z-30"><Sidebar /></div>
         
         <div>{children}</div>
       </div>

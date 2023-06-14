@@ -12,7 +12,7 @@ function PostCard(post: Post) {
       <h2 className="flex flex-row">
         <Link
           href={post.slug}
-          className="flex px-3 py-2 mb-1 text-xs rounded-lg w-96 hover:bg-blue-50 focus:bg-blue-100"
+          className="flex px-3 py-2 mb-1 text-xs rounded-lg w-96 hover:bg-gray-50 focus:bg-blue-100"
         >
           {post.image && <Image className="mr-2" src={post.image} width={20} height={20} alt="logo" />}
           {/* <Truncate lines={1} ellipsis={<span>...</span>}> */}
