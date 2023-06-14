@@ -53,7 +53,7 @@ export default function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <div className="w-48 pt-16 mr-10 -mx-20">
+    <div className="hidden w-48 pt-16 mr-10 -mx-20 md:block">
       {posts.map((post, idx) => (
         <PostCard key={idx} {...post} selected={post.slug === pathname} />
       ))}

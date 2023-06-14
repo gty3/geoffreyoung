@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import { Metadata } from "next"
 import { allPosts } from "contentlayer/generated"
-
+import { format } from "date-fns"
 import { Mdx } from "../../components/mdx-components"
 import Background from "./background"
 
@@ -50,6 +50,8 @@ export default async function PostPage({ params }: PostProps) {
     notFound()
   }
 
+  const date = format(new Date(post.date), "yyyy-M-dd")
+
   return (
     <div id={post._id}>
     <div className="z-30 mx-4 mb-40 sm:flex sm:justify-center backdrop-blur-sm">
@@ -62,7 +64,7 @@ export default async function PostPage({ params }: PostProps) {
       )}
       <div className="flex flex-row pb-12 mt-4">
       <div className="px-2 py-1 tracking-tighter rounded-md -pl-2 bg-neutral-100 ">
-        {new Date(post.date).toISOString().split('T')[0]}
+        {date}
       </div>
       <hr className="w-8/12 my-4 ml-2 sm:w-10/12 " />
       </div>
