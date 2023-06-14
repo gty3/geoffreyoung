@@ -7,7 +7,7 @@ export default function Header({ page }: { page?: "blog" | "about" }) {
   return (
     <>
       <div className="fixed z-50 w-full pt-3 bg-white p opacity-95">
-        <div className="flex justify-between max-w-2xl pl-8 mx-auto">
+        <div className="flex justify-between max-w-2xl pl-8 mx-auto text-gray-700">
           <Link href="/" className="">
             <Image className="pt-1" src={ChatBubble} width={22} alt="logo" />
           </Link>
