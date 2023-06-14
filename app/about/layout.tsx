@@ -11,13 +11,13 @@ export default function BlogLayout({
   return (
     <>
     {/* <Background /> */}
-    <div className="sm:-ml-2">
+
     <Header page="about"/>
-      <div className="flex max-w-4xl py-32 mx-auto ">
+      <div className="py-32 mx-auto ">
       <div className="z-30"></div>
         <div>{children}</div>
       </div>
-      </div>
+
     </>
   )
 }

@@ -1,10 +1,11 @@
 
+import About from "./about";
 import Reviews from "./reviews";
 
 export default function AboutPage() {
   return (
-    <div className="justify-center w-screen h-screen mt-40 ">
-      <div className="z-40 mx-auto text-center">hello</div>
+    <div className="w-screen h-screen ">
+      <div className="z-40 mx-auto w-96 "><About /></div>
       <Reviews />
     </div>
   )

@@ -2,9 +2,13 @@
 import React, { useRef, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination } from "swiper"
-import "./styles.css"
 import "swiper/css"
 import "swiper/css/pagination"
+
+interface Review {
+  name: string
+  reviewText: string
+}
 
 export default function Reviews() {
   return (
@@ -12,26 +16,52 @@ export default function Reviews() {
       <Swiper
         slidesPerView={3}
         spaceBetween={30}
-        pagination={{
-          clickable: true,
-        }}
+        loop={true}
         modules={[Pagination]}
         className="mySwiper"
       >
-        <SwiperSlide className="h-40">Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-        <SwiperSlide>Slide 6</SwiperSlide>
-        <SwiperSlide>Slide 7</SwiperSlide>
-        <SwiperSlide>Slide 8</SwiperSlide>
-        <SwiperSlide>Slide 9</SwiperSlide>
+        {reviewsArray.map((review) => {
+          return (
+            <SwiperSlide className="w-40 h-40 bg-gray-200">
+              <Slide review={review} />
+            </SwiperSlide>
+          )
+        })}
       </Swiper>
     </>
   )
 }
 
-const slide = () => {
-  return <div></div>
+const Slide = ({ review }: { review: Review }) => {
+  return (
+    <div>
+      <div className="h-48 border-2 rounded-lg shadow-md w-96">
+        {review.name}
+      </div>
+      <div>{review.reviewText}</div>
+    </div>
+  )
 }
+
+const reviewsArray: Review[] = [
+  {
+    name: "John Doe",
+    reviewText: "",
+  },
+  {
+    name: "John Doe",
+    reviewText: "",
+  },
+  {
+    name: "John Doe",
+    reviewText: "",
+  },
+  {
+    name: "John Doe",
+    reviewText: "",
+  },
+  {
+    name: "John Doe",
+    reviewText: "",
+  },
+]
