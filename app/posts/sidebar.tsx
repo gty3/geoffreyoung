@@ -19,14 +19,17 @@ function truncateString(str: string) {
 
 function PostCard(post: SelectedPost) {
 
+  const selected = "bg-blue-100 text-blue-800 hover:bg-blue-100"
+  const notSelected = "hover:bg-gray-50"
+
   return (
     <div className="mb-4">
       <h2 className="flex flex-row">
         <Link
           href={post.slug}
           className={`${
-            post.selected && "bg-blue-100 text-blue-800 hover:bg-blue-100"
-          } flex px-3 py-2 mb-1 text-xs rounded-lg w-96 hover:bg-gray-50`}
+            post.selected ? selected : notSelected
+          } flex px-3 py-2 mb-1 text-xs rounded-lg w-96`}
         >
           {post.image && (
             <Image

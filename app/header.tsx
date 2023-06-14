@@ -6,12 +6,12 @@ import ChatBubble from "./favicon.ico"
 export default function Header({ page }: { page?: "blog" | "about" }) {
   return (
     <>
-      <div className="fixed z-50 w-full pt-3 bg-white p opacity-95">
-        <div className="flex justify-between max-w-2xl pl-8 mx-auto text-gray-700">
-          <Link href="/" className="">
-            <Image className="pt-1" src={ChatBubble} width={22} alt="logo" />
+      <div className="fixed z-50 w-full pt-3 bg-white opacity-95">
+        <div className="flex justify-between max-w-2xl sm:mx-auto ">
+          <Link href="/" className="mx-6">
+            <Image className="pt-1 " src={ChatBubble} width={22} alt="logo" />
           </Link>
-          <div className="pb-3 space-x-8 text-end">
+          <div className="pb-3 mx-4 space-x-4 text-end">
             <Link
               href="/posts/Fix-nextjslink-not-scrolling-to-top"
               className=""
@@ -40,12 +40,13 @@ function NavButton({
 }) {
   const isSelected =
     "bg-blue-100 text-blue-800 hover:bg-blue-100 hover:text-blue-800"
+  const notSelected = "hover:bg-gray-50 text-gray-800"
 
   return (
     <button
       className={`${
-        selected && isSelected
-      } px-3 py-1.5 rounded-lg hover:bg-gray-50 text-sm font-semibold`}
+        selected ? isSelected : notSelected
+      } px-4 py-1.5 rounded-lg  text-sm font-semibold`}
     >
       {children}
     </button>

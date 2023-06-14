@@ -62,15 +62,6 @@ dependencies:
   react-globe.gl:
     specifier: ^2.24.1
     version: 2.24.1(react@18.2.0)
-  react-parallax-tilt:
-    specifier: ^1.7.139
-    version: 1.7.139(react-dom@18.2.0)(react@18.2.0)
-  react-text-truncate:
-    specifier: ^0.19.0
-    version: 0.19.0(react-dom@18.2.0)(react@18.2.0)
-  react-truncate:
-    specifier: ^2.4.0
-    version: 2.4.0(prop-types@15.8.1)(react@18.2.0)
   react-wrap-balancer:
     specifier: ^0.5.0
     version: 0.5.0(react@18.2.0)
@@ -80,20 +71,15 @@ dependencies:
   remark:
     specifier: ^14.0.3
     version: 14.0.3
+  swiper:
+    specifier: ^9.4.1
+    version: 9.4.1
   tailwindcss:
     specifier: 3.3.2
     version: 3.3.2
   typescript:
     specifier: 5.0.4
     version: 5.0.4
-
-devDependencies:
-  '@types/react-text-truncate':
-    specifier: ^0.14.1
-    version: 0.14.1
-  '@types/react-truncate':
-    specifier: ^2.3.4
-    version: 2.3.4
 
 packages:
 
@@ -1900,6 +1886,7 @@ packages:
 
   /@types/prop-types@15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
+    dev: false
 
   /@types/react-dom@18.2.4:
     resolution: {integrity: sha512-G2mHoTMTL4yoydITgOGwWdWMVd8sNgyEP85xVmMKAPUBwQWm9wBPQUmvbeF4V3WBY1P7mmL4BkjQ0SqUpf1snw==}
@@ -1907,24 +1894,13 @@ packages:
       '@types/react': 18.2.6
     dev: false
 
-  /@types/react-text-truncate@0.14.1:
-    resolution: {integrity: sha512-yCtOOOJzrsfWF6TbnTDZz0gM5JYOxJmewExaTJTv01E7yrmpkNcmVny2fAtsNgSFCp8k2VgCePBoIvFBpKyEOw==}
-    dependencies:
-      '@types/react': 18.2.6
-    dev: true
-
-  /@types/react-truncate@2.3.4:
-    resolution: {integrity: sha512-+ugDlho66dRn7Sw/lPkE/wlOi0KUIRwY2KOiUiehWjFf7EmiMDjMpHqrBhiLJfH2Z9EC+qRBHC9o7iZoEmmWQw==}
-    dependencies:
-      '@types/react': 18.2.6
-    dev: true
-
   /@types/react@18.2.6:
     resolution: {integrity: sha512-wRZClXn//zxCFW+ye/D2qY65UsYP1Fpex2YXorHc8awoNamkMZSvBxwxdYVInsHOZZd2Ppq8isnSzJL5Mpf8OA==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
       csstype: 3.1.2
+    dev: false
 
   /@types/resolve@1.20.2:
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
@@ -1932,6 +1908,7 @@ packages:
 
   /@types/scheduler@0.16.3:
     resolution: {integrity: sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==}
+    dev: false
 
   /@types/unist@2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
@@ -2425,6 +2402,7 @@ packages:
 
   /csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
+    dev: false
 
   /d3-array@3.2.3:
     resolution: {integrity: sha512-JRHwbQQ84XuAESWhvIPaUV4/1UYTBOLiOPGWqgFDHZS1D5QN9c57FbH3QpEnQMYiOXNzKUQyGTZf+EVO7RT5TQ==}
@@ -5182,37 +5160,6 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-parallax-tilt@1.7.139(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-S4uaFL0GP1cCeCsBaGarNxG4TfvmcycCjl0d7vmVgrIvGO1IoaC29WX8DzjfUjod+08PmuK6EskDjRARMaf6vw==}
-    peerDependencies:
-      react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /react-text-truncate@0.19.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-QxHpZABfGG0Z3WEYbRTZ+rXdZn50Zvp+sWZXgVAd7FCKAMzv/kcwctTpNmWgXDTpAoHhMjOVwmgRtX3x5yeF4w==}
-    peerDependencies:
-      react: ^15.4.1 || ^16.0.0 || ^17.0.0 ||  || ^18.0.0
-      react-dom: ^15.4.1 || ^16.0.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /react-truncate@2.4.0(prop-types@15.8.1)(react@18.2.0):
-    resolution: {integrity: sha512-3QW11/COYwi6iPUaunUhl06DW5NJBJD1WkmxW5YxqqUu6kvP+msB3jfoLg8WRbu57JqgebjVW8Lknw6T5/QZdA==}
-    peerDependencies:
-      prop-types: <= 15.x.x
-      react: <= 16.x.x
-    dependencies:
-      prop-types: 15.8.1
-      react: 18.2.0
-    dev: false
-
   /react-wrap-balancer@0.5.0(react@18.2.0):
     resolution: {integrity: sha512-5vwe5QDczQ9zwAtv3iEVj8hdMbNwQtM/QlSNLJfDUzRE9noPtxevb+Kon916Mu2RUorCrAtashQ1F9BVBjdeZg==}
     peerDependencies:
@@ -5527,6 +5474,10 @@ packages:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
     dev: false
 
+  /ssr-window@4.0.2:
+    resolution: {integrity: sha512-ISv/Ch+ig7SOtw7G2+qkwfVASzazUnvlDTwypdLoPoySv+6MqlOV10VwPSE6EWkGjhW50lUmghPmpYZXMu/+AQ==}
+    dev: false
+
   /stop-iteration-iterator@1.0.0:
     resolution: {integrity: sha512-iCGQj+0l0HOdZ2AEeBADlsRC+vsnDsZsbdSiH1yNSjcfKM7fdpCMfqAL/dwF5BLiw/XhRft/Wax6zQbhq2BcjQ==}
     engines: {node: '>= 0.4'}
@@ -5676,6 +5627,13 @@ packages:
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+    dev: false
+
+  /swiper@9.4.1:
+    resolution: {integrity: sha512-1nT2T8EzUpZ0FagEqaN/YAhRj33F2x/lN6cyB0/xoYJDMf8KwTFT3hMOeoB8Tg4o3+P/CKqskP+WX0Df046fqA==}
+    engines: {node: '>= 4.7.0'}
+    dependencies:
+      ssr-window: 4.0.2
     dev: false
 
   /synckit@0.8.5:
