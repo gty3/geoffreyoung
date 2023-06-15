@@ -6,7 +6,7 @@ import Reviews from "./reviews";
 
 export default function AboutPage() {
   return (
-    <div className="w-screen h-screen ">
+    <div className="w-full h-full ">
       <div className="z-40 flex max-w-6xl mx-auto my-10 space-x-20"><About /><Images /></div>
       <Reviews />
     </div>
