@@ -1,3 +1,4 @@
+import Background from "../components/background"
 import World from "../components/world"
 import About from "./about"
 import Development from "./development"
@@ -6,7 +7,9 @@ import Reviews from "./reviews"
 
 export default function AboutPage() {
   return (
-    <div className="w-full h-full ">
+    <>
+    <Background />
+    <div className="w-full h-full py-32 backdrop-blur-none">
       <div className="z-40 flex max-w-6xl mx-auto mb-20 space-x-20">
         <About />
         <Images />
@@ -17,5 +20,6 @@ export default function AboutPage() {
         <World />
       </div>
     </div>
+    </>
   )
 }

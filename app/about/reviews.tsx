@@ -40,7 +40,7 @@ export default function Reviews() {
 const Slide = ({ review }: { review: Review }) => {
   return (
     <div>
-      <div className="h-48 px-3 py-2 border-2 rounded-lg shadow-md">
+      <div className="h-48 px-3 py-2 bg-white border-2 rounded-lg shadow-md">
         <div className="flex justify-between">
           <div className="flex flex-row">
             <div className="pt-1">

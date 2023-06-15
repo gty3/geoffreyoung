@@ -30,6 +30,25 @@ const World = () => {
 
   const startTime = 1000
 
+  // const listenToScroll = () => {
+  //   let heightToHideFrom = 1000;
+  //   const winScroll = document.body.scrollTop ||
+  //       document.documentElement.scrollTop;
+  
+  //   if (winScroll > heightToHideFrom) {
+  //      isVisible &&      // to limit setting state only the first time
+  //        setIsVisible(false);
+  //   } else {
+  //        setIsVisible(true);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   window.addEventListener("scroll", listenToScroll);
+  //   return () =>
+  //      window.removeEventListener("scroll", listenToScroll);
+  // }, [])
+
   useEffect(() => {
     if (!globeRef.current) {
       return

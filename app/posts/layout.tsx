@@ -11,7 +11,7 @@ export default function BlogLayout({
     <>
     <Background />
     <Header page="blog"/>
-      <div className="flex max-w-4xl py-32 mx-auto">
+      <div className="py-12 sm:py-32 sm:flex sm:mx-auto sm:max-w-4xl">
         <div className="z-30"><Sidebar /></div>
         
         <div>{children}</div>
