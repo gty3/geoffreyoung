@@ -1,6 +1,6 @@
 
 import Header from "../header"
-import Background from "../posts/[...slug]/background"
+import Background from "../posts/background"
 import Sidebar from "../posts/sidebar"
 
 export default function BlogLayout({

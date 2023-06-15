@@ -3,7 +3,7 @@ import { Metadata } from "next"
 import { allPosts } from "contentlayer/generated"
 import { format } from "date-fns"
 import { Mdx } from "../../components/mdx-components"
-import Background from "./background"
+import Background from "../background"
 
 interface PostProps {
   params: {

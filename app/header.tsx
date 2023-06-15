@@ -13,7 +13,7 @@ export default function Header({ page }: { page?: "blog" | "about" }) {
           </Link>
           <div className="pb-3 mx-4 space-x-4 text-end">
             <Link
-              href="/posts/Fix-nextjslink-not-scrolling-to-top"
+              href="/posts"
               className=""
             >
               <NavButton selected={page === "blog"}>Blog</NavButton>
