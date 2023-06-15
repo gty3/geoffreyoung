@@ -9,7 +9,7 @@ import Slackline1 from "public/about/slackline1.jpg"
 export default function Images () {
 
   const slides = [
-    Mtb1,
+    // Mtb1,
     Slackline1
   ]
   
@@ -41,7 +41,7 @@ export default function Images () {
             ...style,
             // backgroundImage: `url(https://images.unsplash.com/${slides[i]}?w=1920&q=80&auto=format&fit=crop)`,
           }}
-        ><Image src={slides[i]} width={800} height={600} alt="mtb inmage" /></animated.div>
+        ><Image className="rounded-lg" src={slides[i]} width={800} height={600} alt="mtb inmage" /></animated.div>
       ))}
     </div>
   )
