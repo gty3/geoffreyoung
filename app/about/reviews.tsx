@@ -24,9 +24,9 @@ export default function Reviews() {
           modules={[Pagination]}
           // className="mySwiper"
         >
-          {reviewsArray.map((review) => {
+          {reviewsArray.map((review, i) => {
             return (
-              <SwiperSlide className="rounded-lg">
+              <SwiperSlide key={i} className="rounded-lg">
                 <Slide review={review} />
               </SwiperSlide>
             )

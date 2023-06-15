@@ -1,7 +1,7 @@
 export default function About() {
   return (
     <div className="max-w-lg my-10">
-      <div className="mb-2 text-4xl font-bold">Hi, I'm Geoff</div>
+      <div className="mb-2 text-4xl font-bold">{"Hi, I'm Geoff"}</div>
       <div className="mt-4 text-lg">
         {`I’m an American currently in Australia. 
       I've been living in various places around the States and world working as a bicycle mechanic. 
