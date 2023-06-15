@@ -1,11 +1,11 @@
 "use client"
 
 import { useState, useEffect, useRef, forwardRef } from "react"
-import arcAndSvg from "../../lib/arcAndSvg"
-import { ArcsObj, SVGobj } from "./types"
+import arcAndSvg from "../../../lib/arcAndSvg"
+import { ArcsObj, SVGobj } from "../../components/types"
 import dynamic from "next/dynamic"
 
-const GlobeTmpl = dynamic(() => import("./globeWrapper"), {
+const GlobeTmpl = dynamic(() => import("../../components/globeWrapper"), {
   ssr: false,
 })
 const Globe = forwardRef((props: any, ref) => (
@@ -73,10 +73,10 @@ const World = () => {
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
         onGlobeReady={() => setGlobeReady(true)}
         width={
-          typeof window !== "undefined" && window.innerWidth > 575 ? 460 : 288
+          typeof window !== "undefined" && window.innerWidth > 575 ? 400 : 288
         }
         height={
-          typeof window !== "undefined" && window.innerWidth > 575 ? 700 : 440
+          typeof window !== "undefined" && window.innerWidth > 575 ? 600 : 440
         }
         animateIn={false}
         arcsData={arcsData}

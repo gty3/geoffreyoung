@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { useRef, useState } from "react"
 import { Variants, motion } from "framer-motion"
-import LoadingBalls from "./loadingBalls"
+import LoadingBalls from "../components/loadingBalls"
 
 const itemVariants: Variants = {
   open: {
@@ -61,7 +61,7 @@ const Contact = () => {
 
   return (
     <>
-    <div className="mt-4 text-lg text-center backdrop-blur-none">{"I'm available for hire"}</div>
+    <div id="contact" className="mt-4 text-lg text-center backdrop-blur-none">{"I'm available for hire"}</div>
     <motion.div
       initial={false}
       animate={emailOpen ? "open" : "closed"}

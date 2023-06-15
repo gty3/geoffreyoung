@@ -1,6 +1,6 @@
 "use client"
 
-import { Github } from "./icons"
+import { Github } from "../components/icons"
 import Image from "next/image"
 import projectslist from "@/lib/projects"
 import { motion } from "framer-motion"
@@ -18,7 +18,7 @@ interface CardProps {
 export default function Projects() {
   return (
     <div>
-      <div className="pt-8 text-4xl font-extrabold leading-tight text-center text-black backdrop-blur-none font-display sm:text-5xl sm:leading-tight">
+      <div className="text-4xl font-extrabold leading-tight text-center text-black backdrop-blur-none font-display sm:text-5xl sm:leading-tight">
         Projects
       </div>
       <div className="flex flex-col items-center">

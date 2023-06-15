@@ -44,10 +44,10 @@ export default function Articles() {
   )
 
   return (
-    <div className="max-w-xl py-8 mx-auto ">
-      <h1 className="mb-8 text-4xl font-extrabold text-center backdrop-blur-none sm:text-5xl">
+    <div className="max-w-xl pb-12 mx-auto ">
+      {/* <h1 className="mb-8 text-4xl font-extrabold text-center backdrop-blur-none sm:text-5xl">
         Articles
-      </h1>
+      </h1> */}
       {/* <button>toggle cards</button> */}
       {posts.map((post, idx) => (
         <PostCard key={idx} {...post} />

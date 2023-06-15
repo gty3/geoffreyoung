@@ -7,7 +7,7 @@ export default function Header({ page }: { page?: "blog" | "about" }) {
   return (
     <>
       <div className="fixed z-50 w-full pt-3 bg-white opacity-95">
-        <div className="flex justify-between max-w-2xl sm:mx-auto ">
+        <div className="flex justify-between max-w-6xl sm:mx-auto ">
           <Link href="/" className="mx-6">
             <Image className="pt-1 " src={ChatBubble} width={22} alt="logo" />
           </Link>
@@ -19,8 +19,8 @@ export default function Header({ page }: { page?: "blog" | "about" }) {
               <NavButton selected={page === "blog"}>Blog</NavButton>
             </Link>
 
-            <Link href="/about" className="">
-              <NavButton selected={page === "about"}>About</NavButton>
+            <Link href="#contact" className="">
+              <NavButton selected={page === "about"}>Contact me</NavButton>
             </Link>
           </div>
         </div>
