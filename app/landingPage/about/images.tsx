@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useTransition, animated } from "@react-spring/web"
 
 import Image from "next/image"
@@ -16,6 +16,16 @@ import Snow from "public/about/snow.jpg"
 
 export default function Images() {
   const slides = [Mtb1, Slackline1, Freedive, Mtb2, Mtb3, Paddleboard, Snow]
+
+  const [matches, setMatches] = useState(
+    typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches
+  )
+
+  useEffect(() => {
+    typeof window !== "undefined" && window
+    .matchMedia("(min-width: 768px)")
+    .addEventListener('change', e => setMatches( e.matches ));
+  }, []);
 
   const images = [
     "/about/mtb1.jpg",
@@ -57,8 +67,8 @@ export default function Images() {
             className="rounded-lg"
             //  src={`https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800`}
              src={slides[i]}
-            width={800}
-            height={600}
+            width={matches ? 800 : 400}
+            height={matches ? 600 : 300}
             alt={images[i]}
             placeholder = 'blur'
           />
