@@ -6,10 +6,17 @@ import { useTransition, animated } from "@react-spring/web"
 import Image from "next/image"
 import Mtb1 from "public/about/mtb1.jpg"
 import Slackline1 from "public/about/slackline1.jpg"
-import Selfiegravel from "public/about/selfiegravel.jpg"
+import Freedive from "public/about/freedive.jpg"
+import Mtb2 from "public/about/mtb2.jpg"
+import Mtb3 from "public/about/mtb3.jpg"
+import Paddleboard from "public/about/paddleboard.jpg"
+import Snow from "public/about/snow.jpg"
+
+
 
 export default function Images() {
-  const slides = [Mtb1, Slackline1]
+  const slides = [Mtb1, Slackline1, Freedive, Mtb2, Mtb3, Paddleboard, Snow]
+
   const images = [
     "/about/mtb1.jpg",
     "/about/slackline1.jpg",
