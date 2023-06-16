@@ -17,15 +17,15 @@ import Snow from "public/about/snow.jpg"
 export default function Images() {
   const slides = [Mtb1, Slackline1, Freedive, Mtb2, Mtb3, Paddleboard, Snow]
 
-  const [matches, setMatches] = useState(
-    typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches
-  )
 
-  useEffect(() => {
-    typeof window !== "undefined" && window
-    .matchMedia("(min-width: 768px)")
-    .addEventListener('change', e => setMatches( e.matches ));
-  }, []);
+    const matches = typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches
+
+
+  // useEffect(() => {
+  //   typeof window !== "undefined" && window
+  //   .matchMedia("(min-width: 768px)")
+  //   .addEventListener('change', e => setMatches( e.matches ));
+  // }, []);
 
   const images = [
     "/about/mtb1.jpg",
