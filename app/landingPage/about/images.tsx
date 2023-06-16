@@ -17,6 +17,7 @@ export default function Images() {
     "/about/mtb2.jpg",
     "/about/mtb3.jpg",
     "/about/paddleboard.jpg",
+    "/about/freedive.jpg",
     "/about/snow.jpg",
   ]
 
