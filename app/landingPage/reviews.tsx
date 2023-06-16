@@ -15,23 +15,23 @@ interface Review {
 
 export default function Reviews() {
 
-  const [matches, setMatches] = useState(
-    typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches
-  )
+  // const [matches, setMatches] = useState(
+    const matches = typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches
+  // )
 
-  useEffect(() => {
-    typeof window !== "undefined" && window
-    .matchMedia("(min-width: 768px)")
-    .addEventListener('change', e => setMatches( e.matches ));
-  }, []);
+  // useEffect(() => {
+  //   typeof window !== "undefined" && window
+  //   .matchMedia("(min-width: 768px)")
+  //   .addEventListener('change', e => setMatches( e.matches ));
+  // }, []);
 
 
   return (
     <div className="flex justify-center mt-10 sm:mt-20">
       <div className="max-w-sm px-2 sm:max-w-6xl md:max-w-7xl">
         <Swiper
-          slidesPerView={matches ? 3.5 : 1.2}
-          spaceBetween={matches ? 20 : 10}
+          slidesPerView={!matches ? 1.2 : 3.5}
+          spaceBetween={!matches ? 10 : 20}
           // loop={true}
           modules={[Pagination]}
           // className="mySwiper"
