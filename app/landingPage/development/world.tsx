@@ -32,7 +32,7 @@ const World = () => {
   const startTime = 1000
 
   const listenToScroll = () => {
-    let heightToHideFrom = 1000;
+    let heightToHideFrom = 6000;
     const winScroll = document.body.scrollTop ||
         document.documentElement.scrollTop;
   
@@ -92,7 +92,7 @@ const World = () => {
         htmlElementsData={svgData}
         htmlElement={(d: any) => htmlFunction(d as SVGobj)}
         ref={globeRef}
-      /> : <div className="w-[400px] h-[600px]">w</div>}
+      /> : <div className="w-[400px] h-[600px]"> a</div>}
     </div>
   )
 }

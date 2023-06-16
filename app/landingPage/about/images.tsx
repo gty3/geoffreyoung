@@ -67,8 +67,8 @@ export default function Images() {
             className="rounded-lg"
             //  src={`https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800`}
              src={slides[i]}
-            width={matches ? 800 : 400}
-            height={matches ? 600 : 300}
+            width={800}
+            height={600}
             alt={images[i]}
             placeholder = 'blur'
           />
