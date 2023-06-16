@@ -13,7 +13,6 @@ export default function Images() {
   const images = [
     "/about/mtb1.jpg",
     "/about/slackline1.jpg",
-    // "/about/selfiegravel.jpg",
     "/about/mtb2.jpg",
     "/about/mtb3.jpg",
     "/about/paddleboard.jpg",
@@ -42,17 +41,18 @@ export default function Images() {
       {transitions((style, i) => (
         <animated.div
           className=""
-          style={{
-            ...style,
-            // backgroundImage: `url(https://images.unsplash.com/${slides[i]}?w=1920&q=80&auto=format&fit=crop)`,
-          }}
+          // style={{
+          //   ...style,
+          //   backgroundImage: `url(https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800)`,
+          // }}
         >
           <Image
             className="rounded-lg"
-            src={images[i]}
+            //  src={`https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800`}
+             src={images[i]}
             width={800}
             height={600}
-            alt="mtb inmage"
+            alt={images[i]}
           />
         </animated.div>
       ))}
