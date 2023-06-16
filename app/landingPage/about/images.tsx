@@ -23,10 +23,10 @@ export default function Images() {
   const [index, set] = useState(0)
   const transitions = useTransition(index, {
     key: index,
-    from: { opacity: 0.2 },
+    from: { opacity: 0 },
     enter: { opacity: 1 },
-    leave: { opacity: 0.2, delay: 1000 },
-    config: { duration: 800 },
+    leave: { opacity: 0, delay: 4000 },
+    config: { duration: 1000 },
 
     onRest: (_a, _b, item) => {
       if (index === item) {
@@ -41,10 +41,10 @@ export default function Images() {
       {transitions((style, i) => (
         <animated.div
           className=""
-          // style={{
-          //   ...style,
+          style={{
+            ...style,
           //   backgroundImage: `url(https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800)`,
-          // }}
+          }}
         >
           <Image
             className="rounded-lg"
