@@ -9,7 +9,7 @@ export default function Development() {
     <div className="backdrop-blur-none">
       <div className="justify-center max-w-6xl px-4 mx-auto mt-20 sm:space-x-20 sm:flex backdrop-blur-none">
         <div className="z-50 max-w-md my-10 mt-20">
-          <div className="pb-2 text-4xl font-bold">My web development</div>
+          <div className="pb-2 text-3xl font-bold sm:text-4xl">My web development</div>
           <div className="mt-4 text-lg">
             {`I started my journey learning about serverless architecture and infrastructure as code. I worked with yaml files and the Serverless Framework as well as AWS CDK.`}
           </div>
@@ -27,7 +27,7 @@ export default function Development() {
           />
         </Zoom>
         <div className="max-w-md my-10 text-lg">
-          {"I consumed a plethora of resources, bookmarking everything I found useful. I've streamlined my development experience, focusing on Next.js and TypeScript."}
+          {"I've consumed a plethora of resources, bookmarking everything I've found useful. The more I've learned, the more I've narrowed my focus, spending most of my time now with Next.js and TypeScript."}
         </div>
       </div>
     </div>
