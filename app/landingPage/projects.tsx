@@ -18,7 +18,7 @@ interface CardProps {
 export default function Projects() {
   return (
     <div>
-      <div className="text-4xl font-extrabold leading-tight text-center text-black backdrop-blur-none font-display sm:text-5xl sm:leading-tight">
+      <div className="pt-10 text-4xl font-extrabold leading-tight text-center text-black sm:pt-0 backdrop-blur-none font-display sm:text-5xl sm:leading-tight">
         Projects
       </div>
       <div className="flex flex-col items-center">

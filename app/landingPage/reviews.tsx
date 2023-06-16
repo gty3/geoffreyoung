@@ -1,5 +1,5 @@
 "use client"
-// import React, { useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination } from "swiper"
 import "swiper/css"
@@ -14,12 +14,24 @@ interface Review {
 }
 
 export default function Reviews() {
+
+  const [matches, setMatches] = useState(
+    window.matchMedia("(min-width: 768px)").matches
+  )
+
+  useEffect(() => {
+    window
+    .matchMedia("(min-width: 768px)")
+    .addEventListener('change', e => setMatches( e.matches ));
+  }, []);
+
+
   return (
-    <div className="flex justify-center mt-10">
-      <div className="max-w-7xl ">
+    <div className="flex justify-center mt-10 sm:mt-20">
+      <div className="max-w-sm px-2 sm:max-w-6xl md:max-w-7xl">
         <Swiper
-          slidesPerView={3.5}
-          spaceBetween={20}
+          slidesPerView={matches ? 3.5 : 1.2}
+          spaceBetween={matches ? 20 : 10}
           // loop={true}
           modules={[Pagination]}
           // className="mySwiper"
@@ -40,7 +52,7 @@ export default function Reviews() {
 const Slide = ({ review }: { review: Review }) => {
   return (
     <div>
-      <div className="px-3 py-2 bg-white border-2 rounded-lg shadow-md h-60">
+      <div className="h-64 px-3 py-2 bg-white border-2 rounded-lg shadow-md sm:h-60">
         <div className="flex justify-between">
           <div className="flex flex-row">
             <div className="pt-1">

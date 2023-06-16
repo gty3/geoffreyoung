@@ -2,14 +2,14 @@ import Images from "./about/images"
 
 export default function About() {
   return (
-    <div className="w-full h-full pt-32 backdrop-blur-none">
-      <div className="z-40 flex max-w-6xl mx-auto mb-20 space-x-40">
-        <div className="max-w-md pt-32">
-          <div className="mb-2 text-4xl font-bold">{"Hi, I'm Geoff"}</div>
-          <div className="mt-4 text-lg">
+    <div className="px-4 pt-20 sm:pt-32 backdrop-blur-none">
+      <div className="justify-between max-w-6xl mx-auto sm:flex md:space-x-20 ">
+        <div className="max-w-md">
+          <div className="pb-6 text-6xl font-bold sm:pb-12 sm:pt-12">{"Hi, I'm Geoff"}</div>
+          <div className="pb-6 text-lg">
             {`I’m an American currently in Australia. 
-      I've been living in various places around the States and world working as a bicycle mechanic. 
-      For the past 5 years I have been devoted to becoming a proficient web developer. `}
+      I've been living in various places around the world working as a bicycle mechanic. 
+      For the past 5 years I have devoted myself to becoming a proficient web developer. `}
           </div>
         </div>
         <Images />
