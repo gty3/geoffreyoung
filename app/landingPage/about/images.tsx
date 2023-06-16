@@ -26,7 +26,7 @@ export default function Images() {
     from: { opacity: 0.2 },
     enter: { opacity: 1 },
     leave: { opacity: 0.2, delay: 4000 },
-    config: { duration: 1000 },
+    config: { duration: 800 },
 
     onRest: (_a, _b, item) => {
       if (index === item) {
@@ -46,7 +46,7 @@ export default function Images() {
             // backgroundImage: `url(https://images.unsplash.com/${slides[i]}?w=1920&q=80&auto=format&fit=crop)`,
           }}
         >
-          <img
+          <Image
             className="rounded-lg"
             src={images[i]}
             width={800}
