@@ -25,12 +25,12 @@ export default function Images() {
     key: index,
     from: { opacity: 0.2 },
     enter: { opacity: 1 },
-    leave: { opacity: 0.2, delay: 4000 },
+    leave: { opacity: 0.2, delay: 1000 },
     config: { duration: 800 },
 
     onRest: (_a, _b, item) => {
       if (index === item) {
-        set((state) => (state + 1) % images.length)
+        set((state) => (state + 1) % slides.length)
       }
     },
     exitBeforeEnter: true,
@@ -49,10 +49,11 @@ export default function Images() {
           <Image
             className="rounded-lg"
             //  src={`https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800`}
-             src={images[i]}
+             src={slides[i]}
             width={800}
             height={600}
             alt={images[i]}
+            placeholder = 'blur'
           />
         </animated.div>
       ))}
