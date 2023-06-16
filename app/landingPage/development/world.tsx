@@ -20,6 +20,7 @@ const World = () => {
   const [arcsData, setArcsData] = useState<ArcsObj[]>([])
   const [svgData, setSvgData] = useState<SVGobj[]>([])
   const [globeReady, setGlobeReady] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
 
   const htmlFunction = (d: SVGobj) => {
     const el = document.createElement("div")
@@ -30,24 +31,24 @@ const World = () => {
 
   const startTime = 1000
 
-  // const listenToScroll = () => {
-  //   let heightToHideFrom = 1000;
-  //   const winScroll = document.body.scrollTop ||
-  //       document.documentElement.scrollTop;
+  const listenToScroll = () => {
+    let heightToHideFrom = 1000;
+    const winScroll = document.body.scrollTop ||
+        document.documentElement.scrollTop;
   
-  //   if (winScroll > heightToHideFrom) {
-  //      isVisible &&      // to limit setting state only the first time
-  //        setIsVisible(false);
-  //   } else {
-  //        setIsVisible(true);
-  //   }
-  // };
+    if (winScroll > heightToHideFrom) {
+       isVisible &&      // to limit setting state only the first time
+         setIsVisible(false);
+    } else {
+         setIsVisible(true);
+    }
+  };
 
-  // useEffect(() => {
-  //   window.addEventListener("scroll", listenToScroll);
-  //   return () =>
-  //      window.removeEventListener("scroll", listenToScroll);
-  // }, [])
+  useEffect(() => {
+    window.addEventListener("scroll", listenToScroll);
+    return () =>
+       window.removeEventListener("scroll", listenToScroll);
+  }, [])
 
   useEffect(() => {
     if (!globeRef.current) {
@@ -66,8 +67,8 @@ const World = () => {
   }, [globeReady])
 
   return (
-    <div className="sm:-my-24 -mb-10 sm:h-[700px] h-[400px] -mt-20 flex justify-center">
-      <Globe
+    <div className="sm:-my-24 -mb-10 sm:h-[700px] h-[400px] -mt-20">
+      {isVisible ? <Globe
       showAtmosphere={false}
         enablePointerInteraction={false}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
@@ -91,7 +92,7 @@ const World = () => {
         htmlElementsData={svgData}
         htmlElement={(d: any) => htmlFunction(d as SVGobj)}
         ref={globeRef}
-      />
+      /> : <div className="w-[400px] h-[600px]">w</div>}
     </div>
   )
 }
