@@ -6,7 +6,7 @@ import { allPosts, Post } from "contentlayer/generated"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 
-type SelectedPost = Post & { selected: boolean }
+interface SelectedPost extends Post { selected: boolean } 
 
 function truncateString(str: string) {
   const length = 21

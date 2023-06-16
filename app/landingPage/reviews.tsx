@@ -16,11 +16,11 @@ interface Review {
 export default function Reviews() {
 
   const [matches, setMatches] = useState(
-    window.matchMedia("(min-width: 768px)").matches
+    typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches
   )
 
   useEffect(() => {
-    window
+    typeof window !== "undefined" && window
     .matchMedia("(min-width: 768px)")
     .addEventListener('change', e => setMatches( e.matches ));
   }, []);

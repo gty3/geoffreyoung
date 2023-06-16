@@ -7,10 +7,8 @@ import Image from "next/image"
 import { usePathname } from "next/navigation"
 import Articles from "../components/articles"
 
-type SelectedPost = Post & { selected: boolean }
 
-
-export default function PostCard(post: SelectedPost) {
+export default function PostCard() {
 
   const selected = "bg-blue-100 text-blue-800 hover:bg-blue-100"
   const notSelected = "hover:bg-gray-50"
