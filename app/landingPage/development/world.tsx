@@ -67,8 +67,9 @@ const World = () => {
   }, [globeReady])
 
   return (
-    <div className="sm:-my-24 -mb-10 sm:h-[700px] h-[400px] -mt-20">
-      {isVisible ? <Globe
+    <div className="sm:-my-24 -mb-10 sm:min-h-[700px] min-h-[400px] min-w-[288px] sm:min-w-[400px] -mt-20">
+      {isVisible && <Globe
+      className=""
       showAtmosphere={false}
         enablePointerInteraction={false}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
@@ -92,7 +93,7 @@ const World = () => {
         htmlElementsData={svgData}
         htmlElement={(d: any) => htmlFunction(d as SVGobj)}
         ref={globeRef}
-      /> : <div className="w-[400px] h-[600px]"> a</div>}
+      />}
     </div>
   )
 }

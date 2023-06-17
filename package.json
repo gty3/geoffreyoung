@@ -29,6 +29,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-globe.gl": "^2.24.1",
+    "react-medium-image-zoom": "^5.1.6",
     "react-wrap-balancer": "^0.5.0",
     "rehype-pretty-code": "^0.9.6",
     "remark": "^14.0.3",
