@@ -24,7 +24,7 @@ export default function Development() {
             alt="web development bookmarks"
             // height={400}
             // width={400}
-          />
+          ></Image>
         </Zoom>
         <div className="max-w-md my-10 text-lg">
           {"I've consumed a plethora of resources, bookmarking everything I've found useful. The more I've learned, the more I've narrowed my focus, spending most of my time now with Next.js, TypeScript, and Node.js."}

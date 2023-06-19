@@ -70,7 +70,7 @@ export default function Images() {
             // width={800}
             // height={600}S
             alt={images[i]}
-            priority={true}
+            // priority={true}
             placeholder = 'blur'
           />
         </animated.div>
