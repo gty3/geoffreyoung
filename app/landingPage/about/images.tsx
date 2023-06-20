@@ -11,6 +11,7 @@ import Mtb2 from "public/about/mtb2.jpg"
 import Mtb3 from "public/about/mtb3.jpg"
 import Paddleboard from "public/about/paddleboard.jpg"
 import Snow from "public/about/snow.jpg"
+import { useMediaQuery } from "@/app/components/useMediaQuery"
 
 
 
@@ -34,14 +35,14 @@ export default function Images() {
     "/about/mtb3.jpg",
     "/about/paddleboard.jpg",
     "/about/freedive.jpg",
-    "/about/snow.jpg",
+    "/about/snow.jpg", 
   ]
 
   const [index, set] = useState(0)
   const transitions = useTransition(index, {
     key: index,
     from: { opacity: 0 },
-    enter: { opacity: 1, delay: index === 0 ? 2000 : 0 },
+    enter: { opacity: 1 },
     leave: { opacity: 0, delay: 4000 },
     config: { duration: 1000 },
 
@@ -52,6 +53,8 @@ export default function Images() {
     },
     exitBeforeEnter: true,
   })
+
+  // const isMobile = useMediaQuery(`(max-width: 767.98px)`)
 
   return (
     <div className="flex fill center">
@@ -68,7 +71,7 @@ export default function Images() {
             //  src={`https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800`}
              src={slides[i]}
             // width={800}
-            // height={600}S
+            // height={600}
             alt={images[i]}
             // priority={true}
             placeholder = 'blur'
