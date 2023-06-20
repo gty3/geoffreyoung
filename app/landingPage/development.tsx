@@ -23,7 +23,7 @@ export default function Development() {
         <World />
       </div>
       <div className="z-50 flex flex-col-reverse justify-center max-w-6xl px-4 mx-auto mb-20 -mt-10 sm:flex-row sm:space-x-20 sm:flex">
-        <Zoom>
+        {/* <Zoom> */}
           {(!isMobile || isMobile === undefined) && (
             <img
               loading="lazy"
@@ -50,7 +50,7 @@ export default function Development() {
             height={1390}
             width={1951}
           ></Image> */}
-        </Zoom>
+        {/* </Zoom> */}
         <div className="order-1 max-w-md my-10 text-lg sm:text-xl">
           {
             "I've consumed a plethora of resources, collecting bookmarks along the way. I spend most of my time now with Next.js, TypeScript, and Node.js."
