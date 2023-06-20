@@ -18,14 +18,14 @@ export default function Development() {
       </div>
       <div className="z-50 flex flex-col-reverse justify-center max-w-6xl px-4 mx-auto mb-20 -mt-10 sm:flex-row sm:space-x-20 sm:flex">
         <Zoom>
-          <img
+          <Image
             className="rounded-lg sm:max-w-lg"
             src="/bookmarks1.png"
             alt="web development bookmarks"
-            loading="lazy"
+            // loading="lazy"
             height={1390}
             width={1951}
-          ></img>
+          ></Image>
         </Zoom>
         <div className="order-1 max-w-md my-10 text-lg sm:text-xl">
           {"I've consumed a plethora of resources, collecting bookmarks along the way. I spend most of my time now with Next.js, TypeScript, and Node.js."}
