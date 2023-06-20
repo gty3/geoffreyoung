@@ -41,7 +41,7 @@ export default function Images() {
   const transitions = useTransition(index, {
     key: index,
     from: { opacity: 0 },
-    enter: { opacity: 1 },
+    enter: { opacity: 1, delay: index === 0 ? 2000 : 0 },
     leave: { opacity: 0, delay: 4000 },
     config: { duration: 1000 },
 
