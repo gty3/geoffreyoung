@@ -4,13 +4,15 @@ import { useEffect, useState } from "react"
 import { useTransition, animated } from "@react-spring/web"
 
 import Image from "next/image"
-import Mtb1 from "public/about/mtb1.jpg"
-import Slackline1 from "public/about/slackline1.jpg"
-import Freedive from "public/about/freedive.jpg"
-import Mtb2 from "public/about/mtb2.jpg"
-import Mtb3 from "public/about/mtb3.jpg"
-import Paddleboard from "public/about/paddleboard.jpg"
-import Snow from "public/about/snow.jpg"
+// import Mtb1 from "public/about/desktop/mtb1.jpg"
+import Slackline1 from "public/about/mobile/slackline1.jpg"
+import Freedive from "public/about/mobile/freedive.jpg"
+import Mtb2 from "public/about/mobile/mtb2.jpg"
+import Mtb3 from "public/about/mobile/mtb3.jpg"
+import Paddleboard from "public/about/mobile/paddleboard.jpg"
+import Snow from "public/about/mobile/snow.jpg"
+import Mtb1 from "public/about/mobile/mtb1.jpg"
+
 import { useMediaQuery } from "@/app/components/useMediaQuery"
 
 
@@ -18,24 +20,33 @@ import { useMediaQuery } from "@/app/components/useMediaQuery"
 export default function Images() {
   const slides = [Mtb1, Slackline1, Freedive, Mtb2, Mtb3, Paddleboard, Snow]
 
+  const [matches, setMatches] = useState<boolean>()
+    // const matches = typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches
 
-    const matches = typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches
 
-
-  // useEffect(() => {
-  //   typeof window !== "undefined" && window
-  //   .matchMedia("(min-width: 768px)")
-  //   .addEventListener('change', e => setMatches( e.matches ));
-  // }, []);
+  useEffect(() => {
+    typeof window !== "undefined" && window
+    .matchMedia("(min-width: 768px)")
+    .addEventListener('change', e => setMatches( e.matches ));
+  }, []);
 
   const images = [
-    "/about/mtb1.jpg",
-    "/about/slackline1.jpg",
-    "/about/mtb2.jpg",
-    "/about/mtb3.jpg",
-    "/about/paddleboard.jpg",
-    "/about/freedive.jpg",
-    "/about/snow.jpg", 
+    "/about/desktop/mtb1.jpg",
+    "/about/desktop/slackline1.jpg",
+    "/about/desktop/mtb2.jpg",
+    "/about/desktop/mtb3.jpg",
+    "/about/desktop/paddleboard.jpg",
+    "/about/desktop/freedive.jpg",
+    "/about/desktop/snow.jpg", 
+  ]
+  const mobileImages = [
+    "/about/mobile/mtb1.jpg",
+    "/about/mobile/slackline1.jpg",
+    "/about/mobile/mtb2.jpg",
+    "/about/mobile/mtb3.jpg",
+    "/about/mobile/paddleboard.jpg",
+    "/about/mobile/freedive.jpg",
+    "/about/mobile/snow.jpg", 
   ]
 
   const [index, set] = useState(0)
@@ -69,7 +80,7 @@ export default function Images() {
           <Image
             className="rounded-lg "
             //  src={`https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800`}
-             src={slides[i]}
+             src={matches ? slides[i] : mobileImages[i]}
             // width={800}
             // height={600}
             alt={images[i]}
