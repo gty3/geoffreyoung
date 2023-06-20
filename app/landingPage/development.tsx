@@ -26,6 +26,7 @@ export default function Development() {
         {/* <Zoom> */}
           {(!isMobile || isMobile === undefined) && (
             <Image
+            className="rounded-lg sm:max-w-lg"
               height={1390}
               width={1951}
               src="/bookmarks1.png"
@@ -34,6 +35,7 @@ export default function Development() {
           )}
           {(isMobile || isMobile === undefined) && (
             <Image
+              className="rounded-lg sm:max-w-lg"
               height={347.5}
               width={487.75}
               src="/bookmarks1.png"
