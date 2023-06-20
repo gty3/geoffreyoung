@@ -12,7 +12,7 @@ const projectslist = [
     name: "Trail Guesser",
     description: "Mountain bike trail guessing game",
     builtWith:
-      "This fullstack Vite app had me utilizing AWS Federated identities and DynamoDB to manage saved game data. I also leveraged the AWS Serverless Image Handler as well as the Google Maps API.",
+      "This fullstack Vite app had me utilizing AWS unauthenticated Federated identities and DynamoDB to manage saved game data. I also leveraged the AWS Serverless Image Handler as well as the Google Maps API.",
     github: "https://github.com/gty3/trailguesser",
     image: "/projectImages/trailguesser.png",
     url: "https://trailguesser.com",

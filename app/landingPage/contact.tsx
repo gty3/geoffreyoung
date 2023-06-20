@@ -61,7 +61,7 @@ const Contact = () => {
 
   return (
     <>
-    <div id="contact" className="mt-4 text-lg text-center backdrop-blur-none">{"I'm available for hire"}</div>
+    {/* <div id="contact" className="mt-4 text-lg text-center backdrop-blur-none">{"I'm available for hire"}</div> */}
     <motion.div
       initial={false}
       animate={emailOpen ? "open" : "closed"}
@@ -71,7 +71,7 @@ const Contact = () => {
         <div className="flex flex-row justify-center">
           <Image
             className="opacity-90"
-            src="/favicon.ico"
+            src="/gtyPhoto.png"
             height={60}
             width={60}
             alt="Geoff"

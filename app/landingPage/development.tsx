@@ -23,8 +23,8 @@ export default function Development() {
             src="/bookmarks1.png"
             alt="web development bookmarks"
             
-            // height={400}
-            // width={400}
+            height={1390}
+            width={1951}
           ></img>
         </Zoom>
         <div className="order-1 max-w-md my-10 text-lg sm:text-xl">
