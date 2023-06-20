@@ -4,7 +4,7 @@ const projectslist = [
     description: "Demo Landing Page",
     builtWith:
       "I recreated a WordPress page with Next.js and TailwindCSS to showcase the speed with which I could go from design to production.",
-    // github: "https://github.com/gty3/trailguesser",
+    github: "https://github.com/gty3/cocoondata-demo",
     image: "/projectImages/cocoonData.png",
     // url: "https://trailguesser.com",
   },

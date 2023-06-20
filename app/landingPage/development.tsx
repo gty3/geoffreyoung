@@ -22,7 +22,7 @@ export default function Development() {
             className="rounded-lg sm:max-w-lg"
             src="/bookmarks1.png"
             alt="web development bookmarks"
-            
+            loading="lazy"
             height={1390}
             width={1951}
           ></img>
