@@ -8,7 +8,7 @@ import Bookmarks from "/public/bookmarks1.png"
 import { useMediaQuery } from "../components/useMediaQuery"
 
 export default function Development() {
-  const isMobile = useMediaQuery(`(max-width: 767.98px)`)
+  // const isMobile = useMediaQuery(`(max-width: 767.98px)`)
   return (
     <div className="backdrop-blur-none">
       <div className="justify-center max-w-6xl px-4 mx-auto mt-20 sm:space-x-20 sm:flex backdrop-blur-none">
@@ -24,25 +24,27 @@ export default function Development() {
       </div>
       <div className="z-50 flex flex-col-reverse justify-center max-w-6xl px-4 mx-auto mb-20 -mt-10 sm:flex-row sm:space-x-20 sm:flex">
         {/* <Zoom> */}
-          {(!isMobile || isMobile === undefined) && (
+        {/* {(!isMobile || isMobile === undefined) && (
+          <Zoom>
             <Image
-            className="rounded-lg sm:max-w-lg"
+              className="rounded-lg sm:max-w-lg"
               height={1390}
               width={1951}
               src="/bookmarks1.png"
               alt="Web development bookmarks - high quality"
             />
-          )}
-          {(isMobile || isMobile === undefined) && (
-            <Image
-              className="rounded-lg sm:max-w-lg"
-              height={347.5}
-              width={487.75}
-              src="/bookmarks1.png"
-              alt="Web development bookmarks - low quality"
-            />
-          )}
-          {/* <Image
+          </Zoom>
+        )} */}
+        {/* {(isMobile || isMobile === undefined) && ( */}
+          <Image
+            className="rounded-lg sm:max-w-lg"
+            height={347.5}
+            width={487.75}
+            src="/bookmarks1.png"
+            alt="Web development bookmarks - low quality"
+          />
+        {/* )} */}
+        {/* <Image
             className="rounded-lg sm:max-w-lg"
             src="/bookmarks1.png"
             alt="web development bookmarks"
