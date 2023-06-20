@@ -46,6 +46,7 @@ export default function Images() {
     "/about/desktop/freedive.jpg",
     "/about/desktop/snow.jpg", 
   ]
+  
   // const mobileImages = [
   //   "/about/mobile/mtb1.jpg",
   //   "/about/mobile/slackline1.jpg",
