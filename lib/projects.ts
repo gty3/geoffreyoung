@@ -37,7 +37,7 @@ const projectslist = [
     name: "Geoffrey Young",
     description: "Personal website",
     builtWith:
-      "This application helped familiarize me with more frontend styling. I used a Three.js wrapper - react-globe.gl, ContentLayer - a type-safe content SDK, and animation libraries - Framer Motion React Spring.",
+      "This application helped familiarize me with more frontend styling. I used a Three.js wrapper - react-globe.gl, ContentLayer - a type-safe content SDK, and animation libraries - Framer Motion and React Spring.",
     github: "https://github.com/gty3/geoffreyoung",
     image: "/projectImages/gtyusa.png",
   },
@@ -45,7 +45,7 @@ const projectslist = [
     name: "Note Tree",
     description: "On demand consulting with blog",
     builtWith:
-      "I used the Vonage API to allow for one-to-one video communication and Stripe payment intents to allow for pay-per-minute interactions. I used React-Notion-X for the frontend blogging and built the backend with the Serverless Framework.",
+      "I used the Vonage API to allow for one-to-one video communication and Stripe payment intents to enable for pay-per-minute interactions. I used React-Notion-X for the frontend blogging and built the backend with Serverless Framework.",
     github: "https://github.com/gty3/notetree",
     image: "/projectImages/treeFavicon.svg",
   },
