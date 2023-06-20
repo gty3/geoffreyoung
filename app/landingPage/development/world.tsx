@@ -67,7 +67,7 @@ const World = () => {
   }, [globeReady])
 
   return (
-    <div className="sm:-my-24 -mb-10 sm:min-h-[700px] min-h-[400px] min-w-[288px] sm:min-w-[400px] -mt-20">
+    <div className="flex justify-center sm:-my-24 -mb-10 sm:min-h-[700px] min-h-[400px] min-w-[288px] sm:min-w-[400px] -mt-20">
       {isVisible && <Globe
       className=""
       showAtmosphere={false}

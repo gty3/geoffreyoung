@@ -22,7 +22,7 @@ export default function Projects() {
         Projects
       </div>
       <div className="flex flex-col items-center">
-        <div className="max-w-6xl py-8 mx-4 space-y-6 sm:columns-2 sm:gap-6 xl:columns-3">
+        <div className="max-w-6xl pt-8 mx-4 space-y-6 sm:columns-2 sm:gap-6 xl:columns-3">
           {projectslist.map((project, idx) => (
             <Card key={idx} {...project} />
           ))}
@@ -76,7 +76,7 @@ const GithubButton = ({ github }: { github: string }) => {
     <motion.div
       whileTap={{ scale: 0.96 }}
       onClick={(e) => openGithub(e)}
-      className="z-30 flex items-center justify-center w-40 px-5 py-2 space-x-2 transition-all bg-white border border-gray-300 rounded-full shadow-lg cursor-pointer hover:border-gray-800"
+      className="z-30 flex items-center justify-center w-40 px-5 py-2 mt-2 space-x-2 transition-all bg-white border border-gray-300 rounded-full shadow-lg cursor-pointer hover:border-gray-800"
     >
       <Github className="w-5 h-5 text-black" />
       <p className="text-sm">GitHub</p>

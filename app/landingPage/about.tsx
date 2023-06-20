@@ -9,7 +9,7 @@ export default function About() {
           <div className="pb-6 text-lg">
             {`I’m an American currently in Australia. 
       I've been living in various places around the world working as a bicycle mechanic. 
-      For the past 5 years I have devoted myself to becoming a proficient web developer. `}
+      For the past 5 years I've been devoted to becoming a proficient web developer. `}
           </div>
         </div>
         <Images />
