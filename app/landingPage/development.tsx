@@ -27,8 +27,8 @@ export default function Development() {
           {(!isMobile || isMobile === undefined) && (
             <img
               loading="lazy"
-              height={1390}
-              width={1951}
+              height="1390px"
+              width="1951px"
               src="/bookmarks1.png"
               alt="Web development bookmarks - high quality"
             />
@@ -36,8 +36,8 @@ export default function Development() {
           {(isMobile || isMobile === undefined) && (
             <img
               loading="lazy"
-              height={347.5}
-              width={487.75}
+              height="347.5px"
+              width="487.75px"
               src="/bookmarks1.png"
               alt="Web development bookmarks - low quality"
             />
