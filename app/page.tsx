@@ -19,7 +19,7 @@ export default function Home() {
         <Reviews />
         <Development />
       <Projects />
-      <div className="py-6 text-6xl font-bold text-center backdrop-blur-none">
+      <div className="py-6 pt-12 text-4xl font-extrabold text-center sm:text-5xl backdrop-blur-none">
         Articles
       </div>
       <Articles />
