@@ -25,19 +25,17 @@ export default function Development() {
       <div className="z-50 flex flex-col-reverse justify-center max-w-6xl px-4 mx-auto mb-20 -mt-10 sm:flex-row sm:space-x-20 sm:flex">
         {/* <Zoom> */}
           {(!isMobile || isMobile === undefined) && (
-            <img
-              loading="lazy"
-              height="1390px"
-              width="1951px"
+            <Image
+              height={1390}
+              width={1951}
               src="/bookmarks1.png"
               alt="Web development bookmarks - high quality"
             />
           )}
           {(isMobile || isMobile === undefined) && (
-            <img
-              loading="lazy"
-              height="347.5px"
-              width="487.75px"
+            <Image
+              height={347.5}
+              width={487.75}
               src="/bookmarks1.png"
               alt="Web development bookmarks - low quality"
             />
