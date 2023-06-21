@@ -3,7 +3,7 @@ const projectslist = [
     name: "Cocoon Data",
     description: "Demo Landing Page",
     builtWith:
-      "I recreated a WordPress page with Next.js and TailwindCSS to showcase the speed with which I could go from design to production.",
+      "I recreated a WordPress page with Next.js and TailwindCSS to showcase the speed with which I could go from design to production, writing clean code along the way.",
     github: "https://github.com/gty3/cocoondata-demo",
     image: "/projectImages/cocoonData.png",
     // url: "https://trailguesser.com",
@@ -37,7 +37,7 @@ const projectslist = [
     name: "Geoffrey Young",
     description: "Personal website",
     builtWith:
-      "This application helped familiarize me with more frontend styling. I used a Three.js wrapper - react-globe.gl, ContentLayer - a type-safe content SDK, and animation libraries - Framer Motion and React Spring.",
+      "This work in progress has me experimenting with Three.js, ContentLayer, and animation libraries Framer Motion and React Spring. I've enjoyed the challenge of creating a visually appealing site while optimizing for speed.",
     github: "https://github.com/gty3/geoffreyoung",
     image: "/projectImages/gtyusa.png",
   },
@@ -45,7 +45,7 @@ const projectslist = [
     name: "Note Tree",
     description: "On demand consulting with blog",
     builtWith:
-      "I used the Vonage API to allow for one-to-one video communication and Stripe payment intents to enable for pay-per-minute interactions. I used React-Notion-X for the frontend blogging and built the backend with Serverless Framework.",
+      "I used the Vonage API to allow for one-to-one video communication and Stripe payment intents to enable for pay-per-minute interactions. I used React-Notion-X to build the blogging platform with Notion as the CMS.",
     github: "https://github.com/gty3/notetree",
     image: "/projectImages/treeFavicon.svg",
   },

@@ -39,7 +39,7 @@ export default function Development() {
             My web development
           </div>
           <div className="mt-4 text-lg sm:text-xl">
-            {`I started my journey learning about serverless architecture and infrastructure as code. I worked with yaml files and the Serverless Framework as well as AWS CDK.`}
+            {`I started out specializing in serverless architecture and infrastructure as code, creating backends with yaml files, the Serverless Framework, AWS CDK, and Serverless Stack (SST).`}
           </div>
         </div>
         <World />
@@ -67,9 +67,8 @@ export default function Development() {
           )}
         </div>
         <div className="order-1 max-w-md my-10 text-lg sm:text-xl">
-          {
-            "I've consumed a plethora of resources, collecting bookmarks along the way. I spend most of my time now with Next.js, TypeScript, and Node.js."
-          }
+          {`I've shifted my focus to more frontend development, specializing in React and Tailwind CSS, with a preference for Next.js. I still
+          manage to immerse myself in a wide array of tools and products, collecting a plethora of bookmarks along the way.`}
         </div>
       </div>
     </div>

@@ -19,8 +19,6 @@ import DMtb3 from "public/about/desktop/mtb3.jpg"
 import DPaddleboard from "public/about/desktop/paddleboard.jpg"
 import DSnow from "public/about/desktop/snow.jpg"
 import DMtb1 from "public/about/desktop/mtb1.jpg"
-import { useMediaQuery } from "@/app/components/useMediaQuery"
-
 
 
 export default function Images() {
