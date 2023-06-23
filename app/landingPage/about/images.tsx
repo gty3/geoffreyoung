@@ -78,9 +78,9 @@ export default function Images() {
   return (
     <div className="sm:w-[624px] sm:h-[468px] w-[358px] h-[268.5px]">
       {
-      // typeof matches === "undefined"
-      //   ? null
-      //   : 
+      typeof matches === "undefined"
+        ? null
+        : 
         transitions((style, i) => (
             <animated.div
               style={{
@@ -89,7 +89,7 @@ export default function Images() {
             >
               <Image
                 className="rounded-lg "
-                src={mobileSlides[i]}
+                src={matches ? mobileSlides[i] : slides[i]}
                 alt={images[i]}
                 placeholder="blur"
               />
