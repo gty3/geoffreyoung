@@ -75,47 +75,20 @@ export default function Images() {
     exitBeforeEnter: true,
   })
 
-  // const isMobile = useMediaQuery(`(max-width: 767.98px)`)
-
   return (
     <div className="sm:w-[624px] sm:h-[468px] w-[358px] h-[268.5px]">
-      {typeof matches === "undefined" ? null : matches
-        ? transitions((style, i) => (
-            <animated.div
-              className=""
-              style={{
-                ...style,
-                //   backgroundImage: `url(https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800)`,
-              }}
-            >
-              <Image
-                className="rounded-lg "
-                //  src={`https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800`}
-                src={slides[i]}
-                // width={800}
-                // height={600}
-                alt={images[i]}
-                // priority={true}
-                placeholder="blur"
-              />
-            </animated.div>
-          ))
+      {typeof matches === "undefined"
+        ? null
         : transitions((style, i) => (
             <animated.div
-              className=""
               style={{
                 ...style,
-                //   backgroundImage: `url(https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800)`,
               }}
             >
               <Image
                 className="rounded-lg "
-                //  src={`https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800`}
-                src={mobileSlides[i]}
-                // width={800}
-                // height={600}
+                src={matches ? slides[i] : mobileSlides[i]}
                 alt={images[i]}
-                // priority={true}
                 placeholder="blur"
               />
             </animated.div>
