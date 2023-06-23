@@ -48,8 +48,6 @@ export default function Images() {
     }
     setMatches(window.matchMedia("(min-width: 768px)").matches)
   }, [])
-  
-  // const shit = typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches
 
   const images = [
     "/about/desktop/mtb1.jpg",
@@ -90,7 +88,8 @@ export default function Images() {
               }}
             >
               <Image
-                className="rounded-lg "
+                className="rounded-lg"
+                priority={i === 0 ? true : false}
                 src={!matches ? mobileSlides[i] : slides[i]}
                 alt={images[i]}
                 placeholder="blur"
