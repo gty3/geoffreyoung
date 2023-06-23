@@ -20,20 +20,35 @@ import DPaddleboard from "public/about/desktop/paddleboard.jpg"
 import DSnow from "public/about/desktop/snow.jpg"
 import DMtb1 from "public/about/desktop/mtb1.jpg"
 
-
 export default function Images() {
-  const mobileSlides = [Mtb1, Slackline1, Freedive, Mtb2, Mtb3, Paddleboard, Snow]
-  const slides = [DMtb1, DSlackline1, DFreedive, DMtb2, DMtb3, DPaddleboard, DSnow]
+  const mobileSlides = [
+    Mtb1,
+    Slackline1,
+    Freedive,
+    Mtb2,
+    Mtb3,
+    Paddleboard,
+    Snow,
+  ]
+  const slides = [
+    DMtb1,
+    DSlackline1,
+    DFreedive,
+    DMtb2,
+    DMtb3,
+    DPaddleboard,
+    DSnow,
+  ]
 
   const [matches, setMatches] = useState<boolean>()
-    // const matches = typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches
-
 
   useEffect(() => {
-    typeof window !== "undefined" && window
-    .matchMedia("(min-width: 768px)")
-    .addEventListener('change', e => setMatches( e.matches ));
-  }, []);
+    if (typeof window === "undefined") {
+      return
+    }
+    setMatches(window.matchMedia("(min-width: 768px)").matches)
+  }, [])
+  console.log("matches?", matches)
 
   const images = [
     "/about/desktop/mtb1.jpg",
@@ -42,18 +57,8 @@ export default function Images() {
     "/about/desktop/mtb3.jpg",
     "/about/desktop/paddleboard.jpg",
     "/about/desktop/freedive.jpg",
-    "/about/desktop/snow.jpg", 
+    "/about/desktop/snow.jpg",
   ]
-  
-  // const mobileImages = [
-  //   "/about/mobile/mtb1.jpg",
-  //   "/about/mobile/slackline1.jpg",
-  //   "/about/mobile/mtb2.jpg",
-  //   "/about/mobile/mtb3.jpg",
-  //   "/about/mobile/paddleboard.jpg",
-  //   "/about/mobile/freedive.jpg",
-  //   "/about/mobile/snow.jpg", 
-  // ]
 
   const [index, set] = useState(0)
   const transitions = useTransition(index, {
@@ -75,45 +80,47 @@ export default function Images() {
 
   return (
     <div className="sm:w-[624px] sm:h-[468px] w-[358px] h-[268.5px]">
-      {!matches ? transitions((style, i) => (
-        <animated.div
-          className=""
-          style={{
-            ...style,
-          //   backgroundImage: `url(https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800)`,
-          }}
-        >
-          <Image
-            className="rounded-lg "
-            //  src={`https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800`}
-             src={slides[i]}
-            // width={800}
-            // height={600}
-            alt={images[i]}
-            // priority={true}
-            placeholder = 'blur'
-          />
-        </animated.div>
-      )) : transitions((style, i) => (
-        <animated.div
-          className=""
-          style={{
-            ...style,
-          //   backgroundImage: `url(https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800)`,
-          }}
-        >
-          <Image
-            className="rounded-lg "
-            //  src={`https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800`}
-             src={mobileSlides[i]}
-            // width={800}
-            // height={600}
-            alt={images[i]}
-            // priority={true}
-            placeholder = 'blur'
-          />
-        </animated.div>
-      )) }
+      {matches
+        ? transitions((style, i) => (
+            <animated.div
+              className=""
+              style={{
+                ...style,
+                //   backgroundImage: `url(https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800)`,
+              }}
+            >
+              <Image
+                className="rounded-lg "
+                //  src={`https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800`}
+                src={slides[i]}
+                // width={800}
+                // height={600}
+                alt={images[i]}
+                // priority={true}
+                placeholder="blur"
+              />
+            </animated.div>
+          ))
+        : transitions((style, i) => (
+            <animated.div
+              className=""
+              style={{
+                ...style,
+                //   backgroundImage: `url(https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800)`,
+              }}
+            >
+              <Image
+                className="rounded-lg "
+                //  src={`https://ik.imagekit.io/ml8s1f1667/${images[i]}?tr=w-1080,h-800`}
+                src={mobileSlides[i]}
+                // width={800}
+                // height={600}
+                alt={images[i]}
+                // priority={true}
+                placeholder="blur"
+              />
+            </animated.div>
+          ))}
     </div>
   )
 }
