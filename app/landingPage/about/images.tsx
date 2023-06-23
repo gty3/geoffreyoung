@@ -77,7 +77,7 @@ export default function Images() {
 
   return (
     <div className="sm:w-[624px] sm:h-[468px] w-[358px] h-[268.5px]">
-      {/* {
+      {
       typeof matches === "undefined"
         ? null
         : 
@@ -96,7 +96,7 @@ export default function Images() {
                 placeholder="blur"
               />
             </animated.div>
-          ))} */}
+          ))}
     </div>
   )
 }
