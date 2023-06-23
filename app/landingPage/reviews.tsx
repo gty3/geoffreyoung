@@ -33,7 +33,7 @@ export default function Reviews() {
           slidesPerView={!matches ? 1.2 : 3.5}
           spaceBetween={!matches ? 10 : 20}
           // loop={true}
-          modules={[Pagination]}
+          // modules={[Pagination]}
           // className="mySwiper"
         >
           {reviewsArray.map((review, i) => {
