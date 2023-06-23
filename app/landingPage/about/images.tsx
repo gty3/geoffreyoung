@@ -86,6 +86,7 @@ export default function Images() {
               style={{
                 ...style,
               }}
+              className=""
             >
               <Image
                 className="rounded-lg"

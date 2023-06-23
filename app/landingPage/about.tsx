@@ -3,7 +3,7 @@ import Images from "./about/images"
 export default function About() {
   return (
     <div className="px-4 pt-20 sm:pt-32 backdrop-blur-none">
-      <div className="justify-between max-w-6xl mx-auto sm:flex md:space-x-20 ">
+      <div className="justify-between max-w-6xl mx-auto sm:flex md:space-x-20">
         <div className="max-w-md">
           <div className="pb-6 text-6xl font-bold sm:pb-12 sm:pt-12">{"Hi, I'm Geoff"}</div>
           <div className="pb-6 text-lg sm:text-xl">
