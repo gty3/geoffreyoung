@@ -40,14 +40,16 @@ export default function Images() {
     DSnow,
   ]
 
-  const [matches, setMatches] = useState<boolean>()
+  // const [matches, setMatches] = useState<boolean>()
 
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return
-    }
-    setMatches(window.matchMedia("(min-width: 768px)").matches)
-  }, [])
+  // useEffect(() => {
+  //   if (typeof window === "undefined") {
+  //     return
+  //   }
+  //   setMatches(window.matchMedia("(min-width: 768px)").matches)
+  // }, [])
+  
+  const shit = typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches
 
   const images = [
     "/about/desktop/mtb1.jpg",
@@ -78,7 +80,7 @@ export default function Images() {
   return (
     <div className="sm:w-[624px] sm:h-[468px] w-[358px] h-[268.5px]">
       {
-      typeof matches === "undefined"
+      typeof shit === "undefined"
         ? null
         : 
         transitions((style, i) => (
@@ -89,7 +91,7 @@ export default function Images() {
             >
               <Image
                 className="rounded-lg "
-                src={!matches ? mobileSlides[i] : slides[i]}
+                src={!shit ? mobileSlides[i] : slides[i]}
                 alt={images[i]}
                 placeholder="blur"
               />
