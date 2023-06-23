@@ -76,23 +76,24 @@ export default function Images() {
   })
 
   return (
-    <div className="sm:w-[624px] sm:h-[468px] w-[358px] h-[268.5px]">
-      {typeof matches === "undefined"
-        ? null
-        : transitions((style, i) => (
-            <animated.div
-              style={{
-                ...style,
-              }}
-            >
-              <Image
-                className="rounded-lg "
-                src={matches ? slides[i] : mobileSlides[i]}
-                alt={images[i]}
-                placeholder="blur"
-              />
-            </animated.div>
-          ))}
-    </div>
+    null
+    // <div className="sm:w-[624px] sm:h-[468px] w-[358px] h-[268.5px]">
+    //   {typeof matches === "undefined"
+    //     ? null
+    //     : transitions((style, i) => (
+    //         <animated.div
+    //           style={{
+    //             ...style,
+    //           }}
+    //         >
+    //           <Image
+    //             className="rounded-lg "
+    //             src={matches ? slides[i] : mobileSlides[i]}
+    //             alt={images[i]}
+    //             placeholder="blur"
+    //           />
+    //         </animated.div>
+    //       ))}
+    // </div>
   )
 }
