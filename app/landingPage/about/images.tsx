@@ -48,7 +48,6 @@ export default function Images() {
     }
     setMatches(window.matchMedia("(min-width: 768px)").matches)
   }, [])
-  console.log("matches?", matches)
 
   const images = [
     "/about/desktop/mtb1.jpg",
@@ -80,7 +79,7 @@ export default function Images() {
 
   return (
     <div className="sm:w-[624px] sm:h-[468px] w-[358px] h-[268.5px]">
-      {matches
+      {typeof matches === "undefined" ? null : matches
         ? transitions((style, i) => (
             <animated.div
               className=""
