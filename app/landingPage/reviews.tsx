@@ -32,13 +32,14 @@ export default function Reviews() {
         <Swiper
           slidesPerView={!matches ? 1.2 : 3.5}
           spaceBetween={!matches ? 10 : 20}
+          effect="fade"
           // loop={true}
           // modules={[Pagination]}
           // className="mySwiper"
         >
           {reviewsArray.map((review, i) => {
             return (
-              <SwiperSlide key={i} className="rounded-lg">
+              <SwiperSlide key={i}  className="rounded-lg">
                 <Slide review={review} />
               </SwiperSlide>
             )
