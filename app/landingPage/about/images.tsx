@@ -89,7 +89,7 @@ export default function Images() {
             >
               <Image
                 className="rounded-lg "
-                src={matches ? mobileSlides[i] : slides[i]}
+                src={!matches ? mobileSlides[i] : slides[i]}
                 alt={images[i]}
                 placeholder="blur"
               />
