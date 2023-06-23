@@ -12,7 +12,8 @@ export default function Development() {
   const [isMobile, setIsMobile] = useState<boolean>()
 
   const listenToScroll = () => {
-    let heightToHideFrom = 480
+    let heightToHideFrom = 100
+    // was 480
     const winScroll =
       document.body.scrollTop || document.documentElement.scrollTop
     if (winScroll < heightToHideFrom) {
@@ -59,6 +60,7 @@ export default function Development() {
           ) : (
             <Zoom>
               <Image
+                placeholder="blur"
                 className="rounded-lg sm:max-w-lg"
                 src={Bookmarks}
                 alt="Web development bookmarks"
