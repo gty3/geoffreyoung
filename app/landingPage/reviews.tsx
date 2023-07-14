@@ -14,17 +14,6 @@ interface Review {
 }
 
 export default function Reviews() {
-  // const [matches, setMatches] = useState(
-  const matches =
-    typeof window !== "undefined" &&
-    window.matchMedia("(min-width: 768px)").matches
-  // )
-
-  // useEffect(() => {
-  //   typeof window !== "undefined" && window
-  //   .matchMedia("(min-width: 768px)")
-  //   .addEventListener('change', e => setMatches( e.matches ));
-  // }, []);
 
   return (
     <div className="flex justify-center mt-10 sm:mt-20">
@@ -40,7 +29,7 @@ export default function Reviews() {
 const Card = ({ review }: { review: Review }) => {
   return (
     <div>
-      <div className="px-3 py-2 bg-white border-2 rounded-lg shadow-md">
+      <div className="px-3 py-2 bg-white border-2 rounded-lg shadow-md break-inside-avoid">
         <div className="flex justify-between">
           <div className="flex flex-row">
             <div className="pt-1">
@@ -82,7 +71,7 @@ const reviewsArray: Review[] = [
   },
   {
     name: "Hay Sampson",
-    reviewText: "JEFF IS THE ABSOLUTE BEST I LOVE HIM HE IS SO FRIENDLY!!",
+    reviewText: "GEOFF IS THE ABSOLUTE BEST I LOVE HIM HE IS SO FRIENDLY!!",
     date: "April 2023",
     image: "/about/reviews/hay.png",
   },
@@ -95,7 +84,7 @@ const reviewsArray: Review[] = [
   {
     name: "microx7WR",
     reviewText:
-      "Jeff is a great great guy, he helped me heaps! All around very happy, would recommend!",
+      "Geoff is a great great guy, he helped me heaps! All around very happy, would recommend!",
     date: "March 2023",
     image: "/about/reviews/micro.png",
   },
@@ -120,13 +109,13 @@ const reviewsArray: Review[] = [
   },
   {
     name: "Chiara Caggiani",
-    reviewText: `Jeff solved my problem right away. I’ll definitely be back:)`,
+    reviewText: `Geoff solved my problem right away. I’ll definitely be back:)`,
     date: "March 2023",
     image: "/about/reviews/chiara.png",
   },
   {
     name: "Manuela lesmes diaz",
-    reviewText: "Perfect service, thanks Jeff! 🤙🏽 …",
+    reviewText: "Perfect, thanks Geoff! 🤙🏽 …",
     date: "March 2023",
     image: "/about/reviews/manuela.png",
   },

@@ -27,7 +27,7 @@ export default function ClockCard() {
       <div className="flex flex-col py-2">
         <div className="my-1">
           Building this was quite the trigonometric puzzle. Tested with Jest and
-          React Testing Library. Built with Styled-Components.
+          React Testing Library. Styled with Styled-Components.
         </div>
       </div>
     </div>

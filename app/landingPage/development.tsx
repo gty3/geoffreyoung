@@ -69,7 +69,7 @@ export default function Development() {
           )}
         </div>
         <div className="order-1 max-w-md my-10 text-lg sm:text-xl">
-        <div className="pb-2 text-3xl font-bold sm:text-4xl">
+        <div className="pb-6 text-3xl font-bold sm:text-4xl">
             Frontend
           </div>
           {`I build most projects with Next.js and Tailwind CSS, but still
