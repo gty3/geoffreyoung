@@ -15,7 +15,10 @@ type ClockCenter = {
   y: number
 }
 
-export default function AnalogueClock({ dispatch, time }: {
+export default function AnalogueClock({
+  dispatch,
+  time,
+}: {
   time: Date
   dispatch: (action: Action) => void
 }) {
@@ -36,13 +39,25 @@ export default function AnalogueClock({ dispatch, time }: {
     )
   }
 
-  // This gets the x, y center position of the clockface
+  // This gets the x, y center position of the clockface, polls if screen changes
   const getPosition = () => {
     if (!clockRef.current) throw Error("Clockface not set")
-    const bounds = clockRef.current.getBoundingClientRect()
-    const x = bounds.width / 2 + bounds.left
-    const y = bounds.height / 2 + bounds.top
-    setClockCenter({ x: x, y: y })
+    const handle = setInterval(() => {
+      setClockCenter((prevState) => {
+        if (!clockRef.current) return prevState
+        const bounds = clockRef.current.getBoundingClientRect()
+        const x = bounds.width / 2 + bounds.left
+        const y = bounds.height / 2 + bounds.top
+        let nextValue = { x: x, y: y }
+
+        if (nextValue === prevState) {
+          clearInterval(handle)
+          return prevState
+        } else {
+          return nextValue
+        }
+      })
+    }, 100)
   }
 
   function isMouse(
@@ -138,6 +153,10 @@ export default function AnalogueClock({ dispatch, time }: {
   useEffect(() => {
     getPosition()
     window.addEventListener("resize", getPosition)
+    return () => {
+      getPosition()
+      window.removeEventListener("resize", getPosition)
+    }
   }, [])
 
   useEffect(() => {
