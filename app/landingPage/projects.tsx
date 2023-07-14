@@ -5,6 +5,8 @@ import Image from "next/image"
 import projectslist from "@/lib/projects"
 import { motion } from "framer-motion"
 import { BaseSyntheticEvent } from "react"
+import Clock from "./projects/clock.tsx/clock"
+import ClockCard from "./projects/clock.tsx/clock"
 
 interface CardProps {
   url?: string
@@ -26,6 +28,7 @@ export default function Projects() {
           {projectslist.map((project, idx) => (
             <Card key={idx} {...project} />
           ))}
+          <ClockCard />
         </div>
       </div>
     </div>
@@ -52,7 +55,9 @@ const Card = ({
     >
       <div onClick={() => url && window.open(url)}>
         <div className="flex">
-          <div><Image alt={image} width={100} height={100} src={image}></Image></div>
+          <div>
+            <Image alt={image} width={100} height={100} src={image}></Image>
+          </div>
           <div className="flex flex-col pl-4">
             <div className="text-2xl font-extrabold">{name}</div>
             <div className="font-medium ">{description}</div>
