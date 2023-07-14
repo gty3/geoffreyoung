@@ -23,7 +23,7 @@ const projectslist = [
     builtWith: "This fullstack app required me to work intimately with array and object manipulation in a noSQL database.",
     github: "https://github.com/gty3/timebar",
     image: "/projectImages/timebar.png",
-    url: "https://timebar.me",
+    url: "https://dyrsxy35vqc7c.cloudfront.net/",
   },
   {
     name: "Convo Improv",
