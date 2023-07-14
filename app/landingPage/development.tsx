@@ -37,10 +37,10 @@ export default function Development() {
       <div className="justify-center max-w-6xl px-4 mx-auto mt-20 sm:space-x-20 sm:flex backdrop-blur-none">
         <div className="z-50 max-w-md my-10 mt-20">
           <div className="pb-2 text-3xl font-bold sm:text-4xl">
-            My web development
+            Backend
           </div>
           <div className="mt-4 text-lg sm:text-xl">
-            {`I started out specializing in serverless architecture and infrastructure as code. My stack of choice is Serverless Stack (SST) with AWS CDK.`}
+            {`I specialize in serverless architecture and infrastructure as code. My stack of choice is Serverless Stack (SST) with AWS CDK.`}
           </div>
         </div>
         <World />
@@ -69,8 +69,11 @@ export default function Development() {
           )}
         </div>
         <div className="order-1 max-w-md my-10 text-lg sm:text-xl">
-          {`I currently focus on building projects with Next.js and Tailwind CSS. I still
-          manage to immerse myself in a wide array of tools and products, collecting a plethora of bookmarks along the way.`}
+        <div className="pb-2 text-3xl font-bold sm:text-4xl">
+            Frontend
+          </div>
+          {`I build most projects with Next.js and Tailwind CSS, but still
+          use a wide array of tools. I've collected a few bookmarks along the way.`}
         </div>
       </div>
     </div>

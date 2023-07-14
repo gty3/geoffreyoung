@@ -14,9 +14,10 @@ interface Review {
 }
 
 export default function Reviews() {
-
   // const [matches, setMatches] = useState(
-    const matches = typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches
+  const matches =
+    typeof window !== "undefined" &&
+    window.matchMedia("(min-width: 768px)").matches
   // )
 
   // useEffect(() => {
@@ -25,35 +26,21 @@ export default function Reviews() {
   //   .addEventListener('change', e => setMatches( e.matches ));
   // }, []);
 
-
   return (
     <div className="flex justify-center mt-10 sm:mt-20">
-      <div className="max-w-sm px-2 sm:max-w-6xl md:max-w-7xl">
-        <Swiper
-          slidesPerView={!matches ? 1.2 : 3.5}
-          spaceBetween={!matches ? 10 : 20}
-          effect="fade"
-          // loop={true}
-          // modules={[Pagination]}
-          // className="mySwiper"
-        >
+      <div className="max-w-6xl px-2 pt-8 mx-4 space-y-6 sm:columns-2 sm:gap-6 xl:columns-3 sm:max-w-6xl md:max-w-7xl backdrop-blur-none">
           {reviewsArray.map((review, i) => {
-            return (
-              <SwiperSlide key={i}  className="rounded-lg">
-                <Slide review={review} />
-              </SwiperSlide>
-            )
+            return <Card review={review} key={i}/>
           })}
-        </Swiper>
       </div>
     </div>
   )
 }
 
-const Slide = ({ review }: { review: Review }) => {
+const Card = ({ review }: { review: Review }) => {
   return (
     <div>
-      <div className="h-64 px-3 py-2 bg-white border-2 rounded-lg shadow-md sm:h-60">
+      <div className="px-3 py-2 bg-white border-2 rounded-lg shadow-md">
         <div className="flex justify-between">
           <div className="flex flex-row">
             <div className="pt-1">
@@ -73,7 +60,13 @@ const Slide = ({ review }: { review: Review }) => {
             <Image width={20} height={20} src={GoogleLogo} alt="Google Logo" />{" "}
           </div>
         </div>
-        <Image className="my-2" src="/about/5stars.svg" height={20} width={100} alt="5 starts" />
+        <Image
+          className="my-2"
+          src="/about/5stars.svg"
+          height={20}
+          width={100}
+          alt="5 starts"
+        />
         <div className="mt-3">{review.reviewText}</div>
       </div>
     </div>
@@ -81,7 +74,6 @@ const Slide = ({ review }: { review: Review }) => {
 }
 
 const reviewsArray: Review[] = [
-
   {
     name: "Steve Crombie",
     reviewText: `Colorado Geoff has always been super helpful every time.`,
@@ -90,8 +82,7 @@ const reviewsArray: Review[] = [
   },
   {
     name: "Hay Sampson",
-    reviewText:
-      "JEFF IS THE ABSOLUTE BEST I LOVE HIM HE IS SO FRIENDLY!!",
+    reviewText: "JEFF IS THE ABSOLUTE BEST I LOVE HIM HE IS SO FRIENDLY!!",
     date: "April 2023",
     image: "/about/reviews/hay.png",
   },
@@ -135,8 +126,7 @@ const reviewsArray: Review[] = [
   },
   {
     name: "Manuela lesmes diaz",
-    reviewText:
-      "Perfect service, thanks Jeff! 🤙🏽 …",
+    reviewText: "Perfect service, thanks Jeff! 🤙🏽 …",
     date: "March 2023",
     image: "/about/reviews/manuela.png",
   },
