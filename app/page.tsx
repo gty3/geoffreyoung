@@ -1,4 +1,3 @@
-"use client"
 
 import Background from "./components/background"
 import Projects from "./landingPage/projects"
@@ -12,7 +11,7 @@ import { StrictMode } from "react"
 
 export default function Home() {
   return (
-    <StrictMode>
+    <>
       <Background />
       <Header />
       <About />
@@ -24,6 +23,6 @@ export default function Home() {
       </div>
       <Articles />
       <Contact />
-    </StrictMode>
+    </>
   )
 }
