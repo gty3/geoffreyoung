@@ -2,11 +2,15 @@
 
 import Image from "next/image"
 import World from "./development/world"
-import Zoom from "react-medium-image-zoom"
+// import Zoom from "react-medium-image-zoom"
 import "react-medium-image-zoom/dist/styles.css"
 import Bookmarks from "/public/bookmarks1.png"
-import { useMediaQuery } from "../components/useMediaQuery"
 import { useEffect, useState } from "react"
+import dynamic from "next/dynamic"
+
+const Zoom = dynamic(() => import("react-medium-image-zoom"), {
+  ssr: false,
+})
 
 export default function Development() {
   const [isMobile, setIsMobile] = useState<boolean>()

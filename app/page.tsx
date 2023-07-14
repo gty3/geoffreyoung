@@ -7,7 +7,6 @@ import Header from "./header"
 import About from "./landingPage/about"
 import Reviews from "./landingPage/reviews"
 import Development from "./landingPage/development"
-import { StrictMode } from "react"
 
 export default function Home() {
   return (

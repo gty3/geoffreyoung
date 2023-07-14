@@ -5,7 +5,6 @@ import Image from "next/image"
 import projectslist from "@/lib/projects"
 import { motion } from "framer-motion"
 import { BaseSyntheticEvent } from "react"
-import Clock from "./projects/clock.tsx/clock"
 import ClockCard from "./projects/clock.tsx/clock"
 
 interface CardProps {
