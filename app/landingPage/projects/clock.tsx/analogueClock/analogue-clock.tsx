@@ -41,7 +41,7 @@ export default function AnalogueClock({
 
   // This gets the x, y center position of the clockface, polls if screen changes
   const getPosition = () => {
-    if (!clockRef.current) throw Error("Clockface not set")
+    if (!clockRef.current) return
     const handle = setInterval(() => {
       setClockCenter((prevState) => {
         if (!clockRef.current) return prevState
