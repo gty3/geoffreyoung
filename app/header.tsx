@@ -2,7 +2,6 @@ import Image from "next/image"
 import Link from "next/link"
 import ChatBubble from "./favicon.ico"
 
-
 export default function Header({ page }: { page?: "blog" | "about" }) {
   return (
     <>
@@ -12,10 +11,7 @@ export default function Header({ page }: { page?: "blog" | "about" }) {
             <Image className="pt-1 " src={ChatBubble} width={22} alt="logo" />
           </Link>
           <div className="pb-3 mx-4 space-x-4 text-end">
-            <Link
-              href="/posts"
-              className=""
-            >
+            <Link href="/posts" className="">
               <NavButton selected={page === "blog"}>Blog</NavButton>
             </Link>
 
@@ -24,9 +20,9 @@ export default function Header({ page }: { page?: "blog" | "about" }) {
             </Link>
           </div>
         </div>
-        <hr/>
+        <hr />
       </div>
-      <hr className="bg-black"/>
+      <hr className="bg-black" />
     </>
   )
 }

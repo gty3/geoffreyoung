@@ -27,7 +27,7 @@ export default function Projects() {
           {projectslist.map((project, idx) => (
             <Card key={idx} {...project} />
           ))}
-          <ClockCard />
+          {/* <ClockCard /> */}
         </div>
       </div>
     </div>
