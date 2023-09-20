@@ -31,7 +31,7 @@ export default function RiveAndGpt() {
     setTimeout(() => {
       setConversationState((prev: any) => [
         ...prev,
-        { ai: "I'm here to answer any questions you might have" },
+        { ai: "Hi, I'm Geoff's AI. I'm here to answer any questions you might have" },
       ])
       setTyping(false)
     }, 5000)
@@ -64,7 +64,8 @@ export default function RiveAndGpt() {
               )}
               {typing ? <TypingAnimation /> : null}
             </div>
-            <div className="fixed bottom-0 flex mt-4 w-96">
+
+            <div className="fixed w-96 top-[14rem] flex items-end mt-4 px-4 ">
               <input
                 className="flex-1 p-2 rounded-l-xl"
                 placeholder="Type a message..."
