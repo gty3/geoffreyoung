@@ -11,6 +11,9 @@ dependencies:
   '@react-spring/web':
     specifier: ^9.7.2
     version: 9.7.2(react-dom@18.2.0)(react@18.2.0)
+  '@rive-app/react-canvas':
+    specifier: ^4.3.1
+    version: 4.3.1(react@18.2.0)
   '@tailwindcss/typography':
     specifier: ^0.5.9
     version: 0.5.9(tailwindcss@3.3.2)
@@ -77,6 +80,9 @@ dependencies:
   remark:
     specifier: ^14.0.3
     version: 14.0.3
+  rive-react:
+    specifier: ^4.3.1
+    version: 4.3.1(react@18.2.0)
   styled-components:
     specifier: ^6.0.4
     version: 6.0.4(react-dom@18.2.0)(react@18.2.0)
@@ -2361,6 +2367,7 @@ packages:
 
   /@emotion/memoize@0.7.4:
     resolution: {integrity: sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -3186,6 +3193,23 @@ packages:
       '@react-spring/types': 9.7.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@rive-app/canvas@2.4.1:
+    resolution: {integrity: sha512-+maJPYbs5R1dogqRS2He0/kAriM+gQzmStK9Py/U9f4oCsY7ZmeNshH5RCuvJX3fxDDs8QAcFS1Ro7q5fQGECg==}
+    dev: false
+
+  /@rive-app/react-canvas@4.3.1(react@18.2.0):
+    resolution: {integrity: sha512-lDZ01kJyc8p/10SgRmkEXiiFQwDxLGxVVzwcd6yEw8dvRNsDVDL1YFPDsTnuZ5a0NpmmSzPKJi0d07TUJiggZQ==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@rive-app/canvas': 2.4.1
+      react: 18.2.0
+    dev: false
+
+  /@rive-app/webgl@2.4.1:
+    resolution: {integrity: sha512-g20NtAzoPYhgcDcQRp0WYcwu36fcTQNhkPpRH2LpQjIU4rfzN5nWOHqwTAyw6v0Q/k/VARRQtoefE0n68ws0GQ==}
     dev: false
 
   /@rushstack/eslint-patch@1.2.0:
@@ -6975,6 +6999,16 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.3
+    dev: false
+
+  /rive-react@4.3.1(react@18.2.0):
+    resolution: {integrity: sha512-d47QQnFqcoJzvw2danKxqm2Ct+Or3fFYxsYilsaIeYP3LWN6PkioP708GFwGaH0wHPqnsa9xCQxlrCojHubq4Q==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@rive-app/canvas': 2.4.1
+      '@rive-app/webgl': 2.4.1
+      react: 18.2.0
     dev: false
 
   /robust-predicates@3.0.1:

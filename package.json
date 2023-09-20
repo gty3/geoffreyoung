@@ -11,6 +11,7 @@
   "dependencies": {
     "@aws-sdk/client-ses": "^3.338.0",
     "@react-spring/web": "^9.7.2",
+    "@rive-app/react-canvas": "^4.3.1",
     "@tailwindcss/typography": "^0.5.9",
     "@tweenjs/tween.js": "^20.0.3",
     "@types/node": "20.1.7",
@@ -33,6 +34,7 @@
     "react-wrap-balancer": "^0.5.0",
     "rehype-pretty-code": "^0.9.6",
     "remark": "^14.0.3",
+    "rive-react": "^4.3.1",
     "styled-components": "^6.0.4",
     "swiper": "^9.4.1",
     "tailwindcss": "3.3.2",
