@@ -26,9 +26,10 @@ export default function RiveAndGpt() {
   useEffect(() => {
     setTimeout(() => {
       setConversationState((prev: any) => [
-        ...prev,
+        
         { ai: "Hi, I'm here to represent Geoff" },
-        { ai: "You can ask me questions like 'what are you working on?'" },
+        // { ai: "You can ask me questions like 'what are you working on?'" },
+        ...prev,
       ])
       setTyping(false)
     }, 5000)
@@ -44,20 +45,53 @@ export default function RiveAndGpt() {
     })
     const resJson = await res.json()
 
-    setConversationState((prev: any) => [...prev, { ai: resJson.body.content }])
+    setConversationState((prev: any) => [ ...prev, { ai: resJson.body.content } ])
+  }
+
+  const MessageForm = () => {
+    return (
+      <form
+        className=""
+        onSubmit={(e) => {
+          e.preventDefault()
+          sendMessage(messageRef.current?.value)
+        }}
+      >
+        <input
+          className="flex-1 p-2 rounded-l-xl"
+          placeholder="Type a message..."
+          ref={messageRef}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault()
+              sendMessage(messageRef.current?.value)
+            }
+          }}
+        />
+        <button
+          type="submit"
+          className="p-2 text-white bg-blue-500 rounded-r-xl"
+        >
+          Send
+        </button>
+      </form>
+    )
   }
 
   return (
     <>
-      <div className="min-h-screen pt-20 backdrop-blur-none">
-        <div className="flex flex-row justify-center">
+      <div className="h-screen p-4 backdrop-blur-none">
+        <div className="flex flex-row justify-center pt-12 sm:pt-20">
           <div className="h-96 w-96">
             <RiveComponent />
           </div>
         </div>
-        <div className="p-4 backdrop-blur-none">
-          <div className="max-w-md mx-auto ">
-            <div className="bottom-0 flex-col px-4 mt-4 w-96">
+        <div className="absolute inset-x-0 max-w-md mx-auto bottom-24 sm:bottom-64">
+          <div className="flex flex-col-reverse px-4 mt-4 w-96">
+            <div className="flex justify-center mt-8">
+              <ContactLinks />
+            </div>
+            <MessageForm />
             <div className="flex flex-col space-y-4">
               {conversationState.map((message: any, i: number) =>
                 message.ai ? (
@@ -67,36 +101,6 @@ export default function RiveAndGpt() {
                 )
               )}
               {typing ? <TypingAnimation /> : null}
-            </div>
-              <form
-                className="items-end"
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  sendMessage(messageRef.current?.value)
-                }}
-              >
-                <input
-                  className="flex-1 p-2 rounded-l-xl"
-                  placeholder="Type a message..."
-                  ref={messageRef}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault()
-                      sendMessage(messageRef.current?.value)
-                    }
-                  }}
-                />
-                <button
-                  type="submit"
-                  className="p-2 text-white bg-blue-500 rounded-r-xl"
-                >
-                  Send
-                </button>
-              </form>
-              
-              <div className="flex justify-center mt-8">
-                <ContactLinks />
-              </div>
             </div>
           </div>
         </div>
