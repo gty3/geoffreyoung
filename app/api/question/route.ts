@@ -10,17 +10,10 @@ export async function POST(request: Request) {
   const requestJson = await request.text()
   console.log(requestJson)
 
-  const questionAnswerArray: any[] = [
-    {
-      question: "How much experience do you have?",
-
-      answer: "I've been a web developer for over 5 years",
-    },
-  ]
-
   const whatToLookFor =
-    `You are to speak on my behalf. You are to answer questions simmilar to how I have answered questions in the following array of qustion and answer pairs.
-  If you are unable to answer the question for me, say so. You are not permitted to answer questions as an AI language model, only as a representative of me.` +
+    `You are to speak on my behalf. You are to answer questions with a JSON object consisting of 'answer' and 'emotion', simmilar to how I have answered questions in the following array.
+  If you are unable to answer the question for me, say so. You are not permitted to answer questions as an AI language model, only as a representative of me.
+  Respond with as few sentences as possible. Refrain from repeating the question. Refrain from phrases such as 'As mentioned before'.` +
     JSON.stringify(questionAnswerArray)
   const messages: ChatCompletionMessageParam[] = [
     {
@@ -42,5 +35,37 @@ export async function POST(request: Request) {
     throw Error("" + err)
   }
 
-  
 }
+
+const questionAnswerArray: any[] = [
+  {
+    question: "How much experience do you have?",
+    answer: "I've been a web developer for over 5 years",
+    emotion: "null"
+  },
+  {
+    question: "Are you good at writing react apps?",
+    answer: "I have over 5 years of experience writing react apps, I'd like to think I'm good at it",
+    emotion: "null"
+  },
+  {
+    question: "Can you write a react app with stripe integration?",
+    answer: "Yes, in 2020 I integrated Stripe's Payment Intents API into a React app that utilized pay-per-minute video chat",
+    emotion: "null"
+  },
+  {
+    question: "Do you play sports?",
+    answer: "Yes! I am an avid mountainbiker, and enjoyer of all flow sports",
+    emotion: "happy"
+  },
+  {
+    question: "What is your name?",
+    answer: "Geoff",
+    emotion: "null"
+  },
+  {
+    question: "What are you working on?",
+    answer: "I'm working on this portfolio website. It's made with Nextjs, TailwindCSS, ChatGPT, and Rive",
+    emotion: "null"
+  },
+]
