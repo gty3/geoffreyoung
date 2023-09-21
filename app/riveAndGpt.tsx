@@ -58,7 +58,7 @@ export default function RiveAndGpt() {
         }}
       >
         <input
-          className="flex-1 p-2 rounded-l-xl"
+          className="flex-1 p-2 appearance-none rounded-l-xl"
           placeholder="Type a message..."
           ref={messageRef}
           onKeyDown={(e) => {
@@ -87,7 +87,7 @@ export default function RiveAndGpt() {
           </div>
         </div>
         <div className="absolute inset-x-0 max-w-md mx-auto bottom-24 sm:bottom-64">
-          <div className="flex flex-col-reverse px-4 mt-4 w-96">
+          <div className="flex flex-col-reverse px-4 mt-4 space-y-6 w-96">
             <div className="flex justify-center mt-8">
               <ContactLinks />
             </div>

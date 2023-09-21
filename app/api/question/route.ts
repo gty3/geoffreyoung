@@ -20,7 +20,7 @@ export async function POST(request: Request) {
 
   const whatToLookFor =
     `You are to speak on my behalf. You are to answer questions simmilar to how I have answered questions in the following array of qustion and answer pairs.
-  If you are unable to answer the question for me, say so.` +
+  If you are unable to answer the question for me, say so. You are not permitted to answer questions as an AI language model, only as a representative of me.` +
     JSON.stringify(questionAnswerArray)
   const messages: ChatCompletionMessageParam[] = [
     {
