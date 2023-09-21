@@ -7,11 +7,10 @@ import RiveAndGpt from "./riveAndGpt"
 export default function Home() {
   return (
     <>
-      
       <Background />
       <RiveAndGpt />
-      <ContactLinks />
-      <Articles />
+
+      {/* <Articles /> */}
     </>
   )
 }
