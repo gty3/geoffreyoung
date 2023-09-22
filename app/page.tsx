@@ -1,6 +1,5 @@
 import Background from "./components/background"
-import ContactLinks from "./contactLinks"
-import Articles from "./posts"
+import Articles from "./articles"
 import RiveAndGpt from "./riveAndGpt"
 
 

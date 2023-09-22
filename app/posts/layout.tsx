@@ -1,4 +1,4 @@
-import Header from "../header"
+import Header from "./header"
 import Background from "./background"
 
 export default function BlogLayout({
@@ -8,10 +8,9 @@ export default function BlogLayout({
 }) {
   return (
     <>
-    <Background />
-    <Header />
-        
-        <div>{children}</div>
+      <Background />
+      <Header />
+      <div>{children}</div>
     </>
   )
 }
