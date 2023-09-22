@@ -3,7 +3,6 @@ import { Metadata } from "next"
 import { allPosts } from "contentlayer/generated"
 import { format } from "date-fns"
 import { Mdx } from "../../components/mdx-components"
-import Background from "../background"
 
 interface PostProps {
   params: {
@@ -54,8 +53,8 @@ export default async function PostPage({ params }: PostProps) {
 
   return (
     <div id={post._id}>
-    <div className="z-30 px-4 mx-auto mb-40 backdrop-blur-sm">
-    <article className="py-6 prose ">
+    <div className="z-30 px-4 mx-auto mt-20 mb-40 backdrop-blur-sm">
+    <article className="py-6 mx-auto prose">
       <h1 className="mb-2">{post.title}</h1>
       {post.description && (
         <p className="mt-0 text-xl text-slate-700 ">

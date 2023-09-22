@@ -9,7 +9,7 @@ export default function BlogLayout({
   return (
     <>
     <Background />
-    <Header page="blog"/>
+    <Header />
         
         <div>{children}</div>
     </>
