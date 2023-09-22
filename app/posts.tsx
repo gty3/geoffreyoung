@@ -2,39 +2,25 @@
 import Link from "next/link"
 import { compareDesc } from "date-fns"
 import { allPosts, Post } from "contentlayer/generated"
-import { motion } from "framer-motion"
-import Image from "next/image"
 
 function PostCard(post: Post) {
   return (
-    <motion.div
-      whileHover={{ scale: 1.01 }}
-      whileTap={{ scale: 0.96 }}
-      key={post._id}
+    <div
     >
       <Link href={post.slug + "/#"}>
-        <div className="p-4 m-4 border border-gray-300 rounded-lg cursor-pointer break-inside-avoid bg-white/20 bg-clip-padding backdrop-blur-lg backdrop-filter">
+        {/* <br className="bg-black" /> */}
+        <div className="p-4 border-t-2 border-gray-300 cursor-pointer break-inside-avoid bg-clip-padding hover:bg-white/20 focus:bg-white/20 hover:backdrop-blur-lg focus:backdrop-blur-lg backdrop-blur-none backdrop-filter">
           <div className="grid justify-start grid-flow-col">
-            {post.image && (
-              <Image
-                src={post.image}
-                height={100}
-                width={100}
-                alt={post.image}
-              />
-            )}
+            <div className="">{new Date(post.date).getFullYear()}</div>
             <div className="ml-4 ">
-              <h2 className="text-xl font-semibold">{post.title}</h2>
-              <div className="pt-1 text-xs sm:text-sm">
-                {new Date(post.date).toISOString().split("T")[0]}
-              </div>
+              <h2 className="text-lg ">{post.title}</h2>
             </div>
           </div>
         </div>
       </Link>
 
       {post.description && <p>{post.description}</p>}
-    </motion.div>
+    </div>
   )
 }
 
@@ -44,11 +30,7 @@ export default function Articles() {
   )
 
   return (
-    <div className="max-w-xl pb-12 mx-auto ">
-      {/* <h1 className="mb-8 text-4xl font-extrabold text-center backdrop-blur-none sm:text-5xl">
-        Articles
-      </h1> */}
-      {/* <button>toggle cards</button> */}
+    <div className="max-w-xl pb-12 mx-auto -mt-12">
       {posts.map((post, idx) => (
         <PostCard key={idx} {...post} />
       ))}

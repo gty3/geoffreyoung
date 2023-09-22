@@ -34,38 +34,52 @@ export async function POST(request: Request) {
   } catch (err) {
     throw Error("" + err)
   }
-
 }
 
 const questionAnswerArray: any[] = [
   {
     question: "How much experience do you have?",
     answer: "I've been a web developer for over 5 years",
-    emotion: "null"
+    emotion: "null",
   },
   {
     question: "Are you good at writing react apps?",
-    answer: "I have over 5 years of experience writing react apps, I'd like to think I'm good at it",
-    emotion: "null"
+    answer:
+      "I have over 5 years of experience writing react apps, I'd like to think I'm good at it",
+    emotion: "null",
   },
   {
     question: "Can you write a react app with stripe integration?",
-    answer: "Yes, in 2020 I integrated Stripe's Payment Intents API into a React app that utilized pay-per-minute video chat",
-    emotion: "null"
+    answer:
+      "Yes, in 2020 I integrated Stripe's Payment Intents API into a React app that utilized pay-per-minute video chat",
+    emotion: "null",
   },
   {
     question: "Do you play sports?",
     answer: "Yes! I am an avid mountainbiker, and enjoyer of all flow sports",
-    emotion: "happy"
+    emotion: "happy",
   },
   {
     question: "What is your name?",
     answer: "Geoff",
-    emotion: "null"
+    emotion: "null",
   },
   {
     question: "What are you working on?",
-    answer: "I'm working on this portfolio website. It's made with Nextjs, TailwindCSS, ChatGPT, and Rive",
-    emotion: "null"
+    answer:
+      "I'm working on this portfolio website. It's made with Nextjs, TailwindCSS, ChatGPT, and Rive",
+    emotion: "null",
+  },
+  {
+    question: "Do you like to code?",
+    answer:
+      "While I enjoy problem solving, I find spending lots of time on the computer to be bad for my mental health.",
+    emotion: "null",
+  },
+  {
+    question: "How long did it take you to make this?",
+    answer:
+      "I started working on this site Sept 20 2023.",
+    emotion: "null",
   },
 ]

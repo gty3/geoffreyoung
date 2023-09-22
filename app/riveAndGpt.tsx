@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react"
 import ContactLinks from "./contactLinks"
 
 export default function RiveAndGpt() {
-  const [animationState, setAnimationState] = useState<boolean>(false)
   const [typing, setTyping] = useState<boolean>(false)
   const [conversationState, setConversationState] = useState<any>([])
   const messageRef = useRef<HTMLInputElement>(null)
@@ -22,6 +21,7 @@ export default function RiveAndGpt() {
       }
     },
   })
+  const smile = useStateMachineInput(rive, "State Machine 1", "smile")
 
   useEffect(() => {
     setTimeout(() => {
@@ -30,11 +30,11 @@ export default function RiveAndGpt() {
         { ai: "Hi, I'm here to represent Geoff" },
       ])
       setTyping(false)
-    }, 4000)
+    }, 3000)
 
     setTimeout(() => {
       setTyping(true)
-    }, 5000)
+    }, 3500)
 
     setTimeout(() => {
       setConversationState((prev: any) => [
@@ -42,7 +42,7 @@ export default function RiveAndGpt() {
         { ai: "You can ask me questions like 'what are you working on?'" },
       ])
       setTyping(false)
-    }, 7000)
+    }, 4500)
   }, [])
 
   const sendMessage = async (message: string | undefined) => {
@@ -50,7 +50,7 @@ export default function RiveAndGpt() {
     setTimeout(() => {
       setTyping(true)
     }, 200)
-    
+
     setConversationState((prev: any) => [...prev, { sender: message }])
     messageRef.current && (messageRef.current.value = "")
     const res = await fetch("/api/question", {
@@ -58,13 +58,24 @@ export default function RiveAndGpt() {
       body: JSON.stringify({ message: message }),
     })
     const resJson = await res.json()
-    const answer = JSON.parse(resJson.body.content).answer
-    const emotion = JSON.parse(resJson.body.content).emotion
-    if (emotion === "happy") {
-      console.log("SET ANMATION TO HAPPY")
+    try {
+      const answer = JSON.parse(resJson.body.content).answer
+      const emotion = JSON.parse(resJson.body.content).emotion
+      if (emotion === "happy") {
+        smile && (smile.value = true)
+      } else {
+        smile && (smile.value = false)
+      }
+      setTyping(false)
+      setConversationState((prev: any) => [...prev, { ai: answer }])
+    } catch {
+      /* if response is not a json object */
+      setTyping(false)
+      setConversationState((prev: any) => [
+        ...prev,
+        { ai: resJson.body.content },
+      ])
     }
-    setTyping(false)
-    setConversationState((prev: any) => [...prev, { ai: answer }])
   }
 
   const MessageForm = () => {
@@ -77,7 +88,7 @@ export default function RiveAndGpt() {
         }}
       >
         <input
-          className="flex-1 max-w-md p-2 appearance-none rounded-l-xl"
+          className="p-2 appearance-none rounded-l-xl w-72 overflow-"
           placeholder="Type a message..."
           ref={messageRef}
           onKeyDown={(e) => {
@@ -97,10 +108,53 @@ export default function RiveAndGpt() {
     )
   }
 
+  const AiMessage = ({ children, i }: any) => {
+    let opacity = "opacity-100"
+    const position =  conversationState.length - i
+
+    if (position > 4) {
+      opacity = "opacity-0"
+    } else if (position > 3) {
+      opacity = "opacity-30"
+    } else if (position > 2) {
+      opacity = "opacity-50"
+    }
+
+    return (
+      <div className="flex items-start">
+        <div
+          className={
+            opacity +
+            " max-w-sm px-4 py-2 text-black bg-gray-200 rounded-br-xl rounded-t-xl"
+          }
+        >
+          {children}
+        </div>
+      </div>
+    )
+  }
+  const SenderMessage = ({ children, i }: any) => {
+    let opacity = "opacity-100"
+    const position = conversationState.length - i
+
+    if (position > 4) {
+      opacity = "opacity-0"
+    } else if (position > 2) {
+      opacity = "opacity-50"
+    }
+    return (
+      <div className="flex items-end justify-end ">
+        <div className={ opacity + " max-w-sm px-4 py-2 text-white bg-blue-500 rounded-bl-xl rounded-t-xl"}>
+          {children}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <>
       <div className="h-screen p-4 backdrop-blur-none">
-        <div className="flex flex-row justify-center pt-12 sm:pt-20">
+        <div className="flex flex-row justify-center pt-8 sm:pt-12">
           <div className="z-10 h-96 w-96">
             <RiveComponent />
           </div>
@@ -114,9 +168,13 @@ export default function RiveAndGpt() {
             <div className="flex flex-col space-y-4">
               {conversationState.map((message: any, i: number) =>
                 message.ai ? (
-                  <AiMessage key={i}>{message.ai}</AiMessage>
+                  <AiMessage i={i} key={i}>
+                    {message.ai}
+                  </AiMessage>
                 ) : (
-                  <SenderMessage key={i}>{message.sender}</SenderMessage>
+                  <SenderMessage i={i} key={i}>
+                    {message.sender}
+                  </SenderMessage>
                 )
               )}
               {typing ? <TypingAnimation /> : null}
@@ -125,25 +183,6 @@ export default function RiveAndGpt() {
         </div>
       </div>
     </>
-  )
-}
-
-const AiMessage = ({ children }: any) => {
-  return (
-    <div className="flex items-start">
-      <div className="max-w-sm px-4 py-2 text-black bg-gray-200 rounded-br-xl rounded-t-xl">
-        {children}
-      </div>
-    </div>
-  )
-}
-const SenderMessage = ({ children }: any) => {
-  return (
-    <div className="flex items-end justify-end ">
-      <div className="max-w-sm px-4 py-2 text-white bg-blue-500 rounded-bl-xl rounded-t-xl">
-        {children}
-      </div>
-    </div>
   )
 }
 
