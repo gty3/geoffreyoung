@@ -78,79 +78,6 @@ export default function RiveAndGpt() {
     }
   }
 
-  const MessageForm = () => {
-    return (
-      <form
-        className=""
-        onSubmit={(e) => {
-          e.preventDefault()
-          sendMessage(messageRef.current?.value)
-        }}
-      >
-        <input
-          className="p-2 appearance-none rounded-l-xl w-72 overflow-"
-          placeholder="Type a message..."
-          ref={messageRef}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault()
-              sendMessage(messageRef.current?.value)
-            }
-          }}
-        />
-        <button
-          type="submit"
-          className="p-2 text-white bg-blue-500 rounded-r-xl"
-        >
-          Send
-        </button>
-      </form>
-    )
-  }
-
-  const AiMessage = ({ children, i }: any) => {
-    let opacity = "opacity-100"
-    const position =  conversationState.length - i
-
-    if (position > 4) {
-      opacity = "opacity-0"
-    } else if (position > 3) {
-      opacity = "opacity-30"
-    } else if (position > 2) {
-      opacity = "opacity-50"
-    }
-
-    return (
-      <div className="flex items-start">
-        <div
-          className={
-            opacity +
-            " max-w-sm px-4 py-2 text-black bg-gray-200 rounded-br-xl rounded-t-xl"
-          }
-        >
-          {children}
-        </div>
-      </div>
-    )
-  }
-  const SenderMessage = ({ children, i }: any) => {
-    let opacity = "opacity-100"
-    const position = conversationState.length - i
-
-    if (position > 4) {
-      opacity = "opacity-0"
-    } else if (position > 2) {
-      opacity = "opacity-50"
-    }
-    return (
-      <div className="flex items-end justify-end ">
-        <div className={ opacity + " max-w-sm px-4 py-2 text-white bg-blue-500 rounded-bl-xl rounded-t-xl"}>
-          {children}
-        </div>
-      </div>
-    )
-  }
-
   return (
     <>
       <div className="h-screen p-4 backdrop-blur-none">
@@ -164,19 +91,9 @@ export default function RiveAndGpt() {
             <div className="flex justify-center mt-8">
               <ContactLinks />
             </div>
-            <MessageForm />
+            <MessageForm sendMessage={sendMessage} messageRef={messageRef} />
             <div className="flex flex-col space-y-4">
-              {conversationState.map((message: any, i: number) =>
-                message.ai ? (
-                  <AiMessage i={i} key={i}>
-                    {message.ai}
-                  </AiMessage>
-                ) : (
-                  <SenderMessage i={i} key={i}>
-                    {message.sender}
-                  </SenderMessage>
-                )
-              )}
+              <MessagesList conversationState={conversationState} />
               {typing ? <TypingAnimation /> : null}
             </div>
           </div>
@@ -193,5 +110,107 @@ const TypingAnimation = () => {
       <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
       <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
     </div>
+  )
+}
+
+type MessageProps = {
+  children: any
+  i: number
+  conversationStateLength: number
+  type: "ai" | "sender"
+}
+
+const Message = ({
+  children,
+  i,
+  conversationStateLength,
+  type,
+}: MessageProps) => {
+  let opacity = "opacity-100"
+  const position = conversationStateLength - i
+
+  if (position > 4) {
+    opacity = "opacity-0"
+  } else if (position > 3 && type === "ai") {
+    opacity = "opacity-30"
+  } else if (position > 2) {
+    opacity = "opacity-50"
+  }
+
+  const baseStyles = "max-w-sm px-4 py-2 rounded-t-xl"
+  const aiStyles = "text-black bg-gray-200 rounded-br-xl"
+  const senderStyles = "text-white bg-blue-500 rounded-bl-xl"
+
+  return (
+    <div
+      className={`flex items-${type === "ai" ? "start" : "end"} ${
+        type === "sender" ? "justify-end" : ""
+      }`}
+    >
+      <div
+        className={`${opacity} ${baseStyles} ${
+          type === "ai" ? aiStyles : senderStyles
+        }`}
+      >
+        {children}
+      </div>
+    </div>
+  )
+}
+
+interface MessagesListProps {
+  conversationState: any[]
+}
+
+const MessagesList: React.FC<MessagesListProps> = ({ conversationState }) => {
+  const conversationLength = conversationState.length
+  return (
+    <>
+      {conversationState.map((message: any, i: number) => (
+        <Message
+          type={message.ai ? "ai" : "sender"}
+          i={i}
+          key={i}
+          conversationStateLength={conversationLength}
+        >
+          {message.ai}
+        </Message>
+      ))}
+    </>
+  )
+}
+
+interface MessageFormProps {
+  sendMessage: (message: string | undefined) => void
+  messageRef: React.RefObject<HTMLInputElement>
+}
+
+const MessageForm: React.FC<MessageFormProps> = ({
+  sendMessage,
+  messageRef,
+}) => {
+  return (
+    <form
+      className=""
+      onSubmit={(e) => {
+        e.preventDefault()
+        sendMessage(messageRef.current?.value)
+      }}
+    >
+      <input
+        className="p-2 appearance-none rounded-l-xl w-72 overflow-"
+        placeholder="Type a message..."
+        ref={messageRef}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault()
+            sendMessage(messageRef.current?.value)
+          }
+        }}
+      />
+      <button type="submit" className="p-2 text-white bg-blue-500 rounded-r-xl">
+        Send
+      </button>
+    </form>
   )
 }
