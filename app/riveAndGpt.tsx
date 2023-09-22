@@ -15,6 +15,7 @@ export default function RiveAndGpt() {
     onStateChange: (state) => {
       if (!Array.isArray(state.data)) return
       if (state.data[0] === "exit") {
+        sessionStorage.setItem('smile', 'true')
         setTimeout(() => {
           setTyping(true)
         }, 500)
@@ -24,6 +25,8 @@ export default function RiveAndGpt() {
   const smile = useStateMachineInput(rive, "State Machine 1", "smile")
 
   useEffect(() => {
+    const smileValue = sessionStorage.getItem('smile')
+    smile && (smile.value = true)
     setTimeout(() => {
       setConversationState((prev: any) => [
         ...prev,
