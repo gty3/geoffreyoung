@@ -1,6 +1,7 @@
 import Background from "./components/background"
 import Articles from "./articles"
 import RiveAndGpt from "./riveAndGpt"
+import Footer from "./footer"
 
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
       <Background />
       <RiveAndGpt />
       <Articles />
+      <Footer />
     </>
   )
 }
