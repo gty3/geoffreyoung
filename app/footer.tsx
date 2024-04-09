@@ -7,7 +7,6 @@ export default function Footer() {
     src: "/rain-cloud.riv",
     stateMachines: "State Machine 1",
   })
-  // const smile = useStateMachineInput(rive, "State Machine 1", "smile")
 
   return (
     <div className="flex justify-center mb-0.5">

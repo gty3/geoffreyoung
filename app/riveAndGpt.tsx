@@ -42,7 +42,7 @@ export default function RiveAndGpt() {
     setTimeout(() => {
       setConversationState((prev: any) => [
         ...prev,
-        { ai: "You can ask me questions like 'what are you working on?'" },
+        { ai: "You can typically ask me questions like 'what are you working on?' but I am temporarily disabled" },
       ])
       setTyping(false)
     }, 4500)
