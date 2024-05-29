@@ -10,7 +10,7 @@ export default function Home() {
       <Background />
       <RiveAndGpt />
       <Articles />
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }

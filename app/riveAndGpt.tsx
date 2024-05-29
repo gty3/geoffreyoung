@@ -30,7 +30,7 @@ export default function RiveAndGpt() {
     setTimeout(() => {
       setConversationState((prev: any) => [
         ...prev,
-        { ai: "Hi, I'm here to represent Geoff" },
+        { ai: "Hi, feel free to send me a message" },
       ])
       setTyping(false)
     }, 3000)
@@ -42,64 +42,69 @@ export default function RiveAndGpt() {
     setTimeout(() => {
       setConversationState((prev: any) => [
         ...prev,
-        { ai: "You can typically ask me questions like 'what are you working on?' but I am temporarily disabled" },
+        { ai: "I'll try my best to respond but am not always available" },
       ])
       setTyping(false)
     }, 4500)
   }, [])
 
   const sendMessage = async (message: string | undefined) => {
+    console.log(message)
     if (!message) return
-    setTimeout(() => {
-      setTyping(true)
-    }, 200)
+    // setTimeout(() => {
+    //   setTyping(true)
+    // }, 200)
 
     setConversationState((prev: any) => [...prev, { sender: message }])
-    messageRef.current && (messageRef.current.value = "")
-    const res = await fetch("/api/question", {
-      method: "POST",
-      body: JSON.stringify({ message: message }),
-    })
-    const resJson = await res.json()
+    // messageRef.current && (messageRef.current.value = "")
+    // const res = await fetch("/api/question", {
+    //   method: "POST",
+    //   body: JSON.stringify({ message: message }),
+    // })
+    // const resJson = await res.json()
     try {
-      const answer = JSON.parse(resJson.body.content).answer
-      const emotion = JSON.parse(resJson.body.content).emotion
-      if (emotion === "happy") {
-        smile && (smile.value = true)
-      } else {
-        smile && (smile.value = false)
-      }
-      setTyping(false)
-      setConversationState((prev: any) => [...prev, { ai: answer }])
+      // const answer = JSON.parse(resJson.body.content).answer
+      // const emotion = JSON.parse(resJson.body.content).emotion
+      // if (emotion === "happy") {
+      //   smile && (smile.value = true)
+      // } else {
+      //   smile && (smile.value = false)
+      // }
+      // setTimeout(() => {
+      //   setTyping(false)
+      // setConversationState((prev: any) => [...prev, { ai: "I will not answer" }])
+      // }, 200)
+      // setTyping(false)
+      // setConversationState((prev: any) => [...prev, { ai: answer }])
     } catch {
       /* if response is not a json object */
-      setTyping(false)
-      setConversationState((prev: any) => [
-        ...prev,
-        { ai: resJson.body.content },
-      ])
+      // setTyping(false)
+      // setConversationState((prev: any) => [
+      //   ...prev,
+      //   { ai: resJson.body.content },
+      // ])
     }
   }
 
   return (
     <>
-      <div className="h-screen p-4 backdrop-blur-none">
+      <div className="p-4 backdrop-blur-none">
         <div className="flex flex-row justify-center pt-8 sm:pt-12">
-          <div className="z-10 h-96 w-96">
+          <div className="z-10 w-96 h-96">
             <RiveComponent />
           </div>
         </div>
-        <div className="absolute inset-x-0 z-0 max-w-md mx-auto bottom-24 sm:bottom-64">
-          <div className="z-0 flex flex-col-reverse px-4 mt-4 space-y-6 w-96">
-            <div className="flex justify-center mt-8">
+        <div className="absolute inset-x-0 z-0 mx-auto max-w-md">
+          {/* <div className="flex z-0 flex-col-reverse px-4 mt-4 space-y-6 w-96"> */}
+            <div className="flex justify-center mt-12 sm:mt-20">
               <ContactLinks />
             </div>
-            <MessageForm sendMessage={sendMessage} messageRef={messageRef} />
+            {/* <MessageForm sendMessage={sendMessage} messageRef={messageRef} />
             <div className="flex flex-col space-y-4">
               <MessagesList conversationState={conversationState} />
               {typing ? <TypingAnimation /> : null}
-            </div>
-          </div>
+            </div> */}
+          {/* </div> */}
         </div>
       </div>
     </>
@@ -201,7 +206,7 @@ const MessageForm: React.FC<MessageFormProps> = ({
       }}
     >
       <input
-        className="p-2 appearance-none rounded-l-xl w-72 overflow-"
+        className="p-2 w-72 rounded-l-xl appearance-none overflow-"
         placeholder="Type a message..."
         ref={messageRef}
         onKeyDown={(e) => {
