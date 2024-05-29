@@ -108,8 +108,8 @@ export default function Troubleshooting() {
         </div>
         <div className="overflow-x-hidden p-4 mx-auto max-w-2xl prose">
           <h1>Getting started with Rive and React</h1>
-          <p className="-mt-4">Didn&apos;t read the documentation? I got you</p>
-          <h2>
+          {/* <p className="-mt-4">Didn&apos;t read the documentation? I got you</p> */}
+          <h2 className="mt-20">
             What if your Rive is rerendering infinitely or not rendering at all
           </h2>
           <div className="sm:hidden">
