@@ -94,7 +94,7 @@ export default function RiveAndGpt() {
             <RiveComponent />
           </div>
         </div>
-        <div className="absolute inset-x-0 z-0 mx-auto max-w-md">
+        {/* <div className="absolute inset-x-0 z-0 mx-auto max-w-md"> */}
           {/* <div className="flex z-0 flex-col-reverse px-4 mt-4 space-y-6 w-96"> */}
             <div className="flex justify-center mt-12 sm:mt-20">
               <ContactLinks />
@@ -105,7 +105,7 @@ export default function RiveAndGpt() {
               {typing ? <TypingAnimation /> : null}
             </div> */}
           {/* </div> */}
-        </div>
+        {/* </div> */}
       </div>
     </>
   )

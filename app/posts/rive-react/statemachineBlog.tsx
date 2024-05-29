@@ -1,6 +1,6 @@
 "use client"
 
-import ButtonLight from "../../components/button"
+import { ButtonDark } from "../../components/button"
 import { ArrowDown, ArrowDownCircle } from "../../components/svg"
 import { useRive, useStateMachineInput } from "@rive-app/react-canvas"
 import { useEffect, useRef, useState } from "react"
@@ -109,9 +109,9 @@ return (
         </div>
       </div>
       <p>Let&apos;s trigger that state change in our code, press the button below</p>
-      <ButtonLight onClick={buttonHandler}>
+      <ButtonDark onClick={buttonHandler}>
         Set boolean1.value = true
-      </ButtonLight>
+      </ButtonDark>
       <div className="mt-4 h-10 text-red-600">
         {i && (
           <div className="flex flex-row">
